@@ -8,24 +8,33 @@ public abstract class Cromosoma {
 	private ArrayList<Gen> genes;
 	
 	//La imagen de la codificacion
-	private double fenotipo;
+	private float fenotipo;
 	
 	//Valor de fitness del individuo
-	private double aptitud;
+	private float aptitud;
 	
 	//Como de bueno es el individuo respecto a los demas
-	private double puntuacion;
+	private float puntuacion;
 	
 	//Puntuacian acumulada
-	private double punt_acum;
+	private float punt_acum;
 	private int longitud;
 	
 	//Devuelve el valor de fitness
-	public abstract double evaluar();
+	public abstract float evaluar();
 	
 	//Inicializa el cromosoma
 	public abstract void inicializaCromosoma();
+
+	/*GETTERS y SETTERS*/
+	public float getAptitud() {
+		return aptitud;
+	}
+
+	public void setAptitud(float aptitud) {
+		this.aptitud = aptitud;
+	}
 	
-	
+
 	
 }
