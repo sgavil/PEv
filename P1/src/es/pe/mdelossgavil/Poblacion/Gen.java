@@ -1,8 +1,8 @@
 package es.pe.mdelossgavil.Poblacion;
 
 import java.util.ArrayList;
-
-public class Gen {
-	private boolean valor;
+public class Gen<T> {
+	
+	private T valor;
 
 }
