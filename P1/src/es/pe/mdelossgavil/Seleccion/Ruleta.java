@@ -1,5 +1,15 @@
 package es.pe.mdelossgavil.Seleccion;
+import java.util.ArrayList;
 
-public class Ruleta {
+import es.pe.mdelossgavil.Poblacion.Cromosoma;
+import es.pe.mdelossgavil.Seleccion.Seleccion;
+
+public class Ruleta extends Seleccion{
+
+	@Override
+	public void hacerSeleccion(ArrayList<Cromosoma> poblacion) {
+		// TODO Auto-generated method stub
+		return;
+	}
 
 }
