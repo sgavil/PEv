@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import es.pe.mdelossgavil.Poblacion.Cromosoma;
 import es.pe.mdelossgavil.Seleccion.Seleccion;
 
-public class EstocasticoUniversal extends Seleccion{
+public class EstocasticoUniversal implements Seleccion{
 
 	@Override
 	public void hacerSeleccion(ArrayList<Cromosoma> poblacion) {

@@ -23,7 +23,8 @@ public class AGenetico {
 	void evaluarPoblacion(){
 		
 	}
-	//Crea una poblacion inicial de cromosomas
+	
+	//Crea una poblacion inicial de cromosomas ademas de escoger una seleccion,cruce y mutacion
 	void inicializa(Seleccion seleccion_) {
 		seleccion=seleccion_;
 		seleccion_.hacerSeleccion(poblacion);
