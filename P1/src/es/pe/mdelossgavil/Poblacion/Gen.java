@@ -2,12 +2,9 @@ package es.pe.mdelossgavil.Poblacion;
 
 import java.util.ArrayList;
 
-public class Gen {
+public class Gen<T> {
 	
-	private boolean valor;
-	private ArrayList<Boolean> boolAlelos;
-	private ArrayList<Double> doubleAlelos;
-	
-	
+	private T valor;
+
 	
 }
