@@ -9,6 +9,6 @@ import es.pe.mdelossgavil.Poblacion.ACromosoma;
  * correspondiente.
  */
 public interface ISeleccion {
-	public void hacerSeleccion(ArrayList<ACromosoma> poblacion);
+	public void hacer_seleccion(ArrayList<ACromosoma> poblacion);
 }
 		

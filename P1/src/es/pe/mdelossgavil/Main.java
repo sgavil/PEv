@@ -22,5 +22,16 @@ public class Main {
 		Mutacion mutacion = new Mutacion();
 		
 		a_genetico.inicializa(ruleta, cruce,mutacion,"F1");
+		a_genetico.evaluar_poblacion();
+		
+		int i = 0;
+		while(i < N_GENERACIONES) {
+			a_genetico.seleccion();
+			a_genetico.cruce();
+			a_genetico.mutacion();
+			a_genetico.evaluar_poblacion();
+			i++;
+		}
+		
 	}
 }

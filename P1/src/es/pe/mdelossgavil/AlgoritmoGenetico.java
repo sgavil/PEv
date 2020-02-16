@@ -12,6 +12,7 @@ public class AlgoritmoGenetico {
 	public AlgoritmoGenetico(int tam_poblacion,int generaciones) {
 		tam_pob = tam_poblacion;
 		num_max_gen = generaciones;
+		
 	}
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -31,7 +32,7 @@ public class AlgoritmoGenetico {
 	private ACromosoma el_mejor;
 
 	private int pos_mejor;
-	private float prob_cruce;
+	private float prob_cruce ;
 	private float prob_mut;
 	private float tolerancia;
 
@@ -67,7 +68,9 @@ public class AlgoritmoGenetico {
 		
 	}
 
-	// Evalua los individuos y coge el mejor
+	/**
+	 * Evalua la población y elige al mejor individuo
+	 */
 	public void evaluar_poblacion() 
 	{
 		float punt_acum = 0;
@@ -99,12 +102,24 @@ public class AlgoritmoGenetico {
 		}
 
 	}
+	
+	/**
+	 * Proceso de selección
+	 */
 	public void seleccion() {
-		metodo_seleccion.hacerSeleccion(poblacion);
+		metodo_seleccion.hacer_seleccion(poblacion);
 	}
+	
+	/**
+	 * Proceso de cruce
+	 */
 	public void cruce() {
 		metodo_cruce.reproduccion(poblacion);
 	}
+	
+	/**
+	 * Proceso de mutación
+	 */
 	public void mutacion() {
 		metodo_mutacion.mutar(poblacion);
 	}

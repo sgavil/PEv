@@ -11,9 +11,13 @@ import es.pe.mdelossgavil.Seleccion.ISeleccion;
 public class Torneos implements ISeleccion{
 
 	@Override
-	public void hacerSeleccion(ArrayList<ACromosoma> poblacion) {
+	public void hacer_seleccion(ArrayList<ACromosoma> poblacion) {
 		// TODO Auto-generated method stub
-		return ;
+		
 	}
+
+	
+
+	
 
 }

@@ -10,12 +10,16 @@ import es.pe.mdelossgavil.Seleccion.ISeleccion;
  * de un número aleatorio entre 0 y 1/N, Siendo N el número de individuos que se quieren seleccionar
  *
  */
-public class EstocasticoUniversal implements ISeleccion{
-
+public class EstocasticoUniversal /*implements ISeleccion*/{
+/*
 	@Override
-	public void hacerSeleccion(ArrayList<ACromosoma> poblacion) {
+	public void hacer_seleccion(ArrayList<ACromosoma> poblacion, float prob_selecc) {
 		// TODO Auto-generated method stub
-		return;
+		
 	}
+*/
+	
+
+	
 
 }
