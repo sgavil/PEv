@@ -1,10 +1,26 @@
 package es.pe.mdelossgavil;
 
 import javax.swing.*;
-import org.math.plot.*;
+//import org.math.plot.*;
+
+import es.pe.mdelossgavil.Cruce.*;
+import es.pe.mdelossgavil.Mutacion.*;
+import es.pe.mdelossgavil.Seleccion.*;
 
 public class Main {
-public static void main(String[] args) {
-
-}
+	
+	public static final int TAM_POB = 100;
+	public static final int N_GENERACIONES = 100;
+	
+	
+	public static void main(String[] args) {
+		
+		AlgoritmoGenetico a_genetico = new AlgoritmoGenetico(TAM_POB,N_GENERACIONES);
+		
+		Ruleta ruleta = new Ruleta();
+		Monopunto cruce = new Monopunto();
+		Mutacion mutacion = new Mutacion();
+		
+		a_genetico.inicializa(ruleta, cruce,mutacion,"F1");
+	}
 }

@@ -1,6 +1,6 @@
 package es.pe.mdelossgavil.Poblacion;
 
-public class CromosomaF1 extends Cromosoma{
+public class CromosomaF1 extends ACromosoma{
 	
 	
 	public float fenotipo() {
@@ -20,7 +20,7 @@ public class CromosomaF1 extends Cromosoma{
 	}
 
 	@Override
-	public void inicializaCromosoma() {
+	public void inicializa_cromosoma() {
 		// TODO Auto-generated method stub
 		
 	}

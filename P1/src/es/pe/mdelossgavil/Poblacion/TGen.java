@@ -1,7 +1,7 @@
 package es.pe.mdelossgavil.Poblacion;
 
 import java.util.ArrayList;
-public class Gen<T> {
+public class TGen<T> {
 	
 	private T valor;
 

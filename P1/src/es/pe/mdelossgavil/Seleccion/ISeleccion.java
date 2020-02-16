@@ -2,13 +2,13 @@ package es.pe.mdelossgavil.Seleccion;
 
 import java.util.ArrayList;
 
-import es.pe.mdelossgavil.Poblacion.Cromosoma;
+import es.pe.mdelossgavil.Poblacion.ACromosoma;
 
 /**
  * Interfaz que define un tipo de seleccion, recibe una poblacion y la modifica aplicando la seleccion
  * correspondiente.
  */
-public interface Seleccion {
-	public void hacerSeleccion(ArrayList<Cromosoma> poblacion);
+public interface ISeleccion {
+	public void hacerSeleccion(ArrayList<ACromosoma> poblacion);
 }
 		

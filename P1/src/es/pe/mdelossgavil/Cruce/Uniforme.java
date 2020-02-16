@@ -2,11 +2,11 @@ package es.pe.mdelossgavil.Cruce;
 
 import java.util.ArrayList;
 
-import es.pe.mdelossgavil.Poblacion.Cromosoma;
+import es.pe.mdelossgavil.Poblacion.ACromosoma;
 
-public class Uniforme implements Cruce {
+public class Uniforme implements ICruce {
 
-	public void reproduccion(ArrayList<Cromosoma> poblacion) {
+	public void reproduccion(ArrayList<ACromosoma> poblacion) {
 		// TODO Auto-generated method stub
 		
 	}

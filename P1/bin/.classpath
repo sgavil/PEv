@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="src" path=""/>
-	<classpathentry kind="lib" path="D:/ssjGithub/PEv/P1/lib/jmathplot.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
