@@ -80,11 +80,23 @@ public class AlgoritmoGenetico {
 
 		ACromosoma individuoActual;
 
+		/*Primero hacemos un for para tener la suma de las aptitudes y la mejor
+		 * aptitud de todas
+		 */
 		for (int i = 0; i < tam_pob; i++) {
 			individuoActual = poblacion.get(i);
-			
 			suma_aptitud += individuoActual.get_aptitud();
-
+			
+			//Si este individuo es el mejor que hemos encontrado hasta el momento, lo actualizamos
+			if (individuoActual.get_aptitud() > aptitud_mejor) {
+				pos_mejor = i;
+				aptitud_mejor = individuoActual.get_aptitud();
+				el_mejor = individuoActual;
+			}
+		}
+		for (int i = 0; i < tam_pob; i++)
+		{
+			individuoActual = poblacion.get(i);
 			//Calculamos la puntuación del individuo y su puntuación acumulada
 			float puntuacion = individuoActual.get_aptitud() / suma_aptitud;
 			individuoActual.set_puntuacion(puntuacion);
@@ -92,14 +104,6 @@ public class AlgoritmoGenetico {
 			
 			//Actualizamos la puntuación acumulada general
 			punt_acum += puntuacion;
-
-			//Si este individuo es el mejor que hemos encontrado hasta el momento, lo actualizamos
-			if (individuoActual.get_aptitud() > aptitud_mejor) {
-				pos_mejor = i;
-				aptitud_mejor = individuoActual.get_aptitud();
-				el_mejor = individuoActual;
-			}
-
 		}
 
 	}

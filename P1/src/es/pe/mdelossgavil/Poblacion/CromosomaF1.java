@@ -1,8 +1,24 @@
 package es.pe.mdelossgavil.Poblacion;
-
+import java.lang.Object;
+import java.util.ArrayList;
 public class CromosomaF1 extends ACromosoma{
 	
+	//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //    				Variables del problema concreto
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	
+	final float MinX1=-3.0f;
+	final float MaxX1=12.1f;
+	final float MinX2=4.1f;
+	final float MaxX2=5.8f;
+	
+	//Tolerancia provisional
+	float tolerancia=0.001f;
+	
+	/**
+	 * @return el fenotipo del cromosoma dentro 
+	 * del dominio del problema
+	 */
 	public float fenotipo() {
 		return 0.0f;
 	}
@@ -38,9 +54,13 @@ public class CromosomaF1 extends ACromosoma{
 	 */
 	@Override
 	public void inicializa_cromosoma() {
+		/*La longitud del cromosoma sera igual a la longitud de X1 y X2*/
+		longitud=calcularLongitud(tolerancia, MaxX1, MinX1)+calcularLongitud(tolerancia, MaxX2, MinX2);
+		genes=new ArrayList<TGen>();
+		/*Inicializamos el cromosoma*/
 		for(int i=0;i<longitud;i++)
 		{
-			genes.add(new TGen<Boolean>());
+			genes.add(new TGen<Integer>());
 			genes.get(i).setValor(Math.random() < 0.5);
 		}
 	}	

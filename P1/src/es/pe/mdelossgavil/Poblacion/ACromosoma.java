@@ -55,7 +55,7 @@ public abstract class ACromosoma {
 	/**
 	 * @return longitud del cromosoma
 	 */
-	int getLongitud(int precision, float xMax, float xMin)
+	int calcularLongitud(float precision, float xMax, float xMin)
 	{
 		return (int)Math.log(1+((xMax-xMin)/precision));
 	}
