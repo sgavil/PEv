@@ -67,6 +67,7 @@ public class AlgoritmoGenetico {
 		inicializa_poblacion(tipo_cromosoma);
 		
 	}
+	
 
 	/**
 	 * Evalua la población y elige al mejor individuo

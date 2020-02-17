@@ -5,27 +5,60 @@ import java.util.ArrayList;
 public abstract class ACromosoma {
 	
 	//Codificación del cromosoma
-	private ArrayList<TGen> genes;
+	protected ArrayList<TGen> genes;
 	
 	//La imagen de la codificación
-	private float fenotipo;
+	protected float fenotipo;
 	
 	//Valor de fitness del individuo
-	private float aptitud;
+	protected float aptitud;
 	
 	//Cómo de bueno es el individuo respecto a los demás
-	private float puntuacion;
+	protected float puntuacion;
 	
 	//Puntuación acumulada
-	private float punt_acum;
+	protected float punt_acum;
 	
-	private int longitud;
+	protected int longitud;
 	
 	//Devuelve el valor de fitness
 	public abstract float evaluar();
 	
 	//Inicializa el cromosoma
 	public abstract void inicializa_cromosoma();
+	
+	//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //    			Metdos comunes a todos los cromosomas
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	
+	/**
+	 * @return el valor en decimal de la cadena de booleanos para poder calcular el fenotipo
+	 */
+	protected int bin2dec()
+	{
+		/*Creamos el array binario*/
+		int ret[]=new int [genes.size()];
+		
+		for(int i=0;i<genes.size();i++)
+		{
+			ret[i]=(Character)genes.get(i).getValor();
+		}
+		
+		/*Juntamos la cadena en un solo numero*/
+		int result = 0;
+		for(int i = 0; i < ret.length; i++) result += Math.pow(10,i) * ret[ret.length - i - 1];
+		
+		/*y ahora lo pasamos a decimal*/
+		return Integer.parseInt(Integer.toString(result));
+	}
+	
+	/**
+	 * @return longitud del cromosoma
+	 */
+	int getLongitud(int precision, float xMax, float xMin)
+	{
+		return (int)Math.log(1+((xMax-xMin)/precision));
+	}
 
 	//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //    					Getters y Setters 
