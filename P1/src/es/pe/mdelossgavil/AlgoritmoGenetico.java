@@ -119,7 +119,7 @@ public class AlgoritmoGenetico {
 	 * Proceso de cruce
 	 */
 	public void cruce() {
-		metodo_cruce.reproduccion(poblacion);
+		metodo_cruce.reproduccion(poblacion,"F1",0.3f);
 	}
 	
 	/**

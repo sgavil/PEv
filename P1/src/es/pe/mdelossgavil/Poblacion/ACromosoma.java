@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class ACromosoma {
 	
 	//Codificación del cromosoma
-	protected ArrayList<TGen> genes;
+	protected ArrayList<TGen> genes=new ArrayList<TGen>();
 	
 	//La imagen de la codificación
 	protected float fenotipo;

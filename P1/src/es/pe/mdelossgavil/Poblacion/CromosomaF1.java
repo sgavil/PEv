@@ -56,7 +56,6 @@ public class CromosomaF1 extends ACromosoma{
 	public void inicializa_cromosoma() {
 		/*La longitud del cromosoma sera igual a la longitud de X1 y X2*/
 		longitud=calcularLongitud(tolerancia, MaxX1, MinX1)+calcularLongitud(tolerancia, MaxX2, MinX2);
-		genes=new ArrayList<TGen>();
 		/*Inicializamos el cromosoma*/
 		for(int i=0;i<longitud;i++)
 		{
