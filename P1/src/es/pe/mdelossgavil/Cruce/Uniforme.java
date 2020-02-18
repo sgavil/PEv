@@ -11,4 +11,10 @@ public class Uniforme implements ICruce {
 		
 	}
 
+	@Override
+	public void reproduccion(ArrayList<ACromosoma> poblacion, String problema, float probCruce) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

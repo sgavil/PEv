@@ -56,7 +56,7 @@ public class Monopunto implements ICruce {
 			num_sele_cruce--;
 		
 		//Se cruzan los individuos seleccionados en un punto al azar
-		int lCrom=hijo1.get_longitud();
+		int lCrom=poblacion.get(0).get_longitud();
 		Random r=new Random();
 		punto_cruce=r.nextInt(lCrom);
 		
