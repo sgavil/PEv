@@ -39,12 +39,12 @@ public class Monopunto implements ICruce {
 		
 		for(int i=0;i<tam_pob;i++)
 		{
-			//Cremoa una prob aleatoria entre [0,1)
+			//Creamos una prob aleatoria entre [0,1)
 			prob=(float) Math.random();
 			
 			//En caso de que sea menos a la prob de Cruce
 			//se escoge a ese invididuo para cruzarse
-			if(prob>probCruce)
+			if(prob<probCruce)
 			{
 				seleccionCruce[num_sele_cruce]=i;
 				num_sele_cruce++;
@@ -55,7 +55,7 @@ public class Monopunto implements ICruce {
 		if(num_sele_cruce % 2==1)
 			num_sele_cruce--;
 		
-		//Se cruzan los individios seleccinados en un punto al azar
+		//Se cruzan los individuos seleccionados en un punto al azar
 		int lCrom=hijo1.get_longitud();
 		Random r=new Random();
 		punto_cruce=r.nextInt(lCrom);

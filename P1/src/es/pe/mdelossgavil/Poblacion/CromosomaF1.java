@@ -59,7 +59,7 @@ public class CromosomaF1 extends ACromosoma{
 		/*Inicializamos el cromosoma*/
 		for(int i=0;i<longitud;i++)
 		{
-			genes.add(new TGen<Integer>());
+			genes.add(new TGen<Boolean>());
 			genes.get(i).setValor(Math.random() < 0.5);
 		}
 	}	

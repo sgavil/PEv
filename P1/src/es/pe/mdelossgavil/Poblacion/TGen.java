@@ -12,5 +12,7 @@ public class TGen<T> {
 	public void setValor(T valor) {
 		this.valor = valor;
 	}
+	
+	 
 
 }

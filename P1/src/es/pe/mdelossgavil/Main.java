@@ -10,7 +10,7 @@ import es.pe.mdelossgavil.Seleccion.*;
 public class Main {
 	
 	public static final int TAM_POB = 100;
-	public static final int N_GENERACIONES = 100;
+	public static final int N_GENERACIONES = 1;
 	
 	
 	public static void main(String[] args) {
@@ -19,7 +19,7 @@ public class Main {
 		
 		Ruleta ruleta = new Ruleta();
 		Monopunto cruce = new Monopunto();
-		Mutacion mutacion = new Mutacion();
+		MutacionBoolean mutacion = new MutacionBoolean();
 		
 		a_genetico.inicializa(ruleta, cruce,mutacion,"F1");
 		a_genetico.evaluar_poblacion();

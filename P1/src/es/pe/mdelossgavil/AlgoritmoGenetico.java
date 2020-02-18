@@ -33,7 +33,7 @@ public class AlgoritmoGenetico {
 
 	private int pos_mejor;
 	private float prob_cruce ;
-	private float prob_mut;
+	private float prob_mut = 0.6f;
 	private float tolerancia;
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -126,7 +126,7 @@ public class AlgoritmoGenetico {
 	 * Proceso de mutación
 	 */
 	public void mutacion() {
-		metodo_mutacion.mutar(poblacion);
+		metodo_mutacion.mutar(poblacion, prob_mut);
 	}
 	
 	

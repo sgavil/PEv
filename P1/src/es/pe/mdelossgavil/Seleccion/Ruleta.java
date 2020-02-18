@@ -33,9 +33,9 @@ public class Ruleta implements ISeleccion{
 			//Recorremos la poblacion buscando el elemento al que corresponde la eleccion de la ruleta
 			int k = 0;
 			while(rnd > poblacion.get(i).get_punt_acum() && 
-					k < poblacion.size()) 
+					k < poblacion.size()-1) 
 				k++;
-				
+			
 			//Al llegar al elemento lo guardamos en nuestra selección de población
 			nueva_pob.add(poblacion.get(k));
 			
