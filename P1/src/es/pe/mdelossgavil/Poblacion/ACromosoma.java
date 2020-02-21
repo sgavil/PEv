@@ -41,7 +41,7 @@ public abstract class ACromosoma {
 		
 		for(int i=0;i<genes.size();i++)
 		{
-			ret[i]=(Character)genes.get(i).getValor();
+			//ret[i]=(Character)genes.get(i).getValor();
 		}
 		
 		/*Juntamos la cadena en un solo numero*/

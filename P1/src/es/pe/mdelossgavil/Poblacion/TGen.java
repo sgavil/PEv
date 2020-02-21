@@ -3,16 +3,19 @@ package es.pe.mdelossgavil.Poblacion;
 import java.util.ArrayList;
 public class TGen<T> {
 	
-	private T valor;
+	private ArrayList<T> genotipo = new ArrayList<T>();
 
-	public T getValor() {
-		return valor;
+	public ArrayList<T> getGenotipo() {
+		return genotipo;
 	}
 
-	public void setValor(T valor) {
-		this.valor = valor;
+	public void setGenotipo(ArrayList<T> genotipo) {
+		this.genotipo = genotipo;
 	}
 	
+	public void setAlelo(T valor, int posicion) {
+		this.genotipo.set(posicion, valor);
+	}
 	 
 
 }
