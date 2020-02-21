@@ -54,6 +54,7 @@ public class CromosomaF1 extends ACromosoma{
 	 */
 	@Override
 	public void inicializa_cromosoma() {
+		setCodificacion();
 		/*La longitud del cromosoma sera igual a la longitud de X1 y X2*/
 		int longitudX1 = calcularLongitud(tolerancia, MaxX1, MinX1);
 		int longitudX2 =calcularLongitud(tolerancia, MaxX2, MinX2);
@@ -67,9 +68,9 @@ public class CromosomaF1 extends ACromosoma{
 		for(int i=0;i<longitud;i++)
 		{	
 			if(i < longitudX1)
-				genes.get(0).getGenotipo().add(Math.random() < 0.5);
+				((TGen<Boolean>) genes.get(0)).getGenotipo().add(Math.random() < 0.5);
 			else 
-				genes.get(1).getGenotipo().add(Math.random() < 0.5);
+				((TGen<Boolean>) genes.get(1)).getGenotipo().add(Math.random() < 0.5);
 		}
 	}	
 

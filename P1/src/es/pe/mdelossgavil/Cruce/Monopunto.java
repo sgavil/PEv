@@ -78,24 +78,36 @@ public class Monopunto implements ICruce {
 	 */
 	private void Cruce(ACromosoma padre1,ACromosoma padre2,ACromosoma hijo1,ACromosoma hijo2,int puntoCruce)
 	{
-		
 		// primera parte del intercambio: 1 a 1 y 2 a 2
 		for(int i=0;i<puntoCruce;i++)
 		{
-			hijo1.get_genes().add(padre1.get_genes().get(i));
-			hijo2.get_genes().add(padre2.get_genes().get(i));
+			hijo1.getCodificacion().add(padre1.getCodificacion().get(i));
+			hijo2.getCodificacion().add(padre2.getCodificacion().get(i));
 		}
 		
 		// segunda parte: 1 a 2 y 2 a 1
 		for(int i=puntoCruce;i<hijo1.get_longitud();i++)
 		{
-			hijo1.get_genes().add(padre2.get_genes().get(i));
-			hijo2.get_genes().add(padre1.get_genes().get(i));
+			hijo1.getCodificacion().add(padre2.getCodificacion().get(i));
+			hijo2.getCodificacion().add(padre1.getCodificacion().get(i));
 		}
 		
+		/*Actualizamos los genes*/
+		int comienzo=0;
+		for(int i=0;i<hijo1.get_genes().size();i++)
+		{
+			/*Cogemos el tamanio del gen*/
+			TGen gen=(TGen) hijo1.get_genes().get(i);
+			int tam=gen.getGenotipo().size();
+			/*Trasladamos el Array*/
+			System.arraycopy(hijo1.getCodificacion(), comienzo, hijo1.get_genes().get(i), 0, tam);
+			System.arraycopy(hijo2.getCodificacion(), comienzo, hijo2.get_genes().get(i), 0, tam);
+			comienzo+=tam;
+			
+		}
 		//Una vez hecho el cruce, se evalua
 		hijo1.set_aptitud(hijo1.evaluar());
-		hijo2.set_aptitud(hijo2.evaluar());	
+		hijo2.set_aptitud(hijo2.evaluar());
 	}
 
 }

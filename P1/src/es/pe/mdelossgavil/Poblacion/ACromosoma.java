@@ -2,7 +2,7 @@ package es.pe.mdelossgavil.Poblacion;
 
 import java.util.ArrayList;
 
-public abstract class ACromosoma {
+public abstract class ACromosoma <T> {
 	
 	//Codificación del cromosoma
 	protected ArrayList<TGen> genes=new ArrayList<TGen>();
@@ -21,6 +21,22 @@ public abstract class ACromosoma {
 	
 	protected int longitud;
 	
+	ArrayList<T> codificacion=new ArrayList<T>();
+	
+	protected void setCodificacion()
+	{
+		for(int i=0;i<genes.size();i++)
+		{
+			for(int j=0;j<genes.get(i).getGenotipo().size();j++)
+			{
+				codificacion.add((T) genes.get(i).getGenotipo().get(j));
+			}
+		}
+	}
+	public ArrayList<T> getCodificacion() {
+		return codificacion;
+	}
+
 	//Devuelve el valor de fitness
 	public abstract float evaluar();
 	
