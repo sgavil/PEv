@@ -7,9 +7,6 @@ public abstract class ACromosoma <T> {
 	//Codificación del cromosoma
 	protected ArrayList<TGen> genes=new ArrayList<TGen>();
 	
-	//La imagen de la codificación
-	protected float fenotipo;
-	
 	//Valor de fitness del individuo
 	protected float aptitud;
 	
@@ -20,6 +17,8 @@ public abstract class ACromosoma <T> {
 	protected float punt_acum;
 	
 	protected int longitud;
+	
+	protected int bin2dec(int comienzo,int lgen) {return 0;};
 	
 	ArrayList<T> codificacion=new ArrayList<T>();
 	
@@ -47,26 +46,7 @@ public abstract class ACromosoma <T> {
     //    			Metdos comunes a todos los cromosomas
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	
-	/**
-	 * @return el valor en decimal de la cadena de booleanos para poder calcular el fenotipo
-	 */
-	protected int bin2dec()
-	{
-		/*Creamos el array binario*/
-		int ret[]=new int [genes.size()];
-		
-		for(int i=0;i<genes.size();i++)
-		{
-			//ret[i]=(Character)genes.get(i).getValor();
-		}
-		
-		/*Juntamos la cadena en un solo numero*/
-		int result = 0;
-		for(int i = 0; i < ret.length; i++) result += Math.pow(10,i) * ret[ret.length - i - 1];
-		
-		/*y ahora lo pasamos a decimal*/
-		return Integer.parseInt(Integer.toString(result));
-	}
+	
 	
 	/**
 	 * @return longitud del cromosoma
@@ -94,19 +74,6 @@ public abstract class ACromosoma <T> {
 		this.genes = genes;
 	}
 
-	/**
-	 * @return the fenotipo
-	 */
-	public float get_fenotipo() {
-		return fenotipo;
-	}
-
-	/**
-	 * @param fenotipo the fenotipo to set
-	 */
-	public void set_fenotipo(float fenotipo) {
-		this.fenotipo = fenotipo;
-	}
 
 	/**
 	 * @return the aptitud

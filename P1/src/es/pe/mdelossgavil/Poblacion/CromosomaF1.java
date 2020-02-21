@@ -1,26 +1,33 @@
 package es.pe.mdelossgavil.Poblacion;
 import java.lang.Object;
 import java.util.ArrayList;
+
 public class CromosomaF1 extends ACromosoma{
 	
 	//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //    				Variables del problema concreto
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	
-	final float MinX1=-3.0f;
-	final float MaxX1=12.1f;
-	final float MinX2=4.1f;
-	final float MaxX2=5.8f;
+	static final float MinX1=-3.0f;
+	static final float MaxX1=12.1f;
+	static final float MinX2=4.1f;
+	static final float MaxX2=5.8f;
 	
 	//Tolerancia provisional
 	float tolerancia=0.001f;
 	
+	//La imagen de la codificación
+
+	
 	/**
-	 * @return el fenotipo del cromosoma dentro 
+	 * @return el fenotipo x1 del cromosoma dentro 
 	 * del dominio del problema
 	 */
-	public float fenotipo() {
-		return 0.0f;
+	public float fenotipo_x1() {
+		return (float) (MinX1 + bin2dec() * (MaxX1 - MinX1)/(Math.pow(2, longitud)-1));
+	}
+	public float fenotipo_x2() {
+		return (float) (MinX2 + bin2dec() * (MaxX2 - MinX2)/(Math.pow(2, longitud)-1)); 
 	}
 
 	
@@ -42,11 +49,38 @@ public class CromosomaF1 extends ACromosoma{
 	@Override
 	public float evaluar() {
 		float x1,x2;
-		x1 = fenotipo();
-		x2 = fenotipo();
+		x1 = fenotipo_x1();
+		x2 = fenotipo_x2();
 		return funcion(x1,x2);
 	}
 
+	
+	/**
+	 * @return el valor en decimal de la cadena de booleanos para poder calcular el fenotipo
+	 */
+	@Override
+	protected int bin2dec(int comienzo,int lgen)
+	{
+		/*Creamos el array binario*/
+		
+		int ret[]=new int [lgen];
+		
+		for(int i=0;i<lgen;i++)
+		{
+			if((Boolean)getCodificacion().get(i))
+				ret[i]=1;
+			else ret[i] = 0;
+				
+		}
+		
+		/*Juntamos la cadena en un solo numero*/
+		int result = 0;
+		for(int i = 0; i < ret.length; i++) result += Math.pow(10,i) * ret[ret.length - i - 1];
+		
+		/*y ahora lo pasamos a decimal*/
+		return Integer.parseInt(Integer.toString(result));
+	}
+	
 	/**
 	 *Inicializa todos los genes con valores aleatorios
 	 *Al ser el un problema donde trabajamos con cadenas binarias,
@@ -54,7 +88,7 @@ public class CromosomaF1 extends ACromosoma{
 	 */
 	@Override
 	public void inicializa_cromosoma() {
-		setCodificacion();
+		
 		/*La longitud del cromosoma sera igual a la longitud de X1 y X2*/
 		int longitudX1 = calcularLongitud(tolerancia, MaxX1, MinX1);
 		int longitudX2 =calcularLongitud(tolerancia, MaxX2, MinX2);
@@ -72,6 +106,8 @@ public class CromosomaF1 extends ACromosoma{
 			else 
 				((TGen<Boolean>) genes.get(1)).getGenotipo().add(Math.random() < 0.5);
 		}
+		
+		setCodificacion();
 	}	
 
 }

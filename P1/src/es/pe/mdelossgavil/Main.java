@@ -4,6 +4,7 @@ import javax.swing.*;
 //import org.math.plot.*;
 
 import es.pe.mdelossgavil.Cruce.*;
+import es.pe.mdelossgavil.Graficas.Grafica;
 import es.pe.mdelossgavil.Mutacion.*;
 import es.pe.mdelossgavil.Seleccion.*;
 
@@ -32,6 +33,15 @@ public class Main {
 			a_genetico.evaluar_poblacion();
 			i++;
 		}
+		/*double[] x = { 1, 2, 3, 4, 5, 6 };
+		double[] y = { 45, 89, 6, 32, 63, 12 };
+		Grafica grafica = new Grafica(600,600);
+		grafica.inicializa_grafica();
+		grafica.agregar_linea("lineaUno", x, y);
+		//grafica.agregar_linea("linea2", y, x);
+		grafica.pinta_grafica();*/
+		
+		
 		
 	}
 }
