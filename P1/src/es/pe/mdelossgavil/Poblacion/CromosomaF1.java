@@ -24,10 +24,11 @@ public class CromosomaF1 extends ACromosoma{
 	 * del dominio del problema
 	 */
 	public float fenotipo_x1() {
-		return (float) (MinX1 + bin2dec() * (MaxX1 - MinX1)/(Math.pow(2, longitud)-1));
+		return (float) (MinX1 + bin2dec(0,((TGen<Boolean>) genes.get(0)).getGenotipo().size()) * (MaxX1 - MinX1)/(Math.pow(2, longitud)-1));
 	}
 	public float fenotipo_x2() {
-		return (float) (MinX2 + bin2dec() * (MaxX2 - MinX2)/(Math.pow(2, longitud)-1)); 
+		return (float) (MinX2 + bin2dec(((TGen<Boolean>) genes.get(0)).getGenotipo().size(),((TGen<Boolean>) genes.get(1)).getGenotipo().size()) 
+		* (MaxX2 - MinX2)/(Math.pow(2, longitud)-1)); 
 	}
 
 	
@@ -38,9 +39,8 @@ public class CromosomaF1 extends ACromosoma{
 	 */
 	public float funcion(float x1,float x2) 
 	{
-		return (float) (21.5f + x1 * Math.sin(4*Math.PI*x1)+ x2 * Math.sin(20 * Math.PI*x2));
+		return (float) (21.5f + (x1 * Math.sin(4*Math.PI*x1))+ (x2 * Math.sin(20 * Math.PI*x2)));
 	}
-	
 	
 	/**
 	 * devuelve el fitness del cromosoma que se usara posteriormente 
@@ -67,7 +67,7 @@ public class CromosomaF1 extends ACromosoma{
 		
 		for(int i=0;i<lgen;i++)
 		{
-			if((Boolean)getCodificacion().get(i))
+			if((Boolean)getCodificacion().get(i+comienzo))
 				ret[i]=1;
 			else ret[i] = 0;
 				
@@ -77,8 +77,7 @@ public class CromosomaF1 extends ACromosoma{
 		int result = 0;
 		for(int i = 0; i < ret.length; i++) result += Math.pow(10,i) * ret[ret.length - i - 1];
 		
-		/*y ahora lo pasamos a decimal*/
-		return Integer.parseInt(Integer.toString(result));
+		return Integer.parseInt(Integer.toString(result),2);
 	}
 	
 	/**

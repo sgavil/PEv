@@ -34,7 +34,9 @@ public class Monopunto implements ICruce {
 		if(problema=="F1")
 		{
 			hijo1=new CromosomaF1();
+			hijo1.inicializa_cromosoma();
 			hijo2=new CromosomaF1();
+			hijo2.inicializa_cromosoma();
 		}
 		
 		for(int i=0;i<tam_pob;i++)
@@ -63,8 +65,10 @@ public class Monopunto implements ICruce {
 		for(int i=0;i<num_sele_cruce;i+=2)
 		{
 			ACromosoma padre1=poblacion.get(seleccionCruce[i]);
-			ACromosoma padre2=poblacion.get(seleccionCruce[i]);
+			ACromosoma padre2=poblacion.get(seleccionCruce[i+1]);
 			Cruce(padre1, padre2, hijo1, hijo2, punto_cruce);
+			poblacion.set(seleccionCruce[i], hijo1);
+			poblacion.set(seleccionCruce[i+1], hijo2);
 		}
 				
 	}
@@ -81,15 +85,15 @@ public class Monopunto implements ICruce {
 		// primera parte del intercambio: 1 a 1 y 2 a 2
 		for(int i=0;i<puntoCruce;i++)
 		{
-			hijo1.getCodificacion().add(padre1.getCodificacion().get(i));
-			hijo2.getCodificacion().add(padre2.getCodificacion().get(i));
+			hijo1.getCodificacion().set(i, padre1.getCodificacion().get(i));
+			hijo2.getCodificacion().set(i, padre2.getCodificacion().get(i));
 		}
 		
 		// segunda parte: 1 a 2 y 2 a 1
 		for(int i=puntoCruce;i<hijo1.get_longitud();i++)
 		{
-			hijo1.getCodificacion().add(padre2.getCodificacion().get(i));
-			hijo2.getCodificacion().add(padre1.getCodificacion().get(i));
+			hijo1.getCodificacion().set(i, padre2.getCodificacion().get(i));
+			hijo2.getCodificacion().set(i, padre1.getCodificacion().get(i));
 		}
 		
 		/*Actualizamos los genes*/
@@ -100,14 +104,22 @@ public class Monopunto implements ICruce {
 			TGen gen=(TGen) hijo1.get_genes().get(i);
 			int tam=gen.getGenotipo().size();
 			/*Trasladamos el Array*/
-			System.arraycopy(hijo1.getCodificacion(), comienzo, hijo1.get_genes().get(i), 0, tam);
-			System.arraycopy(hijo2.getCodificacion(), comienzo, hijo2.get_genes().get(i), 0, tam);
+			actualizarGen(hijo1, tam, comienzo, i);
+			actualizarGen(hijo2, tam, comienzo, i);
 			comienzo+=tam;
 			
 		}
 		//Una vez hecho el cruce, se evalua
 		hijo1.set_aptitud(hijo1.evaluar());
 		hijo2.set_aptitud(hijo2.evaluar());
+	}
+	
+	private void actualizarGen(ACromosoma cromosoma,int tam, int comienzo, int gen)
+	{
+		for(int i=0;i<tam;i++)
+		{
+			((TGen) cromosoma.get_genes().get(gen)).getGenotipo().set(i, cromosoma.getCodificacion().get(i+comienzo));
+		}
 	}
 
 }

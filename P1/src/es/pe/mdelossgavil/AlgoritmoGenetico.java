@@ -31,6 +31,15 @@ public class AlgoritmoGenetico {
 	// Mejor individuo
 	private ACromosoma el_mejor;
 
+	public ACromosoma getEl_mejor() {
+		return el_mejor;
+	}
+
+
+	public void setEl_mejor(ACromosoma el_mejor) {
+		this.el_mejor = el_mejor;
+	}
+
 	private int pos_mejor;
 	private float prob_cruce ;
 	private float prob_mut = 0.6f;

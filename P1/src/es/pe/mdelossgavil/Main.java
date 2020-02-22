@@ -11,7 +11,7 @@ import es.pe.mdelossgavil.Seleccion.*;
 public class Main {
 	
 	public static final int TAM_POB = 100;
-	public static final int N_GENERACIONES = 1;
+	public static final int N_GENERACIONES = 1000;
 	
 	
 	public static void main(String[] args) {
@@ -33,6 +33,7 @@ public class Main {
 			a_genetico.evaluar_poblacion();
 			i++;
 		}
+		float cosa=a_genetico.getEl_mejor().evaluar();
 		/*double[] x = { 1, 2, 3, 4, 5, 6 };
 		double[] y = { 45, 89, 6, 32, 63, 12 };
 		Grafica grafica = new Grafica(600,600);
@@ -40,8 +41,6 @@ public class Main {
 		grafica.agregar_linea("lineaUno", x, y);
 		//grafica.agregar_linea("linea2", y, x);
 		grafica.pinta_grafica();*/
-		
-		
 		
 	}
 }
