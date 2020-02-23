@@ -17,7 +17,8 @@ public class Ruleta implements ISeleccion {
 	}
 
 	@Override
-	public void hacer_seleccion(ArrayList<ACromosoma> poblacion) {
+	public ArrayList<ACromosoma> hacer_seleccion(ArrayList<ACromosoma> poblacion) 
+	{
 		
 		// Tomamos el número de elementos que se van a seleccionar
 		int elementos_seleccion = poblacion.size();
@@ -33,7 +34,7 @@ public class Ruleta implements ISeleccion {
 			// Recorremos la poblacion buscando el elemento al que corresponde la eleccion
 			// de la ruleta
 			int k = 0;
-			while (rnd > poblacion.get(i).get_punt_acum() && k < poblacion.size() - 1)
+			while (rnd > poblacion.get(k).get_punt_acum() && k < poblacion.size() - 1)
 				k++;
 
 			// Al llegar al elemento lo guardamos en nuestra selección de población
@@ -41,10 +42,9 @@ public class Ruleta implements ISeleccion {
 
 		}
 
+		return nueva_pob;
+
 		
-
-		poblacion = nueva_pob;
-
 	}
 
 }

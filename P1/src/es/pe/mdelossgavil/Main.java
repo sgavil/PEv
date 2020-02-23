@@ -11,7 +11,7 @@ import es.pe.mdelossgavil.Seleccion.*;
 public class Main {
 
 	public static final int TAM_POB = 100;
-	public static final int N_GENERACIONES = 100;
+	public static final int N_GENERACIONES = 5;
 
 	public static void main(String[] args) {
 
@@ -22,7 +22,7 @@ public class Main {
 		Monopunto cruce = new Monopunto();
 		MutacionBoolean mutacion = new MutacionBoolean();
 
-		a_genetico.inicializa(ruleta, cruce, mutacion, "F2");
+		a_genetico.inicializa(ruleta, cruce, mutacion, "F1");
 		a_genetico.evaluar_poblacion();
 
 		int i = 0;
@@ -33,7 +33,7 @@ public class Main {
 			a_genetico.cruce();
 			a_genetico.mutacion();
 			a_genetico.evaluar_poblacion();
-			y[i] = a_genetico.getEl_mejor().get_aptitud();
+			y[i] = a_genetico.get_aptitud_media();
 
 			i++;
 		}

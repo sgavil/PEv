@@ -85,8 +85,8 @@ public abstract class ACromosoma <T> {
 	/**
 	 * @param aptitud the aptitud to set
 	 */
-	public void set_aptitud(float aptitud) {
-		this.aptitud = aptitud;
+	public void set_aptitud(float aptitud_) {
+		aptitud = aptitud_;
 	}
 
 	/**
@@ -99,22 +99,22 @@ public abstract class ACromosoma <T> {
 	/**
 	 * @param puntuacion the puntuacion to set
 	 */
-	public void set_puntuacion(float puntuacion) {
-		this.puntuacion = puntuacion;
+	public void set_puntuacion(float puntuacion_) {
+		puntuacion = puntuacion_;
 	}
 
 	/**
 	 * @return the punt_acum
 	 */
 	public float get_punt_acum() {
-		return punt_acum;
+		return this.punt_acum;
 	}
 
 	/**
 	 * @param punt_acum the punt_acum to set
 	 */
-	public void set_punt_acum(float punt_acum) {
-		this.punt_acum = punt_acum;
+	public void set_punt_acum(float punt_acum_) {
+		punt_acum = punt_acum_;
 	}
 
 	/**

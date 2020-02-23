@@ -87,66 +87,66 @@ public class AlgoritmoGenetico {
 	/**
 	 * Evalua la población y elige al mejor individuo
 	 */
-	public void evaluar_poblacion() {
+	public void evaluar_poblacion() 
+	{
 		float punt_acum = 0;
 		float aptitud_mejor;
 
 		float suma_aptitud = 0;
 
 		ACromosoma individuoActual;
-
-		if (maximizar)
-			aptitud_mejor = Float.MIN_VALUE;
-
-		else
-			aptitud_mejor = Float.MAX_VALUE;
+		
+		aptitud_mejor = Float.MIN_VALUE;
 
 		/*
 		 * Primero hacemos un for para tener la suma de las aptitudes y la mejor aptitud
 		 * de todas
 		 */
-		for (int i = 0; i < tam_pob; i++) {
+		for (int i = 0; i < tam_pob; i++) 
+		{
 			individuoActual = poblacion.get(i);
 			suma_aptitud += individuoActual.get_aptitud();
 
-			if (maximizar) {
-				// Si este individuo es el mejor que hemos encontrado hasta el momento, lo
-				// actualizamos
-				if (individuoActual.get_aptitud() > aptitud_mejor) {
-					pos_mejor = i;
-					aptitud_mejor = individuoActual.get_aptitud();
-					el_mejor = individuoActual;
-				}
-			} else {
-				if (individuoActual.get_aptitud() < aptitud_mejor) {
-					pos_mejor = i;
-					aptitud_mejor = individuoActual.get_aptitud();
-					el_mejor = individuoActual;
-				}
+			if (individuoActual.get_aptitud() > aptitud_mejor) 
+			{
+				pos_mejor = i;
+				aptitud_mejor = individuoActual.get_aptitud();
+				el_mejor = individuoActual;
 			}
+			
 		}
 
-		for (int i = 0; i < tam_pob; i++) {
-			individuoActual = poblacion.get(i);
+		System.out.println("ENTRANDOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+		for (int j = 0; j < tam_pob; j++) 
+		{
 			// Calculamos la puntuación del individuo y su puntuación acumulada
-			float puntuacion = individuoActual.get_aptitud() / suma_aptitud;
-			individuoActual.set_puntuacion(puntuacion);
-			individuoActual.set_punt_acum(puntuacion + punt_acum);
+			float puntuacion = poblacion.get(j).get_aptitud() / suma_aptitud;
+
+			poblacion.get(j).set_puntuacion(puntuacion);
+			poblacion.get(j).set_punt_acum(puntuacion + punt_acum);
 
 			// Actualizamos la puntuación acumulada general
 			punt_acum += puntuacion;
+			System.out.println(poblacion.get(j).get_punt_acum());
+			
 		}
-
-		if (maximizar) {
-			if (el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
-				mejor_abs = el_mejor;
-			}
-		} else {
-			if (el_mejor.get_aptitud() < mejor_abs.get_aptitud()) {
-				mejor_abs = el_mejor;
-			}
+		System.out.println("\n");
+		
+		
+		System.out.println("SALIENDOOOOOOOOOOOOOOOOOOOOOOOOO");
+		for (int i = 0; i < tam_pob; i++) 
+		{
+			
+			System.out.println(poblacion.get(i).get_punt_acum());
+			
 		}
-
+		System.out.println("\n");
+		
+		//System.out.println("\n");
+		if (el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
+			mejor_abs = el_mejor;
+		}
+		
 	}
 
 	public float get_aptitud_media() {
@@ -161,7 +161,7 @@ public class AlgoritmoGenetico {
 	 * Proceso de selección
 	 */
 	public void seleccion() {
-		metodo_seleccion.hacer_seleccion(poblacion);
+		poblacion = metodo_seleccion.hacer_seleccion(poblacion);
 	}
 
 	/**
