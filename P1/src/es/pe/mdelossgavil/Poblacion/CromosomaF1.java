@@ -2,6 +2,8 @@ package es.pe.mdelossgavil.Poblacion;
 import java.lang.Object;
 import java.util.ArrayList;
 
+import es.pe.mdelossgavil.AlgoritmoGenetico;
+
 public class CromosomaF1 extends ACromosoma{
 	
 	//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -12,10 +14,7 @@ public class CromosomaF1 extends ACromosoma{
 	static final float MaxX1=12.1f;
 	static final float MinX2=4.1f;
 	static final float MaxX2=5.8f;
-	
-	//Tolerancia provisional
-	float tolerancia=0.001f;
-	
+		
 	//La imagen de la codificación
 
 	
@@ -24,11 +23,16 @@ public class CromosomaF1 extends ACromosoma{
 	 * del dominio del problema
 	 */
 	public float fenotipo_x1() {
-		return (float) (MinX1 + bin2dec(0,((TGen<Boolean>) genes.get(0)).getGenotipo().size()) * (MaxX1 - MinX1)/(Math.pow(2, longitud)-1));
+		int genSize = ((TGen<Boolean>) genes.get(0)).getGenotipo().size();
+		return (float) 
+		(MinX1 + bin2dec(0,(genSize)) 
+		* ((MaxX1 - MinX1)/((Math.pow(2, genSize)-1))));
 	}
 	public float fenotipo_x2() {
-		return (float) (MinX2 + bin2dec(((TGen<Boolean>) genes.get(0)).getGenotipo().size(),((TGen<Boolean>) genes.get(1)).getGenotipo().size()) 
-		* (MaxX2 - MinX2)/(Math.pow(2, longitud)-1)); 
+		int genSize = ((TGen<Boolean>) genes.get(1)).getGenotipo().size();
+		return (float) 
+		(MinX2 + bin2dec(((TGen<Boolean>) genes.get(0)).getGenotipo().size(),((TGen<Boolean>) genes.get(1)).getGenotipo().size()) 
+		* ((MaxX2 - MinX2)/((Math.pow(2, genSize)-1)))); 
 	}
 
 	
@@ -77,6 +81,7 @@ public class CromosomaF1 extends ACromosoma{
 		int result = 0;
 		for(int i = 0; i < ret.length; i++) result += Math.pow(10,i) * ret[ret.length - i - 1];
 		
+
 		return Integer.parseInt(Integer.toString(result),2);
 	}
 	
@@ -89,8 +94,8 @@ public class CromosomaF1 extends ACromosoma{
 	public void inicializa_cromosoma() {
 		
 		/*La longitud del cromosoma sera igual a la longitud de X1 y X2*/
-		int longitudX1 = calcularLongitud(tolerancia, MaxX1, MinX1);
-		int longitudX2 =calcularLongitud(tolerancia, MaxX2, MinX2);
+		int longitudX1 = calcularLongitud(AlgoritmoGenetico.tolerancia, MaxX1, MinX1);
+		int longitudX2 =calcularLongitud(AlgoritmoGenetico.tolerancia, MaxX2, MinX2);
 		
 		longitud = longitudX1 + longitudX2;
 		

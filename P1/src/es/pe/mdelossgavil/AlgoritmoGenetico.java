@@ -30,6 +30,8 @@ public class AlgoritmoGenetico {
 
 	// Mejor individuo
 	private ACromosoma el_mejor;
+	
+	public ACromosoma mejor_abs;
 
 	public ACromosoma getEl_mejor() {
 		return el_mejor;
@@ -41,9 +43,9 @@ public class AlgoritmoGenetico {
 	}
 
 	private int pos_mejor;
-	private float prob_cruce ;
-	private float prob_mut = 0.6f;
-	private float tolerancia;
+	private float prob_cruce= 0.6f;
+	private float prob_mut = 0.05f;
+	public static float tolerancia = 0.001f;
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Selección, Cruce y Mutación
@@ -103,6 +105,7 @@ public class AlgoritmoGenetico {
 				el_mejor = individuoActual;
 			}
 		}
+		
 		for (int i = 0; i < tam_pob; i++)
 		{
 			individuoActual = poblacion.get(i);
@@ -114,7 +117,19 @@ public class AlgoritmoGenetico {
 			//Actualizamos la puntuación acumulada general
 			punt_acum += puntuacion;
 		}
+		
+		if(el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
+			mejor_abs = el_mejor;
+		}
 
+	}
+	
+	public float get_aptitud_media() {
+		int total = 0;
+		for (int i = 0; i < poblacion.size(); i++) {
+			total+=poblacion.get(i).get_aptitud();
+		}
+		return total / poblacion.size();
 	}
 	
 	/**
@@ -128,7 +143,7 @@ public class AlgoritmoGenetico {
 	 * Proceso de cruce
 	 */
 	public void cruce() {
-		metodo_cruce.reproduccion(poblacion,"F1",0.3f);
+		metodo_cruce.reproduccion(poblacion,"F1",prob_cruce);
 	}
 	
 	/**
@@ -148,6 +163,8 @@ public class AlgoritmoGenetico {
 		{
 			TPoblacion<CromosomaF1> pob = new TPoblacion<CromosomaF1>();
 			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF1.class);
+			mejor_abs = new CromosomaF1();
+			mejor_abs.set_aptitud(0);
 			return;
 		}
 		else {

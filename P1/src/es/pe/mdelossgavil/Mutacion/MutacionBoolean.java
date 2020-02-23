@@ -28,8 +28,7 @@ public class MutacionBoolean implements IMutacion{
 			ACromosoma individuo = poblacion.get(i);
 			ArrayList<TGen> genes = individuo.get_genes();
 			
-			System.out.println("Individuo: " + i + " Aptitud: "+ individuo.get_aptitud());
-			
+		
 			//Recorremos todos los bits de cada cromosoma
 			for (int j = 0; j < genes.size(); j++) 
 			{
@@ -52,7 +51,7 @@ public class MutacionBoolean implements IMutacion{
 			//Si se ha producido una mutación tenemos que volver a calcular la aptitud del individuo
 			if(mutado) {
 				individuo.set_aptitud(individuo.evaluar());
-				System.out.println("Individuo MUTADO: " + i + " Aptitud" + individuo.get_aptitud());
+			
 
 			}
 		}
