@@ -3,8 +3,7 @@ package es.pe.mdelossgavil.Cruce;
 import java.util.ArrayList;
 import java.util.Random;
 
-import es.pe.mdelossgavil.Poblacion.ACromosoma;
-import es.pe.mdelossgavil.Poblacion.CromosomaF1;
+import es.pe.mdelossgavil.Poblacion.*;
 import es.pe.mdelossgavil.Poblacion.TGen;
 
 public class Monopunto implements ICruce {
@@ -33,10 +32,16 @@ public class Monopunto implements ICruce {
 		/* Cogemos el tipo de Cromosoma del problema */
 		if (problema == "F1") {
 			hijo1 = new CromosomaF1();
-			hijo1.inicializa_cromosoma();
 			hijo2 = new CromosomaF1();
-			hijo2.inicializa_cromosoma();
 		}
+		else if(problema == "F2") {
+			hijo1 = new CromosomaF2();
+			hijo2 = new CromosomaF2();
+		}
+		
+		hijo1.inicializa_cromosoma();
+		hijo2.inicializa_cromosoma();
+
 
 		for (int i = 0; i < tam_pob; i++) {
 			// Creamos una prob aleatoria entre [0,1)
@@ -80,11 +85,7 @@ public class Monopunto implements ICruce {
 	 */
 	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2, int puntoCruce) {
 		
-		
 	
-		
-		
-		
 		// primera parte del intercambio: 1 a 1 y 2 a 2
 		for (int i = 0; i < puntoCruce; i++) {
 			hijo1.getCodificacion().set(i, padre1.getCodificacion().get(i));
