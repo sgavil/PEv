@@ -15,6 +15,7 @@ public class CromosomaF1 extends ACromosoma{
 	static final float MinX2=4.1f;
 	static final float MaxX2=5.8f;
 		
+	public float x1test,x2test;
 	//La imagen de la codificación
 
 	
@@ -25,7 +26,7 @@ public class CromosomaF1 extends ACromosoma{
 		this.punt_acum = aCromosoma.punt_acum;
 		this.codificacion = aCromosoma.codificacion;
 		this.longitud = aCromosoma.longitud;
-		
+		this.aptitud = aCromosoma.aptitud;
 		this.genes = aCromosoma.genes;
 	}
 	public CromosomaF1() {
@@ -38,15 +39,19 @@ public class CromosomaF1 extends ACromosoma{
 	 */
 	public float fenotipo_x1() {
 		int genSize = ((TGen<Boolean>) genes.get(0)).getGenotipo().size();
-		return (float) 
-		(MinX1 + bin2dec(0,(genSize)) 
-		* ((MaxX1 - MinX1)/((Math.pow(2, genSize)-1))));
+		float result = (float) 
+				(MinX1 + bin2dec(0,(genSize)) 
+				* ((MaxX1 - MinX1)/((Math.pow(2, genSize)-1))));
+		x1test = result;
+		return result;
 	}
 	public float fenotipo_x2() {
 		int genSize = ((TGen<Boolean>) genes.get(1)).getGenotipo().size();
-		return (float) 
-		(MinX2 + bin2dec(((TGen<Boolean>) genes.get(0)).getGenotipo().size(),((TGen<Boolean>) genes.get(1)).getGenotipo().size()) 
-		* ((MaxX2 - MinX2)/((Math.pow(2, genSize)-1)))); 
+		float result = (float) 
+				(MinX2 + bin2dec(((TGen<Boolean>) genes.get(0)).getGenotipo().size(),((TGen<Boolean>) genes.get(1)).getGenotipo().size()) 
+				* ((MaxX2 - MinX2)/((Math.pow(2, genSize)-1))));
+		x2test = result;
+		return result; 
 	}
 
 	
@@ -66,6 +71,8 @@ public class CromosomaF1 extends ACromosoma{
 	 */
 	@Override
 	public float evaluar() {
+		actualiza_codificacion();
+		
 		float x1,x2;
 		x1 = fenotipo_x1();
 		x2 = fenotipo_x2();

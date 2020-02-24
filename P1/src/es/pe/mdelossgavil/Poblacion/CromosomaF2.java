@@ -21,7 +21,8 @@ public class CromosomaF2 extends ACromosoma {
 		this.punt_acum = aCromosoma.punt_acum;
 		this.codificacion = aCromosoma.codificacion;
 		this.longitud = aCromosoma.longitud;
-		
+		this.aptitud = aCromosoma.aptitud;
+
 		this.genes = aCromosoma.genes;
 	}
 	public CromosomaF2() {
@@ -63,6 +64,8 @@ public class CromosomaF2 extends ACromosoma {
 	 */
 	@Override
 	public float evaluar() {
+		actualiza_codificacion();
+		
 		float x1, x2;
 		x1 = fenotipo_x1();
 		x2 = fenotipo_x2();

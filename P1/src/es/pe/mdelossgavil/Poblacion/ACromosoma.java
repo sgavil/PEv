@@ -32,6 +32,18 @@ public abstract class ACromosoma <T> {
 			}
 		}
 	}
+	
+	public void actualiza_codificacion() {
+		int k = 0;
+		for(int i=0;i<genes.size();i++)
+		{
+			for(int j=0;j<genes.get(i).getGenotipo().size();j++)
+			{
+				codificacion.set(k, (T)genes.get(i).getGenotipo().get(j));
+				k++;
+			}
+		}
+	}
 	public ArrayList<T> getCodificacion() {
 		return codificacion;
 	}

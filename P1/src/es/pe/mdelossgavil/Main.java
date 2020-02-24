@@ -22,7 +22,7 @@ public class Main {
 		Monopunto cruce = new Monopunto();
 		MutacionBoolean mutacion = new MutacionBoolean();
 
-		a_genetico.inicializa(ruleta, cruce, mutacion, "F1");
+		a_genetico.inicializa(ruleta, cruce, mutacion, "F2");
 		a_genetico.evaluar_poblacion();
 
 		int i = 0;
@@ -33,7 +33,7 @@ public class Main {
 			//a_genetico.cruce();
 			a_genetico.mutacion();
 			a_genetico.evaluar_poblacion();
-			y[i] = a_genetico.getEl_mejor().get_aptitud();
+			y[i] = a_genetico.get_aptitud_media();
 
 			i++;
 		}
@@ -44,7 +44,7 @@ public class Main {
 		grafica.pinta_grafica();
 		System.out.println("EL MILL0R: " + a_genetico.mejor_abs.get_aptitud());
 
-		a_genetico.mejor_abs.evaluar();
+		
 
 	}
 }

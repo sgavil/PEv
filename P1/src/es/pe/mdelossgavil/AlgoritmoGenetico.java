@@ -96,7 +96,11 @@ public class AlgoritmoGenetico {
 
 		ACromosoma individuoActual;
 		
+		if(maximizar)
 		aptitud_mejor = Float.MIN_VALUE;
+		else
+			aptitud_mejor = Float.MAX_VALUE;
+
 
 		/*
 		 * Primero hacemos un for para tener la suma de las aptitudes y la mejor aptitud
@@ -107,16 +111,25 @@ public class AlgoritmoGenetico {
 			individuoActual = poblacion.get(i);
 			suma_aptitud += individuoActual.get_aptitud();
 
-			if (individuoActual.get_aptitud() > aptitud_mejor) 
-			{
-				pos_mejor = i;
-				aptitud_mejor = individuoActual.get_aptitud();
-				el_mejor = individuoActual;
+			if(maximizar) {
+				if (individuoActual.get_aptitud() > aptitud_mejor) 
+				{
+					pos_mejor = i;
+					aptitud_mejor = individuoActual.get_aptitud();
+					el_mejor = individuoActual;
+				}
+			}
+			else {
+				if (individuoActual.get_aptitud() < aptitud_mejor) 
+				{
+					pos_mejor = i;
+					aptitud_mejor = individuoActual.get_aptitud();
+					el_mejor = individuoActual;
+				}
 			}
 			
 		}
 
-		System.out.println("ENTRANDOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 		for (int j = 0; j < tam_pob; j++) 
 		{
 			// Calculamos la puntuación del individuo y su puntuación acumulada
@@ -127,25 +140,12 @@ public class AlgoritmoGenetico {
 
 			// Actualizamos la puntuación acumulada general
 			punt_acum += puntuacion;
-			System.out.println(poblacion.get(j).get_punt_acum());
 			
 		}
-		System.out.println("\n");
 		
-		
-		System.out.println("SALIENDOOOOOOOOOOOOOOOOOOOOOOOOO");
-		for (int i = 0; i < tam_pob; i++) 
-		{
-			
-			System.out.println(poblacion.get(i).get_punt_acum());
-			
-		}
-		System.out.println("\n");
-		
-		//System.out.println("\n");
-		if (el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
-			mejor_abs = el_mejor;
-		}
+			if (el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
+				mejor_abs = el_mejor;
+			}
 		
 	}
 

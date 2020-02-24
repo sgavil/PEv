@@ -41,17 +41,15 @@ public class MutacionBoolean implements IMutacion{
 					//Si es menor que la probabilidad de mutación actualizamos el bit
 					// y lo marcamos como mutado
 					if(rndProb < probMutacion) {
-						alelos.set(k, !alelos.get(k));
+						genes.get(j).getGenotipo().set(k, !alelos.get(k));
 						mutado = true;
 					}
 				}
 				
-				
 			}
 			//Si se ha producido una mutación tenemos que volver a calcular la aptitud del individuo
 			if(mutado) {
-				individuo.set_aptitud(individuo.evaluar());
-			
+				poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
 
 			}
 		}
