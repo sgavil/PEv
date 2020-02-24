@@ -1,8 +1,10 @@
 package es.pe.mdelossgavil.Seleccion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
+import es.pe.mdelossgavil.Poblacion.CromosomaF1;
 import es.pe.mdelossgavil.Seleccion.ISeleccion;
 
 /**
@@ -38,10 +40,10 @@ public class Ruleta implements ISeleccion {
 				k++;
 
 			// Al llegar al elemento lo guardamos en nuestra selección de población
-			nueva_pob.add(poblacion.get(k));
+			nueva_pob.add(new CromosomaF1(poblacion.get(k)));
 
 		}
-
+		
 		return nueva_pob;
 
 		

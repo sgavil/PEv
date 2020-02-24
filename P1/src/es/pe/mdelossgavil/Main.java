@@ -11,7 +11,7 @@ import es.pe.mdelossgavil.Seleccion.*;
 public class Main {
 
 	public static final int TAM_POB = 100;
-	public static final int N_GENERACIONES = 5;
+	public static final int N_GENERACIONES = 100;
 
 	public static void main(String[] args) {
 
