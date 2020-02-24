@@ -30,10 +30,10 @@ public class Main {
 			x[i] = i;
 			a_genetico.seleccion();
 			// System.out.println(a_genetico.get_aptitud_media());
-			a_genetico.cruce();
+			//a_genetico.cruce();
 			a_genetico.mutacion();
 			a_genetico.evaluar_poblacion();
-			y[i] = a_genetico.get_aptitud_media();
+			y[i] = a_genetico.getEl_mejor().get_aptitud();
 
 			i++;
 		}

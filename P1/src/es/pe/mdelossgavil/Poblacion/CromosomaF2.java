@@ -16,6 +16,18 @@ public class CromosomaF2 extends ACromosoma {
 
 	// La imagen de la codificación
 
+	public CromosomaF2(ACromosoma aCromosoma) {
+		this.puntuacion = aCromosoma.puntuacion;
+		this.punt_acum = aCromosoma.punt_acum;
+		this.codificacion = aCromosoma.codificacion;
+		this.longitud = aCromosoma.longitud;
+		
+		this.genes = aCromosoma.genes;
+	}
+	public CromosomaF2() {
+		
+	}
+
 	/**
 	 * @return el fenotipo x1 del cromosoma dentro del dominio del problema
 	 */

@@ -161,7 +161,7 @@ public class AlgoritmoGenetico {
 	 * Proceso de selección
 	 */
 	public void seleccion() {
-		poblacion = metodo_seleccion.hacer_seleccion(poblacion);
+		poblacion = metodo_seleccion.hacer_seleccion(poblacion,problemaActual);
 	}
 
 	/**

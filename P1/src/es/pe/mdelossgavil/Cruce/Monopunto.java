@@ -68,8 +68,10 @@ public class Monopunto implements ICruce {
 			ACromosoma padre1 = poblacion.get(seleccionCruce[i]);
 			ACromosoma padre2 = poblacion.get(seleccionCruce[i + 1]);
 			Cruce(padre1, padre2, hijo1, hijo2, punto_cruce);
-			poblacion.set(seleccionCruce[i], hijo1);
-			poblacion.set(seleccionCruce[i + 1], hijo2);
+			
+			
+			poblacion.set(seleccionCruce[i], new CromosomaF1(hijo1));
+			poblacion.set(seleccionCruce[i + 1], new CromosomaF1(hijo2));
 			
 			
 		}
