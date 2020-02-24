@@ -15,7 +15,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		AlgoritmoGenetico a_genetico = new AlgoritmoGenetico(TAM_POB, N_GENERACIONES);
+		AlgoritmoGenetico a_genetico = new AlgoritmoGenetico(TAM_POB, N_GENERACIONES,false);
 		double[] x = new double[N_GENERACIONES];
 		double[] y = new double[N_GENERACIONES];
 		Ruleta ruleta = new Ruleta();
@@ -30,10 +30,10 @@ public class Main {
 			x[i] = i;
 			a_genetico.seleccion();
 			// System.out.println(a_genetico.get_aptitud_media());
-			//a_genetico.cruce();
+			a_genetico.cruce();
 			a_genetico.mutacion();
 			a_genetico.evaluar_poblacion();
-			y[i] = a_genetico.get_aptitud_media();
+			y[i] = a_genetico.mejor_abs.get_aptitud();
 
 			i++;
 		}

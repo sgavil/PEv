@@ -9,10 +9,10 @@ import es.pe.mdelossgavil.Seleccion.*;
 
 public class AlgoritmoGenetico {
 
-	public AlgoritmoGenetico(int tam_poblacion, int generaciones) {
+	public AlgoritmoGenetico(int tam_poblacion, int generaciones,boolean maximizar) {
 		tam_pob = tam_poblacion;
 		num_max_gen = generaciones;
-
+		this.maximizar = maximizar;
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -142,10 +142,16 @@ public class AlgoritmoGenetico {
 			punt_acum += puntuacion;
 			
 		}
-		
+		if(maximizar) {
 			if (el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
 				mejor_abs = el_mejor;
 			}
+		}
+		else {
+			if (el_mejor.get_aptitud() < mejor_abs.get_aptitud()) {
+				mejor_abs = el_mejor;
+			}
+		}
 		
 	}
 
@@ -187,14 +193,14 @@ public class AlgoritmoGenetico {
 			TPoblacion<CromosomaF1> pob = new TPoblacion<CromosomaF1>();
 			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF1.class);
 			mejor_abs = new CromosomaF1();
-			mejor_abs.set_aptitud(0);
+			mejor_abs.set_aptitud(Float.MIN_VALUE);
 			maximizar = true;
 			return;
 		} else if (problemaActual.equals("F2")) {
 			TPoblacion<CromosomaF2> pob = new TPoblacion<CromosomaF2>();
 			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF2.class);
 			mejor_abs = new CromosomaF2();
-			mejor_abs.set_aptitud(0);
+			mejor_abs.set_aptitud(Float.MAX_VALUE);
 			maximizar = false;
 			return;
 		}
