@@ -6,6 +6,8 @@ import java.util.Collections;
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
 import es.pe.mdelossgavil.Poblacion.CromosomaF1;
 import es.pe.mdelossgavil.Poblacion.CromosomaF2;
+import es.pe.mdelossgavil.Poblacion.CromosomaF3;
+import es.pe.mdelossgavil.Poblacion.CromosomaF4;
 import es.pe.mdelossgavil.Seleccion.ISeleccion;
 
 /**
@@ -45,6 +47,10 @@ public class Ruleta implements ISeleccion {
 					nueva_pob.add(new CromosomaF1(poblacion.get(k)));
 			else if(tipoProblema.equals("F2"))
 				nueva_pob.add(new CromosomaF2(poblacion.get(k)));
+			else if(tipoProblema.equals("F3"))
+				nueva_pob.add(new CromosomaF3(poblacion.get(k)));
+			else if(tipoProblema.equals("F4"))
+				nueva_pob.add(new CromosomaF4(poblacion.get(k)));
 
 		}
 		

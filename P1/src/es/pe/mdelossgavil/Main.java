@@ -26,7 +26,7 @@ public class Main {
 		Monopunto cruce = new Monopunto();
 		MutacionBoolean mutacion = new MutacionBoolean();
 
-		a_genetico.inicializa(ruleta, cruce, mutacion, "F1");
+		a_genetico.inicializa(ruleta, cruce, mutacion, "F4");
 		a_genetico.evaluar_poblacion();
 
 		int i = 0;
@@ -34,7 +34,7 @@ public class Main {
 			iteraciones[i] = i;
 			a_genetico.seleccion();
 			a_genetico.cruce();
-			a_genetico.mutacion();
+			//a_genetico.mutacion();
 			a_genetico.evaluar_poblacion();
 			
 			//Graficas

@@ -204,5 +204,21 @@ public class AlgoritmoGenetico {
 			maximizar = false;
 			return;
 		}
+		else if (problemaActual.equals("F3")) {
+			TPoblacion<CromosomaF3> pob = new TPoblacion<CromosomaF3>();
+			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF3.class);
+			mejor_abs = new CromosomaF3();
+			mejor_abs.set_aptitud(Float.MAX_VALUE);
+			maximizar = false;
+			return;
+		}
+		else if (problemaActual.equals("F4")) {
+			TPoblacion<CromosomaF4> pob = new TPoblacion<CromosomaF4>();
+			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF4.class);
+			mejor_abs = new CromosomaF4();
+			mejor_abs.set_aptitud(Float.MAX_VALUE);
+			maximizar = false;
+			return;
+		}
 	}
 }
