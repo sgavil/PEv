@@ -220,5 +220,13 @@ public class AlgoritmoGenetico {
 			maximizar = false;
 			return;
 		}
+		else if (problemaActual.equals("P2")) {
+			TPoblacion<CromosomaP2> pob = new TPoblacion<CromosomaP2>();
+			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaP2.class);
+			mejor_abs = new CromosomaP2();
+			mejor_abs.set_aptitud(Float.MAX_VALUE);
+			maximizar = false;
+			return;
+		}
 	}
 }

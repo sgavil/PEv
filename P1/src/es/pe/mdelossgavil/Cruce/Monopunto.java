@@ -46,6 +46,10 @@ public class Monopunto implements ICruce {
 			hijo1 = new CromosomaF4();
 			hijo2 = new CromosomaF4();
 		}
+		else if(problema == "P2") {
+			hijo1 = new CromosomaP2();
+			hijo2 = new CromosomaP2();
+		}
 		
 		hijo1.inicializa_cromosoma();
 		hijo2.inicializa_cromosoma();
