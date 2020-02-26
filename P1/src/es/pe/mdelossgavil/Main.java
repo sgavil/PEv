@@ -26,13 +26,14 @@ public class Main {
 		Ruleta ruleta = new Ruleta();
 		Torneos torneos = new Torneos(2,MAXIMIZAR);
 		EstocasticoUniversal estocasticoUniversal = new EstocasticoUniversal();
+		Ranking ranking = new Ranking(1.5f);
 		
 		Monopunto mono = new Monopunto();
 		DiscretoUniforme DU=new DiscretoUniforme();
 		MutacionBoolean mutacion = new MutacionBoolean();
 
 
-		a_genetico.inicializa(estocasticoUniversal, DU, mutacion, "F4");
+		a_genetico.inicializa(ranking, mono, mutacion, "F2");
 		a_genetico.evaluar_poblacion();
 
 		int i = 0;
