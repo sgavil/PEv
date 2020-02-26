@@ -12,7 +12,7 @@ public class Main {
 
 	public static final int TAM_POB = 100;
 	public static final int N_GENERACIONES = 100;
-	public static boolean MAXIMIZAR = true;
+	public static boolean MAXIMIZAR = false;
 	public static String PROBLEMA = "P2";
 	
 	
@@ -31,11 +31,14 @@ public class Main {
 		EstocasticoUniversal estocasticoUniversal = new EstocasticoUniversal();
 		Ranking ranking = new Ranking(1.5f);
 		
-		Monopunto monopunto = new Monopunto();
+		Monopunto mono = new Monopunto();
+		DiscretoUniforme DU=new DiscretoUniforme();
 		MutacionBoolean mutacion = new MutacionBoolean();
 		MutacionReal mutacionReal = new MutacionReal(0, (float)Math.PI);
 
-		a_genetico.inicializa(ruleta, monopunto, mutacionReal, PROBLEMA);
+
+		a_genetico.inicializa(ranking, mono, mutacionReal, PROBLEMA);
+
 		a_genetico.evaluar_poblacion();
 
 		int i = 0;

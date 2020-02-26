@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import es.pe.mdelossgavil.AlgoritmoGenetico;
+import es.pe.mdelossgavil.Utils;
 
 public class CromosomaP2 extends ACromosoma{
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -144,11 +145,11 @@ public class CromosomaP2 extends ACromosoma{
 					double finalRes = tempRes/10;
 					System.out.println(formatter.format(finalRes));
 					*/
-					((TGen<Float>) genes.get(0)).getGenotipo().add(1.2f);
+					((TGen<Float>) genes.get(0)).getGenotipo().add(Utils.float_between_range(Min, Max));
 
 				}
 				else {
-					((TGen<Float>) genes.get(1)).getGenotipo().add(2.4f);
+					((TGen<Float>) genes.get(1)).getGenotipo().add(Utils.float_between_range(Min, Max));
 
 				}
 			}

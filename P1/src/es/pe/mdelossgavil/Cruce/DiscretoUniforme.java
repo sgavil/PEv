@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import es.pe.mdelossgavil.Poblacion.*;
-import es.pe.mdelossgavil.Poblacion.TGen;
 
-public class Monopunto implements ICruce {
+public class DiscretoUniforme implements ICruce {
 
-	public Monopunto() {
+	public DiscretoUniforme() {
 
 	}
-
 	/**
 	 * A partir de una poblacion dada,reproduce algunos de sus individuos y los
 	 * hijos resultantes ocupan el lugar de los padres en la poblacion
@@ -46,10 +44,6 @@ public class Monopunto implements ICruce {
 			hijo1 = new CromosomaF4();
 			hijo2 = new CromosomaF4();
 		}
-		else if(problema == "P2") {
-			hijo1 = new CromosomaP2();
-			hijo2 = new CromosomaP2();
-		}
 		
 		hijo1.inicializa_cromosoma();
 		hijo2.inicializa_cromosoma();
@@ -70,16 +64,11 @@ public class Monopunto implements ICruce {
 		// El numero de seleccionados se hace par
 		if (num_sele_cruce % 2 == 1)
 			num_sele_cruce--;
-
-		// Se cruzan los individuos seleccionados en un punto al azar
-		int lCrom = poblacion.get(0).get_longitud();
-		Random r = new Random();
-		punto_cruce = r.nextInt(lCrom);
-
+		
 		for (int i = 0; i < num_sele_cruce; i += 2) {
 			ACromosoma padre1 = poblacion.get(seleccionCruce[i]);
 			ACromosoma padre2 = poblacion.get(seleccionCruce[i + 1]);
-			Cruce(padre1, padre2, hijo1, hijo2, punto_cruce);
+			Cruce(padre1, padre2, hijo1, hijo2);
 			
 			if (problema == "F1") {
 				poblacion.set(seleccionCruce[i], new CromosomaF1(hijo1));
@@ -98,29 +87,27 @@ public class Monopunto implements ICruce {
 				poblacion.set(seleccionCruce[i + 1], new CromosomaF4(hijo2));
 			}
 		}
+		
+		// Una vez hecho el cruce, se evalua
+		hijo1.set_aptitud(hijo1.evaluar());
+		hijo2.set_aptitud(hijo2.evaluar());
 	}
 
-	/**
-	 * @param padre1     Primer cromosoma padre
-	 * @param padre2     Segundo cromosoma padre
-	 * @param hijo1      primer cromosoma hijo
-	 * @param hijo2      segundo cromosoma hijo
-	 * @param puntoCruce prob de hacer el cruce entre dos crosomas
-	 */
-	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2, int puntoCruce) {
-		
-		// primera parte del intercambio: 1 a 1 y 2 a 2
-		for (int i = 0; i < puntoCruce; i++) {
-			hijo1.getCodificacion().set(i, padre1.getCodificacion().get(i));
-			hijo2.getCodificacion().set(i, padre2.getCodificacion().get(i));
-		}
-
-		// segunda parte: 1 a 2 y 2 a 1
-		for (int i = puntoCruce; i < hijo1.get_longitud(); i++) {
+	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2) {
+	
+	for (int i = 0; i <padre1.getCodificacion().size();i++) {
+		// Creamos una prob aleatoria enter [0,1)
+		float prob = (float) Math.random();
+		if (prob < 0.1f) {
 			hijo1.getCodificacion().set(i, padre2.getCodificacion().get(i));
 			hijo2.getCodificacion().set(i, padre1.getCodificacion().get(i));
 		}
-
+		else
+		{
+			hijo1.getCodificacion().set(i, padre1.getCodificacion().get(i));
+			hijo2.getCodificacion().set(i, padre2.getCodificacion().get(i));
+		}
+	}
 		/* Actualizamos los genes */
 		int comienzo = 0;
 		for (int i = 0; i < hijo1.get_genes().size(); i++) {
@@ -133,7 +120,6 @@ public class Monopunto implements ICruce {
 			comienzo += tam;
 
 		}
-
 		// Una vez hecho el cruce, se evalua
 		hijo1.set_aptitud(hijo1.evaluar());
 		hijo2.set_aptitud(hijo2.evaluar());
@@ -144,5 +130,4 @@ public class Monopunto implements ICruce {
 			((TGen) cromosoma.get_genes().get(gen)).getGenotipo().set(i, cromosoma.getCodificacion().get(i + comienzo));
 		}
 	}
-
 }
