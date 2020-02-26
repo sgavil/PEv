@@ -1,6 +1,8 @@
 package es.pe.mdelossgavil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import es.pe.mdelossgavil.Cruce.ICruce;
 import es.pe.mdelossgavil.Mutacion.IMutacion;
@@ -219,6 +221,85 @@ public class AlgoritmoGenetico {
 			mejor_abs.set_aptitud(Float.MAX_VALUE);
 			maximizar = false;
 			return;
+		}
+	}
+	
+	public ArrayList<ACromosoma> separaMejores(int tamElite)
+	{
+		
+		//Primero ordenamos la seleccion
+		Collections.sort(poblacion,new CromosomaComparator());
+		//La lista de los elite que devolveremos
+		ArrayList<ACromosoma> elite=new ArrayList<ACromosoma>();
+		
+		//Metemos los tamElite mejores
+		for(int i=0;i<tamElite;i++)
+		{
+			if(!maximizar)
+			{
+				// Al llegar al elemento lo guardamos en nuestra selección de población
+				if (problemaActual.equals("F1"))
+					elite.add(new CromosomaF1(poblacion.get(i)));
+				else if (problemaActual.equals("F2"))
+					elite.add(new CromosomaF2(poblacion.get(i)));
+				else if (problemaActual.equals("F3"))
+					elite.add(new CromosomaF3(poblacion.get(i)));
+				else if (problemaActual.equals("F4"))
+					elite.add(new CromosomaF4(poblacion.get(i)));
+			}
+			else
+			{
+				// Al llegar al elemento lo guardamos en nuestra selección de población
+				if (problemaActual.equals("F1"))
+					elite.add(new CromosomaF1(poblacion.get(poblacion.size()-1-i)));
+				else if (problemaActual.equals("F2"))
+					elite.add(new CromosomaF2(poblacion.get(poblacion.size()-1-i)));
+				else if (problemaActual.equals("F3"))
+					elite.add(new CromosomaF3(poblacion.get(poblacion.size()-1-i)));
+				else if (problemaActual.equals("F4"))
+					elite.add(new CromosomaF4(poblacion.get(poblacion.size()-1-i)));
+			}
+		}
+		
+		return elite;
+	}
+	
+	public void incluyeElite(ArrayList<ACromosoma> elite)
+	{
+		
+		//Primero ordenamos la seleccion
+		Collections.sort(poblacion,new CromosomaComparator());
+		//Metemos los tamElite mejores
+		
+		if(!maximizar)
+		{
+			for(int i=0;i<elite.size();i++)
+			{
+				// Al llegar al elemento lo guardamos en nuestra selección de población
+				if (problemaActual.equals("F1"))
+					poblacion.set(poblacion.size()-1-i, new CromosomaF1(elite.get(i)));
+				else if (problemaActual.equals("F2"))
+					poblacion.set(poblacion.size()-1-i, new CromosomaF2(elite.get(i)));
+				else if (problemaActual.equals("F3"))
+					poblacion.set(poblacion.size()-1-i, new CromosomaF3(elite.get(i)));
+				else if (problemaActual.equals("F4"))
+					poblacion.set(poblacion.size()-1-i, new CromosomaF4(elite.get(i)));
+			}
+		}
+		else
+		{
+			for(int i=0;i<elite.size();i++)
+			{
+				// Al llegar al elemento lo guardamos en nuestra selección de población
+				if (problemaActual.equals("F1"))
+					poblacion.set(i, new CromosomaF1(elite.get(i)));
+				else if (problemaActual.equals("F2"))
+					poblacion.set(i, new CromosomaF2(elite.get(i)));
+				else if (problemaActual.equals("F3"))
+					poblacion.set(i, new CromosomaF3(elite.get(i)));
+				else if (problemaActual.equals("F4"))
+					poblacion.set(i, new CromosomaF4(elite.get(i)));
+			}
 		}
 	}
 }
