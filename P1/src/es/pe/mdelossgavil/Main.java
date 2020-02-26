@@ -1,11 +1,14 @@
 package es.pe.mdelossgavil;
 
+import java.util.ArrayList;
+
 import javax.swing.*;
 //import org.math.plot.*;
 
 import es.pe.mdelossgavil.Cruce.*;
 import es.pe.mdelossgavil.Graficas.Grafica;
 import es.pe.mdelossgavil.Mutacion.*;
+import es.pe.mdelossgavil.Poblacion.ACromosoma;
 import es.pe.mdelossgavil.Seleccion.*;
 
 public class Main {
@@ -13,9 +16,12 @@ public class Main {
 	public static final int TAM_POB = 100;
 	public static final int N_GENERACIONES = 100;
 	public static boolean MAXIMIZAR = false;
+
 	public static String PROBLEMA = "P2";
 	
 	
+	public static boolean ELITISMO= true;
+	public static int tamElite=5;
 	public static void main(String[] args) {
 
 		AlgoritmoGenetico a_genetico = new AlgoritmoGenetico(TAM_POB, N_GENERACIONES,MAXIMIZAR);
@@ -36,17 +42,29 @@ public class Main {
 		MutacionBoolean mutacion = new MutacionBoolean();
 		MutacionReal mutacionReal = new MutacionReal(0, (float)Math.PI);
 
-
 		a_genetico.inicializa(ranking, mono, mutacionReal, PROBLEMA);
+		
+		ArrayList<ACromosoma> elite=new ArrayList<ACromosoma>();
 
 		a_genetico.evaluar_poblacion();
 
 		int i = 0;
 		while (i < N_GENERACIONES) {
 			iteraciones[i] = i;
+			
+			//Primero separamos los mejores
+			if(ELITISMO)
+				elite=a_genetico.separaMejores(tamElite);
 			a_genetico.seleccion();
 			a_genetico.cruce();
 			a_genetico.mutacion();
+			
+			//Antes de evaluar incluimos la elite
+			if(ELITISMO)
+			{
+				a_genetico.incluyeElite(elite);
+				elite.clear();
+			}
 			a_genetico.evaluar_poblacion();
 			
 			//Graficas
