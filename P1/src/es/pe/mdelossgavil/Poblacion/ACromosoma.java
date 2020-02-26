@@ -1,6 +1,7 @@
 package es.pe.mdelossgavil.Poblacion;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public abstract class ACromosoma <T> {
 	
@@ -144,9 +145,7 @@ public abstract class ACromosoma <T> {
 	}
 
 	 
-	
-	
-	
+
 
 	
 }

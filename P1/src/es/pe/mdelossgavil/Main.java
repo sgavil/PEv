@@ -26,20 +26,21 @@ public class Main {
 		Ruleta ruleta = new Ruleta();
 		Torneos torneos = new Torneos(2,MAXIMIZAR);
 		EstocasticoUniversal estocasticoUniversal = new EstocasticoUniversal();
+		Ranking ranking = new Ranking(1.5f);
 		
 		Monopunto cruce = new Monopunto();
 		MutacionBoolean mutacion = new MutacionBoolean();
 
 
-		a_genetico.inicializa(estocasticoUniversal, cruce, mutacion, "F4");
+		a_genetico.inicializa(ranking, cruce, mutacion, "F1");
 		a_genetico.evaluar_poblacion();
 
 		int i = 0;
 		while (i < N_GENERACIONES) {
 			iteraciones[i] = i;
 			a_genetico.seleccion();
-			a_genetico.cruce();
-			a_genetico.mutacion();
+			//a_genetico.cruce();
+			//a_genetico.mutacion();
 			a_genetico.evaluar_poblacion();
 			
 			//Graficas
