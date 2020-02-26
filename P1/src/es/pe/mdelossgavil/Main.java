@@ -12,7 +12,7 @@ public class Main {
 
 	public static final int TAM_POB = 100;
 	public static final int N_GENERACIONES = 100;
-	public static boolean MAXIMIZAR = true;
+	public static boolean MAXIMIZAR = false;
 	public static void main(String[] args) {
 
 		AlgoritmoGenetico a_genetico = new AlgoritmoGenetico(TAM_POB, N_GENERACIONES,MAXIMIZAR);
@@ -28,19 +28,19 @@ public class Main {
 		EstocasticoUniversal estocasticoUniversal = new EstocasticoUniversal();
 		Ranking ranking = new Ranking(1.5f);
 		
-		Monopunto cruce = new Monopunto();
+		Monopunto monopunto = new Monopunto();
 		MutacionBoolean mutacion = new MutacionBoolean();
 
 
-		a_genetico.inicializa(ranking, cruce, mutacion, "F1");
+		a_genetico.inicializa(ranking, monopunto, mutacion, "F2");
 		a_genetico.evaluar_poblacion();
 
 		int i = 0;
 		while (i < N_GENERACIONES) {
 			iteraciones[i] = i;
 			a_genetico.seleccion();
-			//a_genetico.cruce();
-			//a_genetico.mutacion();
+			a_genetico.cruce();
+			a_genetico.mutacion();
 			a_genetico.evaluar_poblacion();
 			
 			//Graficas
