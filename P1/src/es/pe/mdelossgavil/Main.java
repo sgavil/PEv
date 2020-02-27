@@ -20,7 +20,7 @@ public class Main {
 	public static String PROBLEMA = "P2";
 	
 	
-	public static boolean ELITISMO= true;
+	public static boolean ELITISMO= false;
 	public static int tamElite=5;
 	public static void main(String[] args) {
 
@@ -43,13 +43,17 @@ public class Main {
 		DiscretoUniforme DU=new DiscretoUniforme();
 		Uniforme uni=new Uniforme();
 		Aritmetico aritmetico = new Aritmetico(0.6f);
+		BLXAlpha BLXalpha = new BLXAlpha();
 		
 		//Mutaciones
 		MutacionBoolean mutacion = new MutacionBoolean();
 		MutacionReal mutacionReal = new MutacionReal(0, (float)Math.PI);
 
 		//INICIALIZACION DEL ALGORITMO GENETICO, Aquí se eligen los metodos de cruce seleccion y mutacion
-		a_genetico.inicializa(ranking, aritmetico, mutacionReal, PROBLEMA);
+		
+		a_genetico.inicializa(torneos, BLXalpha, mutacionReal, PROBLEMA);
+		
+		////////////////////////////////////////////////////////////////
 		
 		ArrayList<ACromosoma> elite=new ArrayList<ACromosoma>();
 

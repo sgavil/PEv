@@ -2,20 +2,13 @@ package es.pe.mdelossgavil.Cruce;
 
 import java.util.ArrayList;
 
+import es.pe.mdelossgavil.Utils;
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
-import es.pe.mdelossgavil.Poblacion.CromosomaF1;
-import es.pe.mdelossgavil.Poblacion.CromosomaF2;
-import es.pe.mdelossgavil.Poblacion.CromosomaF3;
-import es.pe.mdelossgavil.Poblacion.CromosomaF4;
 import es.pe.mdelossgavil.Poblacion.CromosomaP2;
 import es.pe.mdelossgavil.Poblacion.TGen;
 
-public class Aritmetico implements ICruce {
+public class BLXAlpha implements ICruce{
 
-	float alpha;
-	public Aritmetico(float alpha) {
-		this.alpha = alpha;
-	}
 	@Override
 	public void reproduccion(ArrayList<ACromosoma> poblacion, String problema, float probCruce) {
 		int tam_pob = poblacion.size();
@@ -65,15 +58,21 @@ public class Aritmetico implements ICruce {
 		}
 
 	}
-
+		
 	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2) {
 		for (int i = 0; i < padre1.get_longitud(); i++) {
+			
 			TGen<Float> gen1 = (TGen<Float>) padre1.get_genes().get(i);
 			TGen<Float> gen2 = (TGen<Float>) padre2.get_genes().get(i);
 			
-			float valh1 = (alpha * gen1.getGenotipo().get(0)) + ((1-alpha)*gen2.getGenotipo().get(0));
-			float valh2 = (alpha * gen2.getGenotipo().get(0)) + ((1-alpha)*gen1.getGenotipo().get(0));
-
+			float alpha = (float)Math.random();
+			float cMax = Math.max(gen1.getGenotipo().get(0), gen2.getGenotipo().get(0));
+			float cMin = Math.min(gen1.getGenotipo().get(0), gen2.getGenotipo().get(0));
+			float I = cMax-cMin;
+			
+			float valh1 = Utils.float_between_range(cMin-I*alpha, cMax+I*alpha);
+			float valh2 = Utils.float_between_range(cMin-I*alpha, cMax+I*alpha);
+			
 			((TGen) hijo1.get_genes().get(i)).getGenotipo().set(0, valh1);
 			((TGen) hijo2.get_genes().get(i)).getGenotipo().set(0, valh2);
 			
@@ -82,5 +81,6 @@ public class Aritmetico implements ICruce {
 
 		}
 	}
+
 
 }

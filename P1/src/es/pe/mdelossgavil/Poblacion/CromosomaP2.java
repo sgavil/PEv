@@ -14,7 +14,7 @@ public class CromosomaP2 extends ACromosoma{
 		static final float Min = 0;
 		static final float Max = (float) Math.PI;
 		
-		int n=3;
+		static final int N=2;
 
 		// La imagen de la codificación
 
@@ -66,7 +66,7 @@ public class CromosomaP2 extends ACromosoma{
 			actualiza_codificacion();
 			
 			ArrayList<Float> x=new ArrayList<Float>();
-			for(int i=0;i<n;i++)
+			for(int i=0;i<N;i++)
 			{
 				x.add(fenotipo(i));
 			}
@@ -109,7 +109,7 @@ public class CromosomaP2 extends ACromosoma{
 			/*Longitud de los genes*/
 			ArrayList<Integer> longitudGenes=new ArrayList<Integer>();
 			
-			for(int i=0;i<n;i++)
+			for(int i=0;i<N;i++)
 			{
 				longitudGenes.add(1);
 				genes.add(new TGen<Float>());
