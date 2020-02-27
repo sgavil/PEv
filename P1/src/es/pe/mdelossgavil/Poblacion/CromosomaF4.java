@@ -2,6 +2,7 @@ package es.pe.mdelossgavil.Poblacion;
 
 import java.lang.Object;
 import java.util.ArrayList;
+import java.util.function.LongUnaryOperator;
 
 import org.omg.CORBA.portable.IndirectionException;
 
@@ -16,7 +17,7 @@ public class CromosomaF4 extends ACromosoma {
 	static final float Min = 0;
 	static final float Max = (float) Math.PI;
 	
-	int n=3;
+	int n=4;
 
 	// La imagen de la codificación
 
@@ -35,15 +36,8 @@ public class CromosomaF4 extends ACromosoma {
 	/**
 	 * @return el fenotipo x1 del cromosoma dentro del dominio del problema
 	 */
-	public float fenotipo_x1() {
-		int genSize = ((TGen<Boolean>) genes.get(0)).getGenotipo().size();
-		return (float) (Min + bin2dec(0, (genSize)) * ((Max - Min) / ((Math.pow(2, genSize) - 1))));
-	}
-
-	public float fenotipo_x2() {
-		int genSize = ((TGen<Boolean>) genes.get(1)).getGenotipo().size();
-		return (float) (Min + bin2dec(((TGen<Boolean>) genes.get(0)).getGenotipo().size(),
-				((TGen<Boolean>) genes.get(1)).getGenotipo().size()) * ((Max - Min) / ((Math.pow(2, genSize) - 1))));
+	public float fenotipo(int comienzo,int tam) {
+		return (float) (Min + bin2dec(comienzo,tam) * ((Max - Min) / ((Math.pow(2, tam) - 1))));
 	}
 
 	/**
@@ -65,14 +59,6 @@ public class CromosomaF4 extends ACromosoma {
 		result*=-1;	
 		return result;	
 	}
-	
-	public float power(final float base, final int power) {
-	    float result = 1;
-	    for( int i = 0; i < power; i++ ) {
-	        result *= base;
-	    }
-	    return result;
-	}
 
 	/**
 	 * devuelve el fitness del cromosoma que se usara posteriormente para calcular
@@ -82,12 +68,13 @@ public class CromosomaF4 extends ACromosoma {
 	public float evaluar() {
 		actualiza_codificacion();
 		
-		float x1, x2;
-		x1 = fenotipo_x1();
-		x2 = fenotipo_x2();
 		ArrayList<Float> x=new ArrayList<Float>();
-		x.add(x1);
-		x.add(x2);
+		for(int i=0;i<n;i++)
+		{
+			int comienzo=0;
+			for(int j=0;j<i;j++)comienzo+=((TGen<Boolean>) genes.get(j)).getGenotipo().size();
+			x.add(fenotipo(comienzo, ((TGen<Boolean>) genes.get(i)).getGenotipo().size()));
+		}
 		return funcion(x);
 	}
 
@@ -124,21 +111,27 @@ public class CromosomaF4 extends ACromosoma {
 	@Override
 	public void inicializa_cromosoma() {
 
-		/* La longitud del cromosoma sera igual a la longitud de X1 y X2 */
-		int longitudX1 = calcularLongitud(AlgoritmoGenetico.tolerancia, Max, Min);
-		int longitudX2 = calcularLongitud(AlgoritmoGenetico.tolerancia, Max, Min);
-
-		longitud = longitudX1 + longitudX2;
-
-		genes.add(new TGen<Boolean>());
-		genes.add(new TGen<Boolean>());
-
+		/*Longitud de los genes*/
+		ArrayList<Integer> longitudGenes=new ArrayList<Integer>();
+		
+		for(int i=0;i<n;i++)
+		{
+			longitudGenes.add(calcularLongitud(AlgoritmoGenetico.tolerancia, Max, Min));
+			genes.add(new TGen<Boolean>());
+		}
+		longitud=0;
+		for(int i=0;i<longitudGenes.size();i++)longitud+=longitudGenes.get(i);
+	
+		int j=0;
+		int sumatorio=longitudGenes.get(j)-1;
 		/* Inicializamos el cromosoma */
 		for (int i = 0; i < longitud; i++) {
-			if (i < longitudX1)
-				((TGen<Boolean>) genes.get(0)).getGenotipo().add(Math.random() < 0.5);
-			else
-				((TGen<Boolean>) genes.get(1)).getGenotipo().add(Math.random() < 0.5);
+			while(i>sumatorio)
+				{
+					sumatorio+=longitudGenes.get(j);
+					j++;
+				}
+			((TGen<Boolean>) genes.get(j)).getGenotipo().add(Math.random() < 0.5);
 		}
 
 		setCodificacion();
