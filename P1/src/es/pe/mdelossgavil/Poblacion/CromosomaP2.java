@@ -29,18 +29,12 @@ public class CromosomaP2 extends ACromosoma{
 		public CromosomaP2() {
 			
 		}
-
+		
 		/**
-		 * @return el fenotipo x1 del cromosoma dentro del dominio del problema
+		 * @return el fenotipo del cromosoma dentro del dominio del problema
 		 */
-		public float fenotipo_x1() {
-			//int genSize = ((TGen<Boolean>) genes.get(0)).getGenotipo().size();
-			return ((TGen<Float>) genes.get(0)).getGenotipo().get(0);
-		}
-
-		public float fenotipo_x2() {
-			//int genSize = ((TGen<Boolean>) genes.get(1)).getGenotipo().size();
-			return ((TGen<Float>) genes.get(1)).getGenotipo().get(0);
+		public float fenotipo(int gen) {
+			return (Float) ((TGen) genes.get(gen)).getGenotipo().get(0);
 		}
 
 		/**
@@ -62,14 +56,6 @@ public class CromosomaP2 extends ACromosoma{
 			result*=-1;	
 			return result;	
 		}
-		
-		public float power(final float base, final int power) {
-		    float result = 1;
-		    for( int i = 0; i < power; i++ ) {
-		        result *= base;
-		    }
-		    return result;
-		}
 
 		/**
 		 * devuelve el fitness del cromosoma que se usara posteriormente para calcular
@@ -79,12 +65,11 @@ public class CromosomaP2 extends ACromosoma{
 		public float evaluar() {
 			actualiza_codificacion();
 			
-			float x1, x2;
-			x1 = fenotipo_x1();
-			x2 = fenotipo_x2();
 			ArrayList<Float> x=new ArrayList<Float>();
-			x.add(x1);
-			x.add(x2);
+			for(int i=0;i<n;i++)
+			{
+				x.add(fenotipo(i));
+			}
 			return funcion(x);
 		}
 
@@ -121,37 +106,28 @@ public class CromosomaP2 extends ACromosoma{
 		@Override
 		public void inicializa_cromosoma() {
 
-			/* La longitud del cromosoma sera igual a la longitud de X1 y X2 */
-			int longitudX1 = 1;
-			int longitudX2 = 1;
-
-			longitud = longitudX1 + longitudX2;
-
-			genes.add(new TGen<Float>());
-			genes.add(new TGen<Float>());
-
-			String tol = Float.toString(AlgoritmoGenetico.tolerancia);
-
+			/*Longitud de los genes*/
+			ArrayList<Integer> longitudGenes=new ArrayList<Integer>();
 			
+			for(int i=0;i<n;i++)
+			{
+				longitudGenes.add(1);
+				genes.add(new TGen<Float>());
+			}
+			
+			longitud=0;
+			for(int i=0;i<longitudGenes.size();i++)longitud+=longitudGenes.get(i);
+			
+			int j=0;
+			int sumatorio=longitudGenes.get(j)-1;
 			/* Inicializamos el cromosoma */
 			for (int i = 0; i < longitud; i++) {
-				//DecimalFormat formatter = new DecimalFormat(AlgoritmoGenetico.tolerancia);  // edited here.
-				
-				if (i < longitudX1) {
-					
-					    
-				/*	double randomValue = min + Math.random( ) * diff;
-					double tempRes = Math.floor(randomValue * 10);
-					double finalRes = tempRes/10;
-					System.out.println(formatter.format(finalRes));
-					*/
-					((TGen<Float>) genes.get(0)).getGenotipo().add(Utils.float_between_range(Min, Max));
-
+				while(i>sumatorio)
+				{
+					sumatorio+=longitudGenes.get(j);
+					j++;
 				}
-				else {
-					((TGen<Float>) genes.get(1)).getGenotipo().add(Utils.float_between_range(Min, Max));
-
-				}
+				((TGen<Float>) genes.get(j)).getGenotipo().add(Utils.float_between_range(Min, Max));
 			}
 
 			setCodificacion();
