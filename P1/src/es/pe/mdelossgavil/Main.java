@@ -42,12 +42,14 @@ public class Main {
 		Monopunto mono = new Monopunto();
 		DiscretoUniforme DU=new DiscretoUniforme();
 		Uniforme uni=new Uniforme();
+		Aritmetico aritmetico = new Aritmetico(0.6f);
 		
 		//Mutaciones
 		MutacionBoolean mutacion = new MutacionBoolean();
 		MutacionReal mutacionReal = new MutacionReal(0, (float)Math.PI);
 
-		a_genetico.inicializa(ranking, DU, mutacionReal, PROBLEMA);
+		//INICIALIZACION DEL ALGORITMO GENETICO, Aquí se eligen los metodos de cruce seleccion y mutacion
+		a_genetico.inicializa(ranking, aritmetico, mutacionReal, PROBLEMA);
 		
 		ArrayList<ACromosoma> elite=new ArrayList<ACromosoma>();
 
