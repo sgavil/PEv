@@ -32,17 +32,22 @@ public class Main {
 
 		
 		
+		//Selecciones
 		Ruleta ruleta = new Ruleta();
 		Torneos torneos = new Torneos(2,MAXIMIZAR);
 		EstocasticoUniversal estocasticoUniversal = new EstocasticoUniversal();
 		Ranking ranking = new Ranking(1.5f);
 		
+		//Cruces
 		Monopunto mono = new Monopunto();
 		DiscretoUniforme DU=new DiscretoUniforme();
+		Uniforme uni=new Uniforme();
+		
+		//Mutaciones
 		MutacionBoolean mutacion = new MutacionBoolean();
 		MutacionReal mutacionReal = new MutacionReal(0, (float)Math.PI);
 
-		a_genetico.inicializa(ranking, mono, mutacionReal, PROBLEMA);
+		a_genetico.inicializa(ranking, DU, mutacionReal, PROBLEMA);
 		
 		ArrayList<ACromosoma> elite=new ArrayList<ACromosoma>();
 

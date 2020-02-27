@@ -44,6 +44,10 @@ public class DiscretoUniforme implements ICruce {
 			hijo1 = new CromosomaF4();
 			hijo2 = new CromosomaF4();
 		}
+		else if(problema == "P2") {
+			hijo1 = new CromosomaP2();
+			hijo2 = new CromosomaP2();
+		}
 		
 		hijo1.inicializa_cromosoma();
 		hijo2.inicializa_cromosoma();
@@ -86,6 +90,10 @@ public class DiscretoUniforme implements ICruce {
 				poblacion.set(seleccionCruce[i], new CromosomaF4(hijo1));
 				poblacion.set(seleccionCruce[i + 1], new CromosomaF4(hijo2));
 			}
+			else if(problema == "P2") {
+				poblacion.set(seleccionCruce[i], new CromosomaP2(hijo1));
+				poblacion.set(seleccionCruce[i + 1], new CromosomaP2(hijo2));
+			}
 		}
 		
 		// Una vez hecho el cruce, se evalua
@@ -95,39 +103,22 @@ public class DiscretoUniforme implements ICruce {
 
 	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2) {
 	
-	for (int i = 0; i <padre1.getCodificacion().size();i++) {
+	for (int i = 0; i <padre1.get_genes().size();i++) {
 		// Creamos una prob aleatoria enter [0,1)
 		float prob = (float) Math.random();
 		if (prob < 0.1f) {
-			hijo1.getCodificacion().set(i, padre2.getCodificacion().get(i));
-			hijo2.getCodificacion().set(i, padre1.getCodificacion().get(i));
+			hijo1.get_genes().set(i, padre2.get_genes().get(i));
+			hijo2.get_genes().set(i, padre1.get_genes().get(i));
 		}
 		else
 		{
-			hijo1.getCodificacion().set(i, padre1.getCodificacion().get(i));
-			hijo2.getCodificacion().set(i, padre2.getCodificacion().get(i));
+			hijo1.get_genes().set(i, padre1.get_genes().get(i));
+			hijo2.get_genes().set(i, padre2.get_genes().get(i));
 		}
 	}
 		/* Actualizamos los genes */
-		int comienzo = 0;
-		for (int i = 0; i < hijo1.get_genes().size(); i++) {
-			/* Cogemos el tamanio del gen */
-			TGen gen = (TGen) hijo1.get_genes().get(i);
-			int tam = gen.getGenotipo().size();
-			/* Trasladamos el Array */
-			actualizarGen(hijo1, tam, comienzo, i);
-			actualizarGen(hijo2, tam, comienzo, i);
-			comienzo += tam;
-
-		}
 		// Una vez hecho el cruce, se evalua
 		hijo1.set_aptitud(hijo1.evaluar());
 		hijo2.set_aptitud(hijo2.evaluar());
-	}
-
-	private void actualizarGen(ACromosoma cromosoma, int tam, int comienzo, int gen) {
-		for (int i = 0; i < tam; i++) {
-			((TGen) cromosoma.get_genes().get(gen)).getGenotipo().set(i, cromosoma.getCodificacion().get(i + comienzo));
-		}
 	}
 }

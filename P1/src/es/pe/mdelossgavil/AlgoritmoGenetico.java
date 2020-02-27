@@ -254,6 +254,8 @@ public class AlgoritmoGenetico {
 					elite.add(new CromosomaF3(poblacion.get(i)));
 				else if (problemaActual.equals("F4"))
 					elite.add(new CromosomaF4(poblacion.get(i)));
+				else if (problemaActual.equals("P2"))
+					elite.add(new CromosomaP2(poblacion.get(i)));
 			}
 			else
 			{
@@ -266,6 +268,8 @@ public class AlgoritmoGenetico {
 					elite.add(new CromosomaF3(poblacion.get(poblacion.size()-1-i)));
 				else if (problemaActual.equals("F4"))
 					elite.add(new CromosomaF4(poblacion.get(poblacion.size()-1-i)));
+				else if (problemaActual.equals("P2"))
+					elite.add(new CromosomaP2(poblacion.get(poblacion.size()-1-i)));
 			}
 		}
 		
@@ -292,6 +296,8 @@ public class AlgoritmoGenetico {
 					poblacion.set(poblacion.size()-1-i, new CromosomaF3(elite.get(i)));
 				else if (problemaActual.equals("F4"))
 					poblacion.set(poblacion.size()-1-i, new CromosomaF4(elite.get(i)));
+				else if (problemaActual.equals("P2"))
+					poblacion.set(poblacion.size()-1-i, new CromosomaP2(elite.get(i)));
 			}
 		}
 		else
@@ -307,6 +313,8 @@ public class AlgoritmoGenetico {
 					poblacion.set(i, new CromosomaF3(elite.get(i)));
 				else if (problemaActual.equals("F4"))
 					poblacion.set(i, new CromosomaF4(elite.get(i)));
+				else if (problemaActual.equals("P2"))
+					poblacion.set(i, new CromosomaP2(elite.get(i)));
 			}
 		}
 	}
