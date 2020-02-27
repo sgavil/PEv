@@ -51,7 +51,7 @@ public class Main {
 
 		//INICIALIZACION DEL ALGORITMO GENETICO, Aquí se eligen los metodos de cruce seleccion y mutacion
 		
-		a_genetico.inicializa(torneos, BLXalpha, mutacionReal, PROBLEMA);
+		a_genetico.inicializa(torneos, uni, mutacionReal, PROBLEMA);
 		
 		////////////////////////////////////////////////////////////////
 		

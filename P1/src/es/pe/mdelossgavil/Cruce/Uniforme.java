@@ -44,6 +44,10 @@ public class Uniforme implements ICruce {
 			hijo1 = new CromosomaF4();
 			hijo2 = new CromosomaF4();
 		}
+		else if(problema == "P2") {
+			hijo1 = new CromosomaP2();
+			hijo2 = new CromosomaP2();
+		}
 		
 		hijo1.inicializa_cromosoma();
 		hijo2.inicializa_cromosoma();
@@ -70,27 +74,10 @@ public class Uniforme implements ICruce {
 			ACromosoma padre2 = poblacion.get(seleccionCruce[i + 1]);
 			Cruce(padre1, padre2, hijo1, hijo2);
 			
-			if (problema == "F1") {
-				poblacion.set(seleccionCruce[i], new CromosomaF1(hijo1));
-				poblacion.set(seleccionCruce[i + 1], new CromosomaF1(hijo2));
-			}
-			else if(problema == "F2") {
-				poblacion.set(seleccionCruce[i], new CromosomaF2(hijo1));
-				poblacion.set(seleccionCruce[i + 1], new CromosomaF2(hijo2));
-			}
-			else if(problema == "F3") {
-				poblacion.set(seleccionCruce[i], new CromosomaF3(hijo1));
-				poblacion.set(seleccionCruce[i + 1], new CromosomaF3(hijo2));
-			}
-			else if(problema == "F4") {
-				poblacion.set(seleccionCruce[i], new CromosomaF4(hijo1));
-				poblacion.set(seleccionCruce[i + 1], new CromosomaF4(hijo2));
-			}
+			poblacion.set(seleccionCruce[i], hijo1);
+			poblacion.set(seleccionCruce[i + 1], hijo2);
 		}
 		
-		// Una vez hecho el cruce, se evalua
-		hijo1.set_aptitud(hijo1.evaluar());
-		hijo2.set_aptitud(hijo2.evaluar());
 	}
 
 	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2) {

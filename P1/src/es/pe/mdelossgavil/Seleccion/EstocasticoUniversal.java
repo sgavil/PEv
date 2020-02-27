@@ -43,6 +43,8 @@ public class EstocasticoUniversal implements ISeleccion {
 				nueva_pob.add(new CromosomaF3(poblacion.get(k)));
 			else if (tipoProblema.equals("F4"))
 				nueva_pob.add(new CromosomaF4(poblacion.get(k)));
+			else if (tipoProblema.equals("P2"))
+				nueva_pob.add(new CromosomaF4(poblacion.get(k)));
 		}
 
 		// TODO Auto-generated method stub

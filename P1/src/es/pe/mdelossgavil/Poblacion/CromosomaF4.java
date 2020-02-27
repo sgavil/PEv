@@ -78,32 +78,7 @@ public class CromosomaF4 extends ACromosoma {
 		return funcion(x);
 	}
 
-	/**
-	 * @return el valor en decimal de la cadena de booleanos para poder calcular el
-	 *         fenotipo
-	 */
-	@Override
-	protected int bin2dec(int comienzo, int lgen) {
-		/* Creamos el array binario */
-
-		int ret[] = new int[lgen];
-
-		for (int i = 0; i < lgen; i++) {
-			if ((Boolean) getCodificacion().get(i + comienzo))
-				ret[i] = 1;
-			else
-				ret[i] = 0;
-
-		}
-
-		/* Juntamos la cadena en un solo numero */
-		int result = 0;
-		for (int i = 0; i < ret.length; i++)
-			result += Math.pow(10, i) * ret[ret.length - i - 1];
-
-		return Integer.parseInt(Integer.toString(result), 2);
-	}
-
+	
 	/**
 	 * Inicializa todos los genes con valores aleatorios Al ser el un problema donde
 	 * trabajamos con cadenas binarias, usaremos el tipo Bolean
