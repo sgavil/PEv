@@ -158,7 +158,7 @@ public class AlgoritmoGenetico {
 	}
 
 	public float get_aptitud_media() {
-		int total = 0;
+		float total = 0;
 		for (int i = 0; i < poblacion.size(); i++) {
 			total += poblacion.get(i).get_aptitud();
 		}
