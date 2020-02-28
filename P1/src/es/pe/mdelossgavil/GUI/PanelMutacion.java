@@ -24,7 +24,7 @@ public class PanelMutacion extends JPanel {
 		
 		probMut = new JTextField();
 		probMut.setHorizontalAlignment(SwingConstants.CENTER);
-		probMut.setText("0");
+		probMut.setText("5");
 		add(probMut);
 		probMut.setColumns(10);
 

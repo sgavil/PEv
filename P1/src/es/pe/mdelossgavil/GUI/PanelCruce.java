@@ -53,7 +53,7 @@ public class PanelCruce extends JPanel {
 		add(probCruceLabel);
 		
 		probCruce = new JTextField();
-		probCruce.setText("0");
+		probCruce.setText("60");
 		probCruce.setHorizontalAlignment(SwingConstants.CENTER);
 		add(probCruce);
 		probCruce.setColumns(10);

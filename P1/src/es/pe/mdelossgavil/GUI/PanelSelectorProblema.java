@@ -31,7 +31,7 @@ public class PanelSelectorProblema extends JPanel {
 		add(lblNewLabel);
 		
 		problemaBox= new JComboBox();
-		problemaBox.setModel(new DefaultComboBoxModel(new String[] {"Funci\u00F3n 1", "Funci\u00F3n 2: H\u00F6lder Table", "Funci\u00F3n 3: Schubert", "Funci\u00F3n 4: Michalewicz", "Michalewicz ( Reales )", " "}));
+		problemaBox.setModel(new DefaultComboBoxModel(new String[] {"Funci\u00F3n 1", "Funci\u00F3n 2: H\u00F6lder Table", "Funci\u00F3n 3: Schubert", "Funci\u00F3n 4: Michalewicz", "Michalewicz ( Reales )"}));
 		problemaBox.setSelectedIndex(0);
 		add(problemaBox);
 		
