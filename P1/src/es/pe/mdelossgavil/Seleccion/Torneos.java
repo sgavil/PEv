@@ -54,7 +54,6 @@ public class Torneos implements ISeleccion {
 
 			for (int j = 0; j < k; j++) {
 				int rnd = (int) (Math.random() * (poblacion.size() - 1) + 1);
-				System.out.println(rnd);
 				ACromosoma individuo = poblacion.get(rnd);
 				if (maximizar && individuo.get_aptitud() > c.get_aptitud()) {
 					c = individuo;

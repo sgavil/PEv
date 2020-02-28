@@ -11,7 +11,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 
 public class PanelOtros extends JPanel {
-	private JTextField textField;
+	public JTextField valElitismo;
+	public JCheckBox checkMaximizar;
 
 	/**
 	 * Create the panel.
@@ -24,19 +25,19 @@ public class PanelOtros extends JPanel {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setText("0");
-		add(textField);
-		textField.setColumns(10);
+		valElitismo = new JTextField();
+		valElitismo.setHorizontalAlignment(SwingConstants.CENTER);
+		valElitismo.setText("0");
+		add(valElitismo);
+		valElitismo.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Maximizar");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel_1);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("");
-		chckbxNewCheckBox.setHorizontalAlignment(SwingConstants.LEFT);
-		add(chckbxNewCheckBox);
+		checkMaximizar = new JCheckBox("");
+		checkMaximizar.setHorizontalAlignment(SwingConstants.LEFT);
+		add(checkMaximizar);
 
 	}
 

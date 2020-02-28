@@ -23,7 +23,9 @@ import javax.swing.JTextField;
 
 public class PanelPoblacion extends JPanel {
 	public JSpinner pobSpinner;
-	private JTextField toleranciaTF;
+	public JSpinner genSpinner;
+	
+	public JTextField toleranciaTF;
 
 	
 	/**
@@ -47,7 +49,7 @@ public class PanelPoblacion extends JPanel {
 		GeneracionesLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		add(GeneracionesLabel);
 
-		JSpinner genSpinner = new JSpinner();
+		genSpinner = new JSpinner();
 		genSpinner.setModel(new SpinnerNumberModel(new Integer(100), new Integer(0), null, new Integer(1)));
 		add(genSpinner);
 

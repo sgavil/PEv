@@ -5,105 +5,190 @@ import java.util.ArrayList;
 import javax.swing.*;
 //import org.math.plot.*;
 
+import org.omg.CORBA.portable.IndirectionException;
+
 import es.pe.mdelossgavil.Cruce.*;
 import es.pe.mdelossgavil.GUI.P1Frame;
 import es.pe.mdelossgavil.Graficas.Grafica;
 import es.pe.mdelossgavil.Mutacion.*;
-import es.pe.mdelossgavil.Poblacion.ACromosoma;
+import es.pe.mdelossgavil.Poblacion.*;
 import es.pe.mdelossgavil.Seleccion.*;
 
 public class Main {
 
-
-	public static final int TAM_POB = 100;
-	public static final int N_GENERACIONES = 100;
+	public static int TAM_POB = 100;
+	public static int N_GENERACIONES = 100;
 	public static boolean MAXIMIZAR = false;
 
 	public static String PROBLEMA = "P2";
-	
-	
-	public static boolean ELITISMO= false;
-	public static int tamElite=5;
+
+	public static boolean INICIAR_ALGORITMO = false;
+
+	public static float ELITISMO = 0f;
+
+	static double[] iteraciones;
+	static double[] graficaMejorAbs;
+	static double[] graficaMedia;
+	static double[] graficaMejorRelativo;
+
+	static P1Frame p1frame;
+
+	public static String SELECCION;
+	public static String CRUCE;
+
+	private static JTextArea textResultado;
+
 	public static void main(String[] args) {
 
-		AlgoritmoGenetico a_genetico = new AlgoritmoGenetico(TAM_POB, N_GENERACIONES,MAXIMIZAR);
-		double[] iteraciones = new double[N_GENERACIONES];
-		double[] graficaMejorAbs = new double[N_GENERACIONES];
-		double[] graficaMedia = new double[N_GENERACIONES];
-		double[] graficaMejorRelativo = new double[N_GENERACIONES];
+		p1frame = new P1Frame();
+		p1frame.show();
 
-		
-		
-		//Selecciones
-		Ruleta ruleta = new Ruleta();
-		Torneos torneos = new Torneos(2,MAXIMIZAR);
-		EstocasticoUniversal estocasticoUniversal = new EstocasticoUniversal();
-		Ranking ranking = new Ranking(1.5f);
-		
-		//Cruces
-		Monopunto mono = new Monopunto();
-		DiscretoUniforme DU=new DiscretoUniforme();
-		Uniforme uni=new Uniforme();
-		Aritmetico aritmetico = new Aritmetico(0.6f);
-		BLXAlpha BLXalpha = new BLXAlpha();
-		
-		//Mutaciones
-		MutacionBoolean mutacion = new MutacionBoolean();
-		MutacionReal mutacionReal = new MutacionReal(0, (float)Math.PI);
+	}
 
-		//INICIALIZACION DEL ALGORITMO GENETICO, Aquí se eligen los metodos de cruce seleccion y mutacion
-		
-		a_genetico.inicializa(torneos, uni, mutacionReal, PROBLEMA);
-		
+	public static void iniciaAlgoritmo() {
+
+		// Panel de poblacion
+		TAM_POB = (Integer) p1frame.pPoblacion.pobSpinner.getValue();
+		N_GENERACIONES = (Integer) p1frame.pPoblacion.genSpinner.getValue();
+
+		// Panel de otros
+		MAXIMIZAR = p1frame.pOtros.checkMaximizar.isSelected();
+
+		// Panel seleccion
+		ISeleccion iSeleccion = null;
+
+		if (SELECCION.equals("Ruleta"))
+			iSeleccion = new Ruleta();
+
+		else if (SELECCION.equals("Estocástico Universal"))
+			iSeleccion = new EstocasticoUniversal();
+
+		else if (SELECCION.equals("Torneos"))
+			iSeleccion = new Torneos(2, MAXIMIZAR);
+
+		else if (SELECCION.equals("Ranking"))
+			iSeleccion = new Ranking(1.5f);
+
+		// Panel cruce
+		ICruce iCruce = null;
+
+		if (CRUCE.equals("Monopunto"))
+			iCruce = new Monopunto();
+
+		else if (CRUCE.equals("Uniforme"))
+			iCruce = new Uniforme();
+
+		else if (CRUCE.equals("Discreto Uniforme"))
+			iCruce = new DiscretoUniforme();
+
+		else if (CRUCE.equals("Aritmético"))
+			iCruce = new Aritmetico(0.6f);
+
+		else if (CRUCE.equals("BLX-Alpha"))
+			iCruce = new BLXAlpha();
+
+		// PROBABILIDADES
+		AlgoritmoGenetico.prob_cruce = Float.parseFloat((p1frame.pCruce.probCruce.getText())) / 100;
+		AlgoritmoGenetico.prob_mut = Float.parseFloat((p1frame.pMutacion.probMut.getText())) / 100;
+		ELITISMO = Float.parseFloat((p1frame.pOtros.valElitismo.getText())) / 100;
+
+		// Cuadro de texto con resultados
+		textResultado = p1frame.pSelectorProblema.textArea;
+
+		AlgoritmoGenetico a_genetico = new AlgoritmoGenetico(TAM_POB, N_GENERACIONES, MAXIMIZAR);
+
+		AlgoritmoGenetico.tolerancia = Float.parseFloat(p1frame.pPoblacion.toleranciaTF.getText());
+
+		IMutacion iMutacion = null;
+		if (PROBLEMA.equals("P2"))
+			iMutacion = new MutacionReal(0, (float) Math.PI);
+		else
+			iMutacion = new MutacionBoolean();
+
+		// INICIALIZACION DEL ALGORITMO GENETICO
+
+		a_genetico.inicializa(iSeleccion, iCruce, iMutacion, PROBLEMA);
+
 		////////////////////////////////////////////////////////////////
-		
-		ArrayList<ACromosoma> elite=new ArrayList<ACromosoma>();
+
+		ArrayList<ACromosoma> elite = new ArrayList<ACromosoma>();
 
 		a_genetico.evaluar_poblacion();
+
+		// Inicializacion de graficas
+		iteraciones = new double[N_GENERACIONES];
+		graficaMejorAbs = new double[N_GENERACIONES];
+		graficaMedia = new double[N_GENERACIONES];
+		graficaMejorRelativo = new double[N_GENERACIONES];
 
 		int i = 0;
 		while (i < N_GENERACIONES) {
 			iteraciones[i] = i;
-			
-			//Primero separamos los mejores
-			if(ELITISMO)
-				elite=a_genetico.separaMejores(tamElite);
+
+			// Primero separamos los mejores
+			if (ELITISMO >= 0f)
+				elite = a_genetico.separaMejores(ELITISMO);
 			a_genetico.seleccion();
 			a_genetico.cruce();
 			a_genetico.mutacion();
-			
-			//Antes de evaluar incluimos la elite
-			if(ELITISMO)
-			{
+
+			// Antes de evaluar incluimos la elite
+			if (ELITISMO >= 0f) {
 				a_genetico.incluyeElite(elite);
 				elite.clear();
 			}
 			a_genetico.evaluar_poblacion();
-			
-			//Graficas
+
+			// Graficas
 			graficaMejorAbs[i] = a_genetico.mejor_abs.get_aptitud();
 			graficaMedia[i] = a_genetico.get_aptitud_media();
 			graficaMejorRelativo[i] = a_genetico.getEl_mejor().get_aptitud();
 			i++;
 		}
 
-		P1Frame f = new P1Frame();
+		float mejorValor = a_genetico.getEl_mejor().get_aptitud();
+
+		String resultado = "";
 		
+		resultado += "Resultado: " + mejorValor + "\n";
+		
+		if (PROBLEMA.equals("F1")) {
+			resultado += "x1: " +((CromosomaF1)(a_genetico.getEl_mejor())).fenotipo_x1() + ", ";
+			resultado += "x2: " +((CromosomaF1)(a_genetico.getEl_mejor())).fenotipo_x2();
+
+
+		} else if (PROBLEMA.equals("F2")) {
+			resultado += "x1: " +((CromosomaF2)(a_genetico.getEl_mejor())).fenotipo_x1() + ", ";
+			resultado += "x2: " +((CromosomaF2)(a_genetico.getEl_mejor())).fenotipo_x2();
+
+		} else if (PROBLEMA.equals("F3")) {
+			resultado += "x1: " +((CromosomaF3)(a_genetico.getEl_mejor())).fenotipo_x1() + ", ";
+			resultado += "x2: " +((CromosomaF3)(a_genetico.getEl_mejor())).fenotipo_x2();
+
+		} else if (PROBLEMA.equals("F4")) {
+			ArrayList<Float> arr;
+			/*arr = ((CromosomaF4)(a_genetico.getEl_mejor())).getFenotipos();
+			for (int j = 0; j < arr.size(); j++) {
+				resultado += "x"+ j + arr.get(j) + ", ";
+			}*/
+
+		} else if (PROBLEMA.equals("P2")) {
+			for (int j = 0; j < ((CromosomaP2)(a_genetico.getEl_mejor())).get_genes().size(); j++) {
+				((CromosomaP2)(a_genetico.getEl_mejor())).get_genes().get(j).getGenotipo();
+			}
+		}
+		
+		textResultado.setText(resultado);
+	}
+
+	public static void creaGrafica() {
+
 		Grafica grafica = new Grafica(600, 600);
-		grafica.inicializa_grafica(f);
+		grafica.inicializa_grafica();
 		grafica.agregar_linea("Mejor Absoluto", iteraciones, graficaMejorAbs);
-		grafica.agregar_linea("Media", iteraciones, graficaMedia);
 		grafica.agregar_linea("Mejor de cada generación", iteraciones, graficaMejorRelativo);
-		
-		//grafica.pinta_grafica();
-		//System.out.println("EL MILL0R: " + a_genetico.mejor_abs.get_aptitud());
-		
-		f.show();
-		
-		int PERSONAS = (Integer)f.pPoblacion.pobSpinner.getValue();
-		
+		grafica.agregar_linea("Media", iteraciones, graficaMedia);
 
-		
-
+		grafica.pinta_grafica();
 	}
 }

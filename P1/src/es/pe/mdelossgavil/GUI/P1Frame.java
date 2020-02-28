@@ -16,7 +16,14 @@ public class P1Frame extends JFrame {
 	public PanelSeleccion pSeleccion;
 	
 	public PanelPoblacion pPoblacion;
+	
+	public PanelOtros pOtros;
+	
+	public PanelCruce pCruce;
 
+	public PanelMutacion pMutacion;
+	
+	public PanelSelectorProblema pSelectorProblema;
 	/**
 	 * Launch the application.
 	 */
@@ -50,17 +57,17 @@ public class P1Frame extends JFrame {
 		pSeleccion = new PanelSeleccion();
 		contentPane.add(pSeleccion);
 		
-		PanelCruce panelCruce = new PanelCruce();
-		contentPane.add(panelCruce);
+		pCruce = new PanelCruce();
+		contentPane.add(pCruce);
 		
-		PanelMutacion panelMutacion = new PanelMutacion();
-		contentPane.add(panelMutacion);
+		pMutacion = new PanelMutacion();
+		contentPane.add(pMutacion);
 		
-		PanelOtros panelOtros = new PanelOtros();
-		contentPane.add(panelOtros);
+		pOtros = new PanelOtros();
+		contentPane.add(pOtros);
 		
-		PanelSelectorProblema panelSelectorProblema = new PanelSelectorProblema();
-		contentPane.add(panelSelectorProblema);
+		 pSelectorProblema = new PanelSelectorProblema();
+		contentPane.add(pSelectorProblema );
 	}
 
 }

@@ -1,5 +1,8 @@
 package es.pe.mdelossgavil.Graficas;
 
+import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.*;
 import org.math.plot.*;
 
@@ -18,26 +21,29 @@ public class Grafica extends JPanel{
 		
 	}
 
-	public void inicializa_grafica(JFrame frame) {
+	public void inicializa_grafica() {
 		// create your PlotPanel (you can use it as a JPanel)
 		plot = new Plot2DPanel();
 
 		// define the legend position
 		plot.addLegend("SOUTH");
 
-		this.frame = frame;
-		//this.frame.setContentPane(plot);
-		/*
+		
+		
 		// put the PlotPanel in a JFrame like a JPanel
 		frame = new JFrame("a plot panel");
 		frame.setSize(width, height);
-		frame.setContentPane(plot);*/
+		frame.setContentPane(plot);
+		
+		plot.setAxisLabel(0, "Generaciones");
+
 	}
 
 	public void agregar_linea(String titulo,double[]x,double[]y) {
 		plot.addLinePlot(titulo, x, y);
 
 	}
+	
 	public void pinta_grafica() {
 		frame.setVisible(true);
 

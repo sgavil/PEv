@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.border.TitledBorder;
+
+import es.pe.mdelossgavil.Main;
+
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -32,9 +35,13 @@ public class PanelSeleccion extends JPanel {
 		setLayout(new GridLayout(0, 1, 0, 0));
 		
 		seleccionBox = new JComboBox();
-		seleccionBox.setModel(new DefaultComboBoxModel(new String[] {" Ruleta", " Estoc\u00E1stico Universal", " Torneos", " Ranking"}));
+		seleccionBox.setModel(new DefaultComboBoxModel(new String[] {"Ruleta", "Estoc\u00E1stico Universal", "Torneos", "Ranking"}));
+		seleccionBox.setSelectedIndex(0);
 		seleccionBox.setRenderer(listRenderer);
 		add(seleccionBox);
+		
+		Main.SELECCION = "Ruleta";
+
 		
 		seleccionBox.addActionListener(new ActionListener() {
 			
@@ -42,8 +49,7 @@ public class PanelSeleccion extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox metodoSeleccionBox = (JComboBox )(e.getSource());
 				String metodoSeleccion = (String)metodoSeleccionBox.getSelectedItem();
-				System.out.println(metodoSeleccion);
-				
+				Main.SELECCION = metodoSeleccion;
 			}
 		});
 		

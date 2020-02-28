@@ -9,7 +9,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
 public class PanelMutacion extends JPanel {
-	private JTextField textField;
+	public JTextField probMut;
 
 	/**
 	 * Create the panel.
@@ -22,11 +22,11 @@ public class PanelMutacion extends JPanel {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setText("0");
-		add(textField);
-		textField.setColumns(10);
+		probMut = new JTextField();
+		probMut.setHorizontalAlignment(SwingConstants.CENTER);
+		probMut.setText("0");
+		add(probMut);
+		probMut.setColumns(10);
 
 	}
 

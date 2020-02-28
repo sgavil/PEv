@@ -49,9 +49,9 @@ public class AlgoritmoGenetico {
 	}
 
 	private int pos_mejor;
-	private float prob_cruce = 0.6f;
-	private float prob_mut = 0.05f;
-	public static float tolerancia = 0.001f;
+	public static float prob_cruce;
+	public static float prob_mut ;
+	public static float tolerancia;
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Selección, Cruce y Mutación
@@ -232,8 +232,10 @@ public class AlgoritmoGenetico {
 		}
 	}
 	
-	public ArrayList<ACromosoma> separaMejores(int tamElite)
+	public ArrayList<ACromosoma> separaMejores(float porcElitismo)
 	{
+		
+		int tamElite = (int)(poblacion.size() * porcElitismo);
 		
 		//Primero ordenamos la seleccion
 		Collections.sort(poblacion,new CromosomaComparator());
