@@ -146,39 +146,43 @@ public class Main {
 			i++;
 		}
 
-		float mejorValor = a_genetico.getEl_mejor().get_aptitud();
+		float mejorValor = a_genetico.mejor_abs.get_aptitud();
 
 		String resultado = "";
 		
 		resultado += "Resultado: " + mejorValor + "\n";
 		
 		if (PROBLEMA.equals("F1")) {
-			resultado += "x1: " +((CromosomaF1)(a_genetico.getEl_mejor())).fenotipo_x1() + ", ";
-			resultado += "x2: " +((CromosomaF1)(a_genetico.getEl_mejor())).fenotipo_x2();
+			resultado += "x1: " +((CromosomaF1)(a_genetico.mejor_abs)).fenotipo_x1() + ", ";
+			resultado += "x2: " +((CromosomaF1)(a_genetico.mejor_abs)).fenotipo_x2();
 
 
 		} else if (PROBLEMA.equals("F2")) {
-			resultado += "x1: " +((CromosomaF2)(a_genetico.getEl_mejor())).fenotipo_x1() + ", ";
-			resultado += "x2: " +((CromosomaF2)(a_genetico.getEl_mejor())).fenotipo_x2();
+			resultado += "x1: " +((CromosomaF2)(a_genetico.mejor_abs)).fenotipo_x1() + ", ";
+			resultado += "x2: " +((CromosomaF2)(a_genetico.mejor_abs)).fenotipo_x2();
 
 		} else if (PROBLEMA.equals("F3")) {
-			resultado += "x1: " +((CromosomaF3)(a_genetico.getEl_mejor())).fenotipo_x1() + ", ";
-			resultado += "x2: " +((CromosomaF3)(a_genetico.getEl_mejor())).fenotipo_x2();
+			resultado += "x1: " +((CromosomaF3)(a_genetico.mejor_abs)).fenotipo_x1() + ", ";
+			resultado += "x2: " +((CromosomaF3)(a_genetico.mejor_abs)).fenotipo_x2();
 
 		} else if (PROBLEMA.equals("F4")) {
 			ArrayList<Float> arr;
-			/*arr = ((CromosomaF4)(a_genetico.getEl_mejor())).getFenotipos();
+			arr = ((CromosomaF4)(a_genetico.mejor_abs)).getFenotipos();
 			for (int j = 0; j < arr.size(); j++) {
-				resultado += "x"+ j + arr.get(j) + ", ";
-			}*/
+				resultado += "x"+ j + ":" + arr.get(j) + ", ";
+			}
 
-		} else if (PROBLEMA.equals("P2")) {
-			for (int j = 0; j < ((CromosomaP2)(a_genetico.getEl_mejor())).get_genes().size(); j++) {
-				((CromosomaP2)(a_genetico.getEl_mejor())).get_genes().get(j).getGenotipo();
+		} 
+		else if (PROBLEMA.equals("P2")) {
+			ArrayList<Float> arr;
+			arr = ((CromosomaP2)(a_genetico.mejor_abs)).getFenotipos();
+			for (int j = 0; j < arr.size(); j++) {
+				resultado += "x"+ j + ":" + arr.get(j) + ", ";
 			}
 		}
 		
 		textResultado.setText(resultado);
+		resultado="";
 	}
 
 	public static void creaGrafica() {

@@ -18,7 +18,7 @@ public class CromosomaF4 extends ACromosoma {
 	static final float Max = (float) Math.PI;
 	static ArrayList<Float> x=new ArrayList<Float>();
 	
-	static final int N=4;
+	static final int N=3;
 
 	// La imagen de la codificación
 
@@ -33,12 +33,36 @@ public class CromosomaF4 extends ACromosoma {
 	public CromosomaF4() {
 		
 	}
+	
+	public ArrayList<Float> getFenotipos(){return this.x;}
 
 	/**
 	 * @return el fenotipo x1 del cromosoma dentro del dominio del problema
 	 */
 	public float fenotipo(int comienzo,int tam) {
 		return (float) (Min + bin2dec(comienzo,tam) * ((Max - Min) / ((Math.pow(2, tam) - 1))));
+	}
+	
+	@Override
+	protected int bin2dec(int comienzo, int lgen) {
+		/* Creamos el array binario */
+
+		int ret[] = new int[lgen];
+
+		for (int i = 0; i < lgen; i++) {
+			if ((Boolean) getCodificacion().get(i + comienzo))
+				ret[i] = 1;
+			else
+				ret[i] = 0;
+
+		}
+
+		/* Juntamos la cadena en un solo numero */
+		int result = 0;
+		for (int i = 0; i < ret.length; i++)
+			result += Math.pow(10, i) * ret[ret.length - i - 1];
+
+		return Integer.parseInt(Integer.toString(result), 2);
 	}
 
 	/**
@@ -69,14 +93,15 @@ public class CromosomaF4 extends ACromosoma {
 	public float evaluar() {
 		actualiza_codificacion();
 		
-		ArrayList<Float> x=new ArrayList<Float>();
+		ArrayList<Float> x_=new ArrayList<Float>();
 		for(int i=0;i<N;i++)
 		{
 			int comienzo=0;
 			for(int j=0;j<i;j++)comienzo+=((TGen<Boolean>) genes.get(j)).getGenotipo().size();
-			x.add(fenotipo(comienzo, ((TGen<Boolean>) genes.get(i)).getGenotipo().size()));
+			x_.add(fenotipo(comienzo, ((TGen<Boolean>) genes.get(i)).getGenotipo().size()));
 		}
-		return funcion(x);
+		this.x=x_;
+		return funcion(x_);
 	}
 
 	
