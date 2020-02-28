@@ -6,12 +6,14 @@ import javax.swing.*;
 //import org.math.plot.*;
 
 import es.pe.mdelossgavil.Cruce.*;
+import es.pe.mdelossgavil.GUI.P1Frame;
 import es.pe.mdelossgavil.Graficas.Grafica;
 import es.pe.mdelossgavil.Mutacion.*;
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
 import es.pe.mdelossgavil.Seleccion.*;
 
 public class Main {
+
 
 	public static final int TAM_POB = 100;
 	public static final int N_GENERACIONES = 100;
@@ -85,14 +87,21 @@ public class Main {
 			i++;
 		}
 
+		P1Frame f = new P1Frame();
+		
 		Grafica grafica = new Grafica(600, 600);
-		grafica.inicializa_grafica();
+		grafica.inicializa_grafica(f);
 		grafica.agregar_linea("Mejor Absoluto", iteraciones, graficaMejorAbs);
 		grafica.agregar_linea("Media", iteraciones, graficaMedia);
 		grafica.agregar_linea("Mejor de cada generación", iteraciones, graficaMejorRelativo);
 		
-		grafica.pinta_grafica();
-		System.out.println("EL MILL0R: " + a_genetico.mejor_abs.get_aptitud());
+		//grafica.pinta_grafica();
+		//System.out.println("EL MILL0R: " + a_genetico.mejor_abs.get_aptitud());
+		
+		f.show();
+		
+		int PERSONAS = (Integer)f.pPoblacion.pobSpinner.getValue();
+		
 
 		
 
