@@ -44,6 +44,7 @@ public class P1Frame extends JFrame {
 	 * Create the frame.
 	 */
 	public P1Frame() {
+		setTitle("Pr\u00E1ctica 1 - G10");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

@@ -31,7 +31,7 @@ public class Grafica extends JPanel{
 		
 		
 		// put the PlotPanel in a JFrame like a JPanel
-		frame = new JFrame("a plot panel");
+		frame = new JFrame("Resultados del Algoritmo Genético");
 		frame.setSize(width, height);
 		frame.setContentPane(plot);
 		

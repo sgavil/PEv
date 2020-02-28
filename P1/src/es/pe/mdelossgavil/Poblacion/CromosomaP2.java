@@ -16,7 +16,7 @@ public class CromosomaP2 extends ACromosoma{
 		
 		static final int N=3;
 		
-		ArrayList<Float> x=new ArrayList<Float>();
+		ArrayList<Float> x;
 
 		// La imagen de la codificación
 
@@ -32,7 +32,10 @@ public class CromosomaP2 extends ACromosoma{
 			
 		}
 		
-		public ArrayList<Float> getFenotipos(){return this.x;}
+		public ArrayList<Float> getFenotipos(){
+			evaluar();
+			return this.x;
+			}
 		/**
 		 * @return el fenotipo del cromosoma dentro del dominio del problema
 		 */
@@ -68,12 +71,14 @@ public class CromosomaP2 extends ACromosoma{
 		public float evaluar() {
 			actualiza_codificacion();
 			
-			ArrayList<Float> x_=new ArrayList<Float>();
+			x = new ArrayList<Float>();
+			
+			//ArrayList<Float> x_=new ArrayList<Float>();
 			for(int i=0;i<N;i++)
 			{
-				x_.add(fenotipo(i));
+				x.add(fenotipo(i));
 			}
-			this.x=x_;
+			//this.x=x_;
 			return funcion(x);
 		}
 
