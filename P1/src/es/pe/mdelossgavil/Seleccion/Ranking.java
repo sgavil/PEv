@@ -22,7 +22,7 @@ public class Ranking implements ISeleccion {
 	}
 
 	@Override
-	public ArrayList<ACromosoma> hacer_seleccion(ArrayList<ACromosoma> poblacion, String tipoProblema) {
+	public void  hacer_seleccion(ArrayList<ACromosoma> poblacion, String tipoProblema) {
 		probabilidades = new double[poblacion.size()];
 
 		ordenar_poblacion(poblacion);
@@ -54,7 +54,6 @@ public class Ranking implements ISeleccion {
 				nueva_pob.add(new CromosomaP2(poblacion.get(k)));
 		}
 
-		return nueva_pob;
 	}
 
 	private void ordenar_poblacion(ArrayList<ACromosoma> poblacion) {

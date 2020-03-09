@@ -11,7 +11,7 @@ import es.pe.mdelossgavil.Seleccion.*;
 
 public class AlgoritmoGenetico {
 
-	public AlgoritmoGenetico(int tam_poblacion, int generaciones,boolean maximizar) {
+	public AlgoritmoGenetico(int tam_poblacion, int generaciones, boolean maximizar) {
 		tam_pob = tam_poblacion;
 		num_max_gen = generaciones;
 		this.maximizar = maximizar;
@@ -50,7 +50,7 @@ public class AlgoritmoGenetico {
 
 	private int pos_mejor;
 	public static float prob_cruce;
-	public static float prob_mut ;
+	public static float prob_mut;
 	public static float tolerancia;
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -89,51 +89,44 @@ public class AlgoritmoGenetico {
 	/**
 	 * Evalua la población y elige al mejor individuo
 	 */
-	public void evaluar_poblacion() 
-	{
+	public void evaluar_poblacion() {
 		float punt_acum = 0;
 		float aptitud_mejor;
 
 		float suma_aptitud = 0;
 
 		ACromosoma individuoActual;
-		
-		if(maximizar)
-		aptitud_mejor = Float.MIN_VALUE;
+
+		if (maximizar)
+			aptitud_mejor = Float.MIN_VALUE;
 		else
 			aptitud_mejor = Float.MAX_VALUE;
-
 
 		/*
 		 * Primero hacemos un for para tener la suma de las aptitudes y la mejor aptitud
 		 * de todas
 		 */
-		for (int i = 0; i < tam_pob; i++) 
-		{
+		for (int i = 0; i < tam_pob; i++) {
 			individuoActual = poblacion.get(i);
 			suma_aptitud += individuoActual.get_aptitud();
 
-			if(maximizar) {
-				if (individuoActual.get_aptitud() > aptitud_mejor) 
-				{
+			if (maximizar) {
+				if (individuoActual.get_aptitud() > aptitud_mejor) {
+					pos_mejor = i;
+					aptitud_mejor = individuoActual.get_aptitud();
+					el_mejor = individuoActual;
+				}
+			} else {
+				if (individuoActual.get_aptitud() < aptitud_mejor) {
 					pos_mejor = i;
 					aptitud_mejor = individuoActual.get_aptitud();
 					el_mejor = individuoActual;
 				}
 			}
-			else {
-				if (individuoActual.get_aptitud() < aptitud_mejor) 
-				{
-					pos_mejor = i;
-					aptitud_mejor = individuoActual.get_aptitud();
-					el_mejor = individuoActual;
-				}
-			}
-			
+
 		}
 
-		for (int j = 0; j < tam_pob; j++) 
-		{
+		for (int j = 0; j < tam_pob; j++) {
 			// Calculamos la puntuación del individuo y su puntuación acumulada
 			float puntuacion = poblacion.get(j).get_aptitud() / suma_aptitud;
 
@@ -142,19 +135,18 @@ public class AlgoritmoGenetico {
 
 			// Actualizamos la puntuación acumulada general
 			punt_acum += puntuacion;
-			
+
 		}
-		if(maximizar) {
+		if (maximizar) {
 			if (el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
 				mejor_abs = el_mejor;
 			}
-		}
-		else {
+		} else {
 			if (el_mejor.get_aptitud() < mejor_abs.get_aptitud()) {
 				mejor_abs = el_mejor;
 			}
 		}
-		
+
 	}
 
 	public float get_aptitud_media() {
@@ -169,14 +161,72 @@ public class AlgoritmoGenetico {
 	 * Proceso de selección
 	 */
 	public void seleccion() {
-		poblacion = metodo_seleccion.hacer_seleccion(poblacion,problemaActual);
+		metodo_seleccion.hacer_seleccion(poblacion, problemaActual);
 	}
 
 	/**
 	 * Proceso de cruce
 	 */
 	public void cruce() {
-		metodo_cruce.reproduccion(poblacion, problemaActual, prob_cruce);
+
+		int tam_pob = poblacion.size();
+		int seleccionCruce[] = new int[tam_pob];
+
+		// Contador seleccionados
+		int num_sele_cruce = 0;
+		int punto_cruce;
+		float prob;
+
+		ACromosoma hijo1 = null, hijo2 = null;
+
+		for (int i = 0; i < tam_pob; i++) {
+			// Creamos una prob aleatoria entre [0,1)
+			prob = (float) Math.random();
+
+			// En caso de que sea menos a la prob de Cruce
+			// se escoge a ese invididuo para cruzarse
+			if (prob < prob_cruce) {
+				seleccionCruce[num_sele_cruce] = i;
+				num_sele_cruce++;
+			}
+		}
+
+		// El numero de seleccionados se hace par
+		if (num_sele_cruce % 2 == 1)
+			num_sele_cruce--;
+
+		for (int i = 0; i < num_sele_cruce; i += 2) {
+
+			/* Cogemos el tipo de Cromosoma del problema */
+			if (problemaActual == "F1") {
+				hijo1 = new CromosomaF1();
+				hijo2 = new CromosomaF1();
+			} else if (problemaActual == "F2") {
+				hijo1 = new CromosomaF2();
+				hijo2 = new CromosomaF2();
+			} else if (problemaActual == "F3") {
+				hijo1 = new CromosomaF3();
+				hijo2 = new CromosomaF3();
+			} else if (problemaActual == "F4") {
+				hijo1 = new CromosomaF4();
+				hijo2 = new CromosomaF4();
+			} else if (problemaActual == "P2") {
+				hijo1 = new CromosomaP2();
+				hijo2 = new CromosomaP2();
+			}
+
+			hijo1.inicializa_cromosoma();
+			hijo2.inicializa_cromosoma();
+
+			ACromosoma padre1 = poblacion.get(seleccionCruce[i]);
+			ACromosoma padre2 = poblacion.get(seleccionCruce[i + 1]);
+
+			metodo_cruce.reproduccion(padre1, padre2, hijo1, hijo2);
+
+			poblacion.set(seleccionCruce[i], hijo1.clone());
+			poblacion.set(seleccionCruce[i + 1], hijo2.clone());
+			
+		}
 	}
 
 	/**
@@ -205,24 +255,21 @@ public class AlgoritmoGenetico {
 			mejor_abs.set_aptitud(Float.MAX_VALUE);
 			maximizar = false;
 			return;
-		}
-		else if (problemaActual.equals("F3")) {
+		} else if (problemaActual.equals("F3")) {
 			TPoblacion<CromosomaF3> pob = new TPoblacion<CromosomaF3>();
 			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF3.class);
 			mejor_abs = new CromosomaF3();
 			mejor_abs.set_aptitud(Float.MAX_VALUE);
 			maximizar = false;
 			return;
-		}
-		else if (problemaActual.equals("F4")) {
+		} else if (problemaActual.equals("F4")) {
 			TPoblacion<CromosomaF4> pob = new TPoblacion<CromosomaF4>();
 			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF4.class);
 			mejor_abs = new CromosomaF4();
 			mejor_abs.set_aptitud(Float.MAX_VALUE);
 			maximizar = false;
 			return;
-		}
-		else if (problemaActual.equals("P2")) {
+		} else if (problemaActual.equals("P2")) {
 			TPoblacion<CromosomaP2> pob = new TPoblacion<CromosomaP2>();
 			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaP2.class);
 			mejor_abs = new CromosomaP2();
@@ -231,22 +278,19 @@ public class AlgoritmoGenetico {
 			return;
 		}
 	}
-	
-	public ArrayList<ACromosoma> separaMejores(float porcElitismo)
-	{
-		
-		int tamElite = (int)(poblacion.size() * porcElitismo);
-		
-		//Primero ordenamos la seleccion
-		Collections.sort(poblacion,new CromosomaComparator());
-		//La lista de los elite que devolveremos
-		ArrayList<ACromosoma> elite=new ArrayList<ACromosoma>();
-		
-		//Metemos los tamElite mejores
-		for(int i=0;i<tamElite;i++)
-		{
-			if(!maximizar)
-			{
+
+	public ArrayList<ACromosoma> separaMejores(float porcElitismo) {
+
+		int tamElite = (int) (poblacion.size() * porcElitismo);
+
+		// Primero ordenamos la seleccion
+		Collections.sort(poblacion, new CromosomaComparator());
+		// La lista de los elite que devolveremos
+		ArrayList<ACromosoma> elite = new ArrayList<ACromosoma>();
+
+		// Metemos los tamElite mejores
+		for (int i = 0; i < tamElite; i++) {
+			if (!maximizar) {
 				// Al llegar al elemento lo guardamos en nuestra selección de población
 				if (problemaActual.equals("F1"))
 					elite.add(new CromosomaF1(poblacion.get(i)));
@@ -258,54 +302,46 @@ public class AlgoritmoGenetico {
 					elite.add(new CromosomaF4(poblacion.get(i)));
 				else if (problemaActual.equals("P2"))
 					elite.add(new CromosomaP2(poblacion.get(i)));
-			}
-			else
-			{
+			} else {
 				// Al llegar al elemento lo guardamos en nuestra selección de población
 				if (problemaActual.equals("F1"))
-					elite.add(new CromosomaF1(poblacion.get(poblacion.size()-1-i)));
+					elite.add(new CromosomaF1(poblacion.get(poblacion.size() - 1 - i)));
 				else if (problemaActual.equals("F2"))
-					elite.add(new CromosomaF2(poblacion.get(poblacion.size()-1-i)));
+					elite.add(new CromosomaF2(poblacion.get(poblacion.size() - 1 - i)));
 				else if (problemaActual.equals("F3"))
-					elite.add(new CromosomaF3(poblacion.get(poblacion.size()-1-i)));
+					elite.add(new CromosomaF3(poblacion.get(poblacion.size() - 1 - i)));
 				else if (problemaActual.equals("F4"))
-					elite.add(new CromosomaF4(poblacion.get(poblacion.size()-1-i)));
+					elite.add(new CromosomaF4(poblacion.get(poblacion.size() - 1 - i)));
 				else if (problemaActual.equals("P2"))
-					elite.add(new CromosomaP2(poblacion.get(poblacion.size()-1-i)));
+					elite.add(new CromosomaP2(poblacion.get(poblacion.size() - 1 - i)));
 			}
 		}
-		
+
 		return elite;
 	}
-	
-	public void incluyeElite(ArrayList<ACromosoma> elite)
-	{
-		
-		//Primero ordenamos la seleccion
-		Collections.sort(poblacion,new CromosomaComparator());
-		//Metemos los tamElite mejores
-		
-		if(!maximizar)
-		{
-			for(int i=0;i<elite.size();i++)
-			{
+
+	public void incluyeElite(ArrayList<ACromosoma> elite) {
+
+		// Primero ordenamos la seleccion
+		Collections.sort(poblacion, new CromosomaComparator());
+		// Metemos los tamElite mejores
+
+		if (!maximizar) {
+			for (int i = 0; i < elite.size(); i++) {
 				// Al llegar al elemento lo guardamos en nuestra selección de población
 				if (problemaActual.equals("F1"))
-					poblacion.set(poblacion.size()-1-i, new CromosomaF1(elite.get(i)));
+					poblacion.set(poblacion.size() - 1 - i, new CromosomaF1(elite.get(i)));
 				else if (problemaActual.equals("F2"))
-					poblacion.set(poblacion.size()-1-i, new CromosomaF2(elite.get(i)));
+					poblacion.set(poblacion.size() - 1 - i, new CromosomaF2(elite.get(i)));
 				else if (problemaActual.equals("F3"))
-					poblacion.set(poblacion.size()-1-i, new CromosomaF3(elite.get(i)));
+					poblacion.set(poblacion.size() - 1 - i, new CromosomaF3(elite.get(i)));
 				else if (problemaActual.equals("F4"))
-					poblacion.set(poblacion.size()-1-i, new CromosomaF4(elite.get(i)));
+					poblacion.set(poblacion.size() - 1 - i, new CromosomaF4(elite.get(i)));
 				else if (problemaActual.equals("P2"))
-					poblacion.set(poblacion.size()-1-i, new CromosomaP2(elite.get(i)));
+					poblacion.set(poblacion.size() - 1 - i, new CromosomaP2(elite.get(i)));
 			}
-		}
-		else
-		{
-			for(int i=0;i<elite.size();i++)
-			{
+		} else {
+			for (int i = 0; i < elite.size(); i++) {
 				// Al llegar al elemento lo guardamos en nuestra selección de población
 				if (problemaActual.equals("F1"))
 					poblacion.set(i, new CromosomaF1(elite.get(i)));
@@ -320,4 +356,5 @@ public class AlgoritmoGenetico {
 			}
 		}
 	}
+
 }

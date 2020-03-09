@@ -1,6 +1,7 @@
 package es.pe.mdelossgavil.Seleccion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
 import es.pe.mdelossgavil.Poblacion.CromosomaF1;
@@ -26,7 +27,7 @@ public class Torneos implements ISeleccion {
 	}
 
 	@Override
-	public ArrayList<ACromosoma> hacer_seleccion(ArrayList<ACromosoma> poblacion, String tipoProblema) {
+	public void hacer_seleccion(ArrayList<ACromosoma> poblacion, String tipoProblema) {
 
 		ArrayList<ACromosoma> nueva_pob = new ArrayList<ACromosoma>();
 
@@ -74,10 +75,11 @@ public class Torneos implements ISeleccion {
 			else if (tipoProblema.equals("P2"))
 				nueva_pob.add(new CromosomaP2(c));
 			
-			
-
+		
 		}
-		return nueva_pob;
+		Collections.copy(poblacion, nueva_pob);
+		
+		
 
 	}
 

@@ -1,6 +1,7 @@
 package es.pe.mdelossgavil.Seleccion;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
 import es.pe.mdelossgavil.Poblacion.CromosomaF1;
@@ -20,7 +21,7 @@ import es.pe.mdelossgavil.Seleccion.ISeleccion;
 public class EstocasticoUniversal implements ISeleccion {
 
 	@Override
-	public ArrayList<ACromosoma> hacer_seleccion(ArrayList<ACromosoma> poblacion, String tipoProblema) {
+	public void hacer_seleccion(ArrayList<ACromosoma> poblacion, String tipoProblema) {
 
 		ArrayList<ACromosoma> nueva_pob = new ArrayList<ACromosoma>();
 
@@ -49,7 +50,7 @@ public class EstocasticoUniversal implements ISeleccion {
 		}
 
 		// TODO Auto-generated method stub
-		return nueva_pob;
+		Collections.copy(poblacion, nueva_pob);
 	}
 
 }

@@ -20,6 +20,9 @@ public class MutacionBoolean implements IMutacion{
 	@Override
 	public void mutar(ArrayList<ACromosoma> poblacion,float probMutacion) {
 				
+		if(probMutacion <= 0f)
+			return;
+		
 		//Recorremos todos los individuos de la población
 		for (int i = 0; i < poblacion.size(); i++) 
 		{

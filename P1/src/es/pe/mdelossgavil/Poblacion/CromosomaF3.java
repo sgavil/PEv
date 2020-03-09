@@ -129,5 +129,10 @@ public class CromosomaF3 extends ACromosoma {
 
 		setCodificacion();
 	}
+	@Override
+	public ACromosoma clone() {
+		// TODO Auto-generated method stub
+		return new CromosomaF3(this);
+	}
 
 }

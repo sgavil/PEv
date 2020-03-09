@@ -135,4 +135,10 @@ public class CromosomaF1 extends ACromosoma{
 		setCodificacion();
 	}	
 
+	@Override
+	public CromosomaF1 clone() {
+		CromosomaF1 c1 = new CromosomaF1(this);
+		return c1;
+		
+	}
 }

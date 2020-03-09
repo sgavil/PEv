@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
+import es.pe.mdelossgavil.Poblacion.CromosomaComparator;
 import es.pe.mdelossgavil.Poblacion.CromosomaF1;
 import es.pe.mdelossgavil.Poblacion.CromosomaF2;
 import es.pe.mdelossgavil.Poblacion.CromosomaF3;
@@ -23,7 +24,7 @@ public class Ruleta implements ISeleccion {
 	}
 
 	@Override
-	public ArrayList<ACromosoma> hacer_seleccion(ArrayList<ACromosoma> poblacion,String tipoProblema) 
+	public void hacer_seleccion(ArrayList<ACromosoma> poblacion,String tipoProblema) 
 	{
 		
 		// Tomamos el número de elementos que se van a seleccionar
@@ -34,6 +35,7 @@ public class Ruleta implements ISeleccion {
 
 		for (int i = 0; i < poblacion.size(); i++) {
 
+			System.out.println(poblacion.get(i).get_punt_acum());
 			// Se genera un random entre 0 y 1
 			float rnd = (float) Math.random();
 
@@ -56,9 +58,8 @@ public class Ruleta implements ISeleccion {
 				nueva_pob.add(new CromosomaP2(poblacion.get(k)));
 
 		}
+		Collections.copy(poblacion, nueva_pob);
 		
-		return nueva_pob;
-
 		
 	}
 

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.swing.*;
 //import org.math.plot.*;
 
-import org.omg.CORBA.portable.IndirectionException;
-
 import es.pe.mdelossgavil.Cruce.*;
 import es.pe.mdelossgavil.GUI.P1Frame;
 import es.pe.mdelossgavil.Graficas.Grafica;
@@ -16,8 +14,8 @@ import es.pe.mdelossgavil.Seleccion.*;
 
 public class Main {
 
-	public static int TAM_POB = 100;
-	public static int N_GENERACIONES = 100;
+	public static int TAM_POB = 5;
+	public static int N_GENERACIONES = 5;
 	public static boolean MAXIMIZAR = false;
 
 	public static String PROBLEMA = "P2";
@@ -126,17 +124,19 @@ public class Main {
 			iteraciones[i] = i;
 
 			// Primero separamos los mejores
-			if (ELITISMO >= 0f)
+			if (ELITISMO > 0f)
 				elite = a_genetico.separaMejores(ELITISMO);
+			
 			a_genetico.seleccion();
 			a_genetico.cruce();
 			a_genetico.mutacion();
 
 			// Antes de evaluar incluimos la elite
-			if (ELITISMO >= 0f) {
+			if (ELITISMO > 0f) {
 				a_genetico.incluyeElite(elite);
 				elite.clear();
 			}
+			
 			a_genetico.evaluar_poblacion();
 
 			// Graficas

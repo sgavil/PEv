@@ -14,7 +14,7 @@ public class CromosomaP2 extends ACromosoma{
 		static final float Min = 0;
 		static final float Max = (float) Math.PI;
 		
-		static final int N=3;
+		static final int N=5;
 		
 		ArrayList<Float> x;
 
@@ -115,6 +115,11 @@ public class CromosomaP2 extends ACromosoma{
 			}
 
 			setCodificacion();
+		}
+		@Override
+		public ACromosoma clone() {
+			// TODO Auto-generated method stub
+			return new CromosomaP2(this);
 		}
 
 }

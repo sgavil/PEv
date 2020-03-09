@@ -3,7 +3,7 @@ package es.pe.mdelossgavil.Poblacion;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public abstract class ACromosoma <T> {
+public abstract class ACromosoma <T> implements Cloneable{
 	
 	//Codificación del cromosoma
 	protected ArrayList<TGen> genes=new ArrayList<TGen>();
@@ -144,8 +144,7 @@ public abstract class ACromosoma <T> {
 		this.longitud = longitud;
 	}
 
-	 
-
+	public abstract ACromosoma clone();
 
 	
 }
