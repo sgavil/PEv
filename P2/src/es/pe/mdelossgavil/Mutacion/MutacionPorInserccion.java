@@ -42,9 +42,13 @@ public class MutacionPorInserccion implements IMutacion{
 				//Escogemos posicion y gen aleatorios
 				Random r = new Random();
 				int posicion = r.nextInt(lCrom);
-				TGen genAInsertar=individuo.getCodificacion().get(posicion);
+				TGen genAInsertar=(TGen) individuo.getCodificacion().get(posicion);
+				individuo.getCodificacion().remove(posicion);
+				//Lo instertamos en una posicion aleatoria
+				individuo.getCodificacion().add(r.nextInt(lCrom), genAInsertar);
 				
 				/* Actualizamos los genes */
+				int comienzo=0;
 				for (int j = 0; j < individuo.get_genes().size(); j++) {
 					/* Cogemos el tamanio del gen */
 					TGen gen = (TGen) individuo.get_genes().get(j);
