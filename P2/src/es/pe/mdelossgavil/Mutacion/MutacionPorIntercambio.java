@@ -12,10 +12,10 @@ import es.pe.mdelossgavil.Poblacion.TGen;
  * Clase que realiza la mutación de genes de tipo Boolean, es decir, mutación bit a bit
  *
  */
-public class MutacionPorInversion implements IMutacion{
+public class MutacionPorIntercambio implements IMutacion{
 
 	
-	public MutacionPorInversion() {
+	public MutacionPorIntercambio() {
 		
 	}
 	
@@ -39,32 +39,25 @@ public class MutacionPorInversion implements IMutacion{
 			// y lo marcamos como mutado
 			if(rndProb < probMutacion) {
 				
-				int principio,fin;
+				int primero,segundo;
 				int lCrom = individuo.get_longitud();
 				//escogemos dos puntos al azar
 				Random r = new Random();
 				
-				principio = r.nextInt(lCrom);
-				fin=r.nextInt(lCrom);
-				while(fin==principio)fin=r.nextInt(lCrom);
-				//En caso de que esten intercambiados . hacemos swap
-				if(fin<principio)
-				{
-					int aux=principio;
-					principio=fin;
-					fin=aux;
-				}
+				primero = r.nextInt(lCrom);
+				segundo=r.nextInt(lCrom);
+				while(primero==segundo)segundo=r.nextInt(lCrom);
 				
-				aplicarMutacion(individuo, principio, fin);
+				aplicarMutacion(individuo, primero, segundo);
 				
 				/* Actualizamos los genes */
 				int comienzo = 0;
 				for (int j = 0; j < individuo.get_genes().size(); j++) {
 					/* Cogemos el tamanio del gen */
-					TGen gen = (TGen) individuo.get_genes().get(i);
+					TGen gen = (TGen) individuo.get_genes().get(j);
 					int tam = gen.getGenotipo().size();
 					/* Trasladamos el Array */
-					actualizarGen(individuo, tam, comienzo, i);
+					actualizarGen(individuo, tam, comienzo, j);
 					comienzo += tam;
 
 				}
@@ -78,13 +71,12 @@ public class MutacionPorInversion implements IMutacion{
 		}
 	}
 	
-	private void aplicarMutacion(ACromosoma invididuo,int comienzo, int fin)
+	private void aplicarMutacion(ACromosoma invididuo,int primero, int segundo)
 	{
-		for (int i = comienzo; i < (fin/2); i++) {
-			TGen aux=(TGen) invididuo.getCodificacion().get(comienzo+i);
-			invididuo.getCodificacion().set(comienzo+i, invididuo.getCodificacion().get(fin-i));
-			invididuo.getCodificacion().set(fin-i, aux);
-		}
+		TGen aux=(TGen) invididuo.getCodificacion().get(primero);
+		invididuo.getCodificacion().set(primero, invididuo.getCodificacion().get(segundo));
+		invididuo.getCodificacion().set(segundo, aux);
+		
 	}
 	
 	private void actualizarGen(ACromosoma cromosoma, int tam, int comienzo, int gen) {
