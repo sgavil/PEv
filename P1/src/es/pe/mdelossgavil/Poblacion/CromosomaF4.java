@@ -18,7 +18,7 @@ public class CromosomaF4 extends ACromosoma {
 	static final float Max = (float) Math.PI;
 	static ArrayList<Float> x=new ArrayList<Float>();
 	
-	static final int N=3;
+	static final int N=4;
 
 	// La imagen de la codificación
 
