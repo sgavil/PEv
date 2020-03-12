@@ -13,7 +13,8 @@ public class TPoblacion<T extends ACromosoma> {
 		
 	}
 	
-	public ArrayList<ACromosoma> inicializa_poblacion(int tam_pob,Class<T> clase_cromosoma){
+	public ArrayList<ACromosoma> inicializa_poblacion(int tam_pob,Class<T> clase_cromosoma)
+	{
 		ArrayList<ACromosoma> poblacion = new ArrayList<ACromosoma>();
 		
 		for (int i = 0; i < tam_pob; i++) 

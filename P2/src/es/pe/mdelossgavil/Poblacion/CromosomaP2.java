@@ -3,7 +3,7 @@ package es.pe.mdelossgavil.Poblacion;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import es.pe.mdelossgavil.AlgoritmoGenetico;
+import es.pe.mdelossgavil.AlgoritmoEvolutivo;
 import es.pe.mdelossgavil.Utils;
 
 public class CromosomaP2 extends ACromosoma{

@@ -73,8 +73,8 @@ public class PanelSelectorProblema extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				//System.out.println("boton pulsado");
 				//Main.INICIAR_ALGORITMO = true;
-				Main.iniciaAlgoritmo();
-				Main.creaGrafica();
+				//Main.iniciaAlgoritmo();
+				//Main.creaGrafica();
 			}
 		});
 

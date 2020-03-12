@@ -3,7 +3,7 @@ package es.pe.mdelossgavil.Poblacion;
 import java.lang.Object;
 import java.util.ArrayList;
 
-import es.pe.mdelossgavil.AlgoritmoGenetico;
+import es.pe.mdelossgavil.AlgoritmoEvolutivo;
 
 public class CromosomaF2 extends ACromosoma {
 
@@ -106,8 +106,8 @@ public class CromosomaF2 extends ACromosoma {
 	public void inicializa_cromosoma() {
 
 		/* La longitud del cromosoma sera igual a la longitud de X1 y X2 */
-		int longitudX1 = calcularLongitud(AlgoritmoGenetico.tolerancia, Max, Min);
-		int longitudX2 = calcularLongitud(AlgoritmoGenetico.tolerancia, Max, Min);
+		int longitudX1 = calcularLongitud(AlgoritmoEvolutivo.tolerancia, Max, Min);
+		int longitudX2 = calcularLongitud(AlgoritmoEvolutivo.tolerancia, Max, Min);
 
 		longitud = longitudX1 + longitudX2;
 

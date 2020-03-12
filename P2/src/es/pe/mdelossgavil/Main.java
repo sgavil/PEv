@@ -36,163 +36,134 @@ public class Main {
 
 	private static JTextArea textResultado;
 
+	private static final String DIR_DATOS = "datos/";
+
 	public static void main(String[] args) {
 
-		p1frame = new P1Frame();
-		p1frame.show();
+		AlgoritmoEvolutivo aEvolutivo = new AlgoritmoEvolutivo(100, 100, DIR_DATOS + "ajuste.txt");
+		aEvolutivo.inicializa(new Ruleta(), new PMX(), new MutacionBoolean());
+		// p1frame = new P1Frame();
+		// p1frame.show();
 
 	}
 
-	public static void iniciaAlgoritmo() {
-
-		// Panel de poblacion
-		TAM_POB = (Integer) p1frame.pPoblacion.pobSpinner.getValue();
-		N_GENERACIONES = (Integer) p1frame.pPoblacion.genSpinner.getValue();
-
-		// Panel de otros
-		MAXIMIZAR = p1frame.pOtros.checkMaximizar.isSelected();
-
-		// Panel seleccion
-		ISeleccion iSeleccion = null;
-
-		if (SELECCION.equals("Ruleta"))
-			iSeleccion = new Ruleta();
-
-		else if (SELECCION.equals("Estocástico Universal"))
-			iSeleccion = new EstocasticoUniversal();
-
-		else if (SELECCION.equals("Torneos"))
-			iSeleccion = new Torneos(2, MAXIMIZAR);
-
-		else if (SELECCION.equals("Ranking"))
-			iSeleccion = new Ranking(1.5f);
-
-		// Panel cruce
-		ICruce iCruce = null;
-
-		if (CRUCE.equals("Monopunto"))
-			iCruce = new Monopunto();
-
-		else if (CRUCE.equals("Uniforme"))
-			iCruce = new Uniforme();
-
-		else if (CRUCE.equals("Discreto Uniforme"))
-			iCruce = new DiscretoUniforme();
-
-		else if (CRUCE.equals("Aritmético"))
-			iCruce = new Aritmetico(0.6f);
-
-		else if (CRUCE.equals("BLX-Alpha"))
-			iCruce = new BLXAlpha();
-
-		// PROBABILIDADES
-		AlgoritmoGenetico.prob_cruce = Float.parseFloat((p1frame.pCruce.probCruce.getText())) / 100;
-		AlgoritmoGenetico.prob_mut = Float.parseFloat((p1frame.pMutacion.probMut.getText())) / 100;
-		ELITISMO = Float.parseFloat((p1frame.pOtros.valElitismo.getText())) / 100;
-
-		// Cuadro de texto con resultados
-		textResultado = p1frame.pSelectorProblema.textArea;
-
-		AlgoritmoGenetico a_genetico = new AlgoritmoGenetico(TAM_POB, N_GENERACIONES, MAXIMIZAR);
-
-		AlgoritmoGenetico.tolerancia = Float.parseFloat(p1frame.pPoblacion.toleranciaTF.getText());
-
-		IMutacion iMutacion = null;
-		if (PROBLEMA.equals("P2"))
-			iMutacion = new MutacionReal(0, (float) Math.PI);
-		else
-			iMutacion = new MutacionBoolean();
-
-		// INICIALIZACION DEL ALGORITMO GENETICO
-
-		a_genetico.inicializa(iSeleccion, iCruce, iMutacion, PROBLEMA);
-
-		////////////////////////////////////////////////////////////////
-
-		ArrayList<ACromosoma> elite = new ArrayList<ACromosoma>();
-
-		a_genetico.evaluar_poblacion();
-
-		// Inicializacion de graficas
-		iteraciones = new double[N_GENERACIONES];
-		graficaMejorAbs = new double[N_GENERACIONES];
-		graficaMedia = new double[N_GENERACIONES];
-		graficaMejorRelativo = new double[N_GENERACIONES];
-
-		int i = 0;
-		while (i < N_GENERACIONES) {
-			iteraciones[i] = i;
-
-			// Primero separamos los mejores
-			if (ELITISMO > 0f)
-				elite = a_genetico.separaMejores(ELITISMO);
-			
-			a_genetico.seleccion();
-			a_genetico.cruce();
-			a_genetico.mutacion();
-
-			// Antes de evaluar incluimos la elite
-			if (ELITISMO > 0f) {
-				a_genetico.incluyeElite(elite);
-				elite.clear();
-			}
-			
-			a_genetico.evaluar_poblacion();
-
-			// Graficas
-			graficaMejorAbs[i] = a_genetico.mejor_abs.get_aptitud();
-			graficaMedia[i] = a_genetico.get_aptitud_media();
-			graficaMejorRelativo[i] = a_genetico.getEl_mejor().get_aptitud();
-			i++;
-		}
-
-		float mejorValor = a_genetico.mejor_abs.get_aptitud();
-
-		String resultado = "";
-		
-		resultado += "Resultado: " + mejorValor + "\n";
-		
-		if (PROBLEMA.equals("F1")) {
-			resultado += "x1: " +((CromosomaF1)(a_genetico.mejor_abs)).fenotipo_x1() + ", ";
-			resultado += "x2: " +((CromosomaF1)(a_genetico.mejor_abs)).fenotipo_x2();
-
-
-		} else if (PROBLEMA.equals("F2")) {
-			resultado += "x1: " +((CromosomaF2)(a_genetico.mejor_abs)).fenotipo_x1() + ", ";
-			resultado += "x2: " +((CromosomaF2)(a_genetico.mejor_abs)).fenotipo_x2();
-
-		} else if (PROBLEMA.equals("F3")) {
-			resultado += "x1: " +((CromosomaF3)(a_genetico.mejor_abs)).fenotipo_x1() + ", ";
-			resultado += "x2: " +((CromosomaF3)(a_genetico.mejor_abs)).fenotipo_x2();
-
-		} else if (PROBLEMA.equals("F4")) {
-			ArrayList<Float> arr;
-			arr = ((CromosomaF4)(a_genetico.mejor_abs)).getFenotipos();
-			for (int j = 0; j < arr.size(); j++) {
-				resultado += "x"+ j + ":" + arr.get(j) + ", ";
-			}
-
-		} 
-		else if (PROBLEMA.equals("P2")) {
-			ArrayList<Float> arr;
-			arr = ((CromosomaP2)(a_genetico.mejor_abs)).getFenotipos();
-			for (int j = 0; j < arr.size(); j++) {
-				resultado += "x"+ j + ":" + arr.get(j) + ", ";
-			}
-		}
-		
-		textResultado.setText(resultado);
-		resultado="";
-	}
-
-	public static void creaGrafica() {
-
-		Grafica grafica = new Grafica(600, 600);
-		grafica.inicializa_grafica();
-		grafica.agregar_linea("Mejor Absoluto", iteraciones, graficaMejorAbs);
-		grafica.agregar_linea("Mejor de cada generación", iteraciones, graficaMejorRelativo);
-		grafica.agregar_linea("Media", iteraciones, graficaMedia);
-
-		grafica.pinta_grafica();
-	}
+	/*
+	 * public static void iniciaAlgoritmo() {
+	 * 
+	 * // Panel de poblacion /*TAM_POB = (Integer)
+	 * p1frame.pPoblacion.pobSpinner.getValue(); N_GENERACIONES = (Integer)
+	 * p1frame.pPoblacion.genSpinner.getValue();
+	 * 
+	 * // Panel de otros MAXIMIZAR = p1frame.pOtros.checkMaximizar.isSelected();
+	 * 
+	 * // Panel seleccion ISeleccion iSeleccion = null;
+	 * 
+	 * if (SELECCION.equals("Ruleta")) iSeleccion = new Ruleta();
+	 * 
+	 * else if (SELECCION.equals("Estocástico Universal")) iSeleccion = new
+	 * EstocasticoUniversal();
+	 * 
+	 * else if (SELECCION.equals("Torneos")) iSeleccion = new Torneos(2, MAXIMIZAR);
+	 * 
+	 * else if (SELECCION.equals("Ranking")) iSeleccion = new Ranking(1.5f);
+	 * 
+	 * // Panel cruce ICruce iCruce = null;
+	 * 
+	 * if (CRUCE.equals("Monopunto")) iCruce = new Monopunto();
+	 * 
+	 * else if (CRUCE.equals("Uniforme")) iCruce = new Uniforme();
+	 * 
+	 * else if (CRUCE.equals("Discreto Uniforme")) iCruce = new DiscretoUniforme();
+	 * 
+	 * else if (CRUCE.equals("Aritmético")) iCruce = new Aritmetico(0.6f);
+	 * 
+	 * else if (CRUCE.equals("BLX-Alpha")) iCruce = new BLXAlpha();
+	 * 
+	 * // PROBABILIDADES AlgoritmoGenetico.prob_cruce =
+	 * Float.parseFloat((p1frame.pCruce.probCruce.getText())) / 100;
+	 * AlgoritmoGenetico.prob_mut =
+	 * Float.parseFloat((p1frame.pMutacion.probMut.getText())) / 100; ELITISMO =
+	 * Float.parseFloat((p1frame.pOtros.valElitismo.getText())) / 100;
+	 * 
+	 * // Cuadro de texto con resultados textResultado =
+	 * p1frame.pSelectorProblema.textArea;
+	 * 
+	 * AlgoritmoGenetico a_genetico = new AlgoritmoGenetico(TAM_POB, N_GENERACIONES,
+	 * MAXIMIZAR);
+	 * 
+	 * AlgoritmoGenetico.tolerancia =
+	 * Float.parseFloat(p1frame.pPoblacion.toleranciaTF.getText());
+	 * 
+	 * IMutacion iMutacion = null; if (PROBLEMA.equals("P2")) iMutacion = new
+	 * MutacionReal(0, (float) Math.PI); else iMutacion = new MutacionBoolean();
+	 * 
+	 * // INICIALIZACION DEL ALGORITMO GENETICO
+	 * 
+	 * a_genetico.inicializa(iSeleccion, iCruce, iMutacion, PROBLEMA);
+	 * 
+	 * ////////////////////////////////////////////////////////////////
+	 * 
+	 * ArrayList<ACromosoma> elite = new ArrayList<ACromosoma>();
+	 * 
+	 * a_genetico.evaluar_poblacion();
+	 * 
+	 * // Inicializacion de graficas iteraciones = new double[N_GENERACIONES];
+	 * graficaMejorAbs = new double[N_GENERACIONES]; graficaMedia = new
+	 * double[N_GENERACIONES]; graficaMejorRelativo = new double[N_GENERACIONES];
+	 * 
+	 * int i = 0; while (i < N_GENERACIONES) { iteraciones[i] = i;
+	 * 
+	 * // Primero separamos los mejores if (ELITISMO > 0f) elite =
+	 * a_genetico.separaMejores(ELITISMO);
+	 * 
+	 * a_genetico.seleccion(); a_genetico.cruce(); a_genetico.mutacion();
+	 * 
+	 * // Antes de evaluar incluimos la elite if (ELITISMO > 0f) {
+	 * a_genetico.incluyeElite(elite); elite.clear(); }
+	 * 
+	 * a_genetico.evaluar_poblacion();
+	 * 
+	 * // Graficas graficaMejorAbs[i] = a_genetico.mejor_abs.get_aptitud();
+	 * graficaMedia[i] = a_genetico.get_aptitud_media(); graficaMejorRelativo[i] =
+	 * a_genetico.getEl_mejor().get_aptitud(); i++; }
+	 * 
+	 * float mejorValor = a_genetico.mejor_abs.get_aptitud();
+	 * 
+	 * String resultado = "";
+	 * 
+	 * resultado += "Resultado: " + mejorValor + "\n";
+	 * 
+	 * if (PROBLEMA.equals("F1")) { resultado += "x1: "
+	 * +((CromosomaF1)(a_genetico.mejor_abs)).fenotipo_x1() + ", "; resultado +=
+	 * "x2: " +((CromosomaF1)(a_genetico.mejor_abs)).fenotipo_x2();
+	 * 
+	 * 
+	 * } else if (PROBLEMA.equals("F2")) { resultado += "x1: "
+	 * +((CromosomaF2)(a_genetico.mejor_abs)).fenotipo_x1() + ", "; resultado +=
+	 * "x2: " +((CromosomaF2)(a_genetico.mejor_abs)).fenotipo_x2();
+	 * 
+	 * } else if (PROBLEMA.equals("F3")) { resultado += "x1: "
+	 * +((CromosomaF3)(a_genetico.mejor_abs)).fenotipo_x1() + ", "; resultado +=
+	 * "x2: " +((CromosomaF3)(a_genetico.mejor_abs)).fenotipo_x2();
+	 * 
+	 * } else if (PROBLEMA.equals("F4")) { ArrayList<Float> arr; arr =
+	 * ((CromosomaF4)(a_genetico.mejor_abs)).getFenotipos(); for (int j = 0; j <
+	 * arr.size(); j++) { resultado += "x"+ j + ":" + arr.get(j) + ", "; }
+	 * 
+	 * } else if (PROBLEMA.equals("P2")) { ArrayList<Float> arr; arr =
+	 * ((CromosomaP2)(a_genetico.mejor_abs)).getFenotipos(); for (int j = 0; j <
+	 * arr.size(); j++) { resultado += "x"+ j + ":" + arr.get(j) + ", "; } }
+	 * 
+	 * textResultado.setText(resultado); resultado=""; }
+	 * 
+	 * public static void creaGrafica() {
+	 * 
+	 * Grafica grafica = new Grafica(600, 600); grafica.inicializa_grafica();
+	 * grafica.agregar_linea("Mejor Absoluto", iteraciones, graficaMejorAbs);
+	 * grafica.agregar_linea("Mejor de cada generación", iteraciones,
+	 * graficaMejorRelativo); grafica.agregar_linea("Media", iteraciones,
+	 * graficaMedia);
+	 * 
+	 * grafica.pinta_grafica(); }
+	 */
 }

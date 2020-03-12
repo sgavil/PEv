@@ -6,7 +6,7 @@ import java.util.function.LongUnaryOperator;
 
 import org.omg.CORBA.portable.IndirectionException;
 
-import es.pe.mdelossgavil.AlgoritmoGenetico;
+import es.pe.mdelossgavil.AlgoritmoEvolutivo;
 
 public class CromosomaF4 extends ACromosoma {
 
@@ -117,7 +117,7 @@ public class CromosomaF4 extends ACromosoma {
 		
 		for(int i=0;i<N;i++)
 		{
-			longitudGenes.add(calcularLongitud(AlgoritmoGenetico.tolerancia, Max, Min));
+			longitudGenes.add(calcularLongitud(AlgoritmoEvolutivo.tolerancia, Max, Min));
 			genes.add(new TGen<Boolean>());
 		}
 		longitud=0;

@@ -1,20 +1,23 @@
 package es.pe.mdelossgavil;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Scanner;
 
 import es.pe.mdelossgavil.Cruce.ICruce;
 import es.pe.mdelossgavil.Mutacion.IMutacion;
 import es.pe.mdelossgavil.Poblacion.*;
 import es.pe.mdelossgavil.Seleccion.*;
 
-public class AlgoritmoGenetico {
+public class AlgoritmoEvolutivo {
 
-	public AlgoritmoGenetico(int tam_poblacion, int generaciones, boolean maximizar) {
+	public AlgoritmoEvolutivo(int tam_poblacion, int generaciones, String fileName) {
 		tam_pob = tam_poblacion;
 		num_max_gen = generaciones;
-		this.maximizar = maximizar;
+		this.fileName = fileName;
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -40,6 +43,8 @@ public class AlgoritmoGenetico {
 
 	public ACromosoma mejor_abs;
 
+	private String fileName;
+
 	public ACromosoma getEl_mejor() {
 		return el_mejor;
 	}
@@ -52,6 +57,10 @@ public class AlgoritmoGenetico {
 	public static float prob_cruce;
 	public static float prob_mut;
 	public static float tolerancia;
+
+	int[][] flujos;
+	int[][] distancias;
+	int N;
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Selección, Cruce y Mutación
@@ -74,15 +83,58 @@ public class AlgoritmoGenetico {
 	 * @param mutacion       tipo de mutacion
 	 * @param tipo_cromosoma tipo de cromosoma
 	 */
-	public void inicializa(ISeleccion seleccion, ICruce cruce, IMutacion mutacion, String tipo_cromosoma) {
+	public void inicializa(ISeleccion seleccion, ICruce cruce, IMutacion mutacion) {
 		/* Guardamos los operadores */
 		metodo_seleccion = seleccion;
 		metodo_cruce = cruce;
 		metodo_mutacion = mutacion;
-		problemaActual = tipo_cromosoma;
-
+	
+		lee_datos();
+		
 		// Inicializamos la población
 		inicializa_poblacion();
+
+	}
+
+	// Leemos los archivos con las matrices de flujos y distancias
+	private void lee_datos() {
+
+		try {
+			File myObj = new File(fileName);
+			Scanner myReader = new Scanner(myObj);
+
+			N = Integer.parseInt(myReader.nextLine());
+
+			flujos = new int[N][N];
+			distancias = new int[N][N];
+
+			myReader.nextLine();
+
+			while (myReader.hasNextLine()) {
+				// Guardamos la matriz de distancias
+				for (int i = 0; i < N; i++) {
+					String[] line = myReader.nextLine().trim().split(" ");
+					for (int j = 0; j < line.length; j++) {
+						distancias[i][j] = Integer.parseInt(line[j]);
+					}
+				}
+
+				myReader.nextLine();
+
+				for (int i = 0; i < N; i++) {
+					String[] line = myReader.nextLine().trim().split(" ");
+					for (int j = 0; j < line.length; j++) {
+						flujos[i][j] = Integer.parseInt(line[j]);
+					}
+				}
+			}
+
+			myReader.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File " + fileName + " not found.");
+			e.printStackTrace();
+		}
 
 	}
 
@@ -225,7 +277,7 @@ public class AlgoritmoGenetico {
 
 			poblacion.set(seleccionCruce[i], hijo1.clone());
 			poblacion.set(seleccionCruce[i + 1], hijo2.clone());
-			
+
 		}
 	}
 
@@ -241,42 +293,18 @@ public class AlgoritmoGenetico {
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	private void inicializa_poblacion() {
-		if (problemaActual.equals("F1")) {
-			TPoblacion<CromosomaF1> pob = new TPoblacion<CromosomaF1>();
-			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF1.class);
-			mejor_abs = new CromosomaF1();
-			mejor_abs.set_aptitud(Float.MIN_VALUE);
-			maximizar = true;
-			return;
-		} else if (problemaActual.equals("F2")) {
-			TPoblacion<CromosomaF2> pob = new TPoblacion<CromosomaF2>();
-			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF2.class);
-			mejor_abs = new CromosomaF2();
-			mejor_abs.set_aptitud(Float.MAX_VALUE);
-			maximizar = false;
-			return;
-		} else if (problemaActual.equals("F3")) {
-			TPoblacion<CromosomaF3> pob = new TPoblacion<CromosomaF3>();
-			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF3.class);
-			mejor_abs = new CromosomaF3();
-			mejor_abs.set_aptitud(Float.MAX_VALUE);
-			maximizar = false;
-			return;
-		} else if (problemaActual.equals("F4")) {
-			TPoblacion<CromosomaF4> pob = new TPoblacion<CromosomaF4>();
-			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaF4.class);
-			mejor_abs = new CromosomaF4();
-			mejor_abs.set_aptitud(Float.MAX_VALUE);
-			maximizar = false;
-			return;
-		} else if (problemaActual.equals("P2")) {
-			TPoblacion<CromosomaP2> pob = new TPoblacion<CromosomaP2>();
-			poblacion = pob.inicializa_poblacion(tam_pob, CromosomaP2.class);
-			mejor_abs = new CromosomaP2();
-			mejor_abs.set_aptitud(Float.MAX_VALUE);
-			maximizar = false;
-			return;
-		}
+		
+		CromosomaHospitales.flujos = this.flujos;
+		CromosomaHospitales.distancias = this.distancias;
+		CromosomaHospitales.N = this.N;
+		
+		TPoblacion<CromosomaHospitales> pob = new TPoblacion<CromosomaHospitales>();
+		poblacion = pob.inicializa_poblacion(tam_pob, CromosomaHospitales.class);
+		mejor_abs = new CromosomaHospitales();
+		mejor_abs.set_aptitud(Float.MAX_VALUE);
+		maximizar = false;
+		
+		
 	}
 
 	public ArrayList<ACromosoma> separaMejores(float porcElitismo) {
