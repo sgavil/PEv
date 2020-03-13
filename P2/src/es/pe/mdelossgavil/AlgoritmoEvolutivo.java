@@ -18,6 +18,7 @@ public class AlgoritmoEvolutivo {
 		tam_pob = tam_poblacion;
 		num_max_gen = generaciones;
 		this.fileName = fileName;
+
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -33,7 +34,7 @@ public class AlgoritmoEvolutivo {
 	// Número máximo de generaciones
 	private int num_max_gen;
 
-	private boolean maximizar;
+	public boolean maximizar;
 
 	// Indicador del problema actual
 	String problemaActual = "";
@@ -88,9 +89,9 @@ public class AlgoritmoEvolutivo {
 		metodo_seleccion = seleccion;
 		metodo_cruce = cruce;
 		metodo_mutacion = mutacion;
-	
+
 		lee_datos();
-		
+
 		// Inicializamos la población
 		inicializa_poblacion();
 
@@ -142,6 +143,9 @@ public class AlgoritmoEvolutivo {
 	 * Evalua la población y elige al mejor individuo
 	 */
 	public void evaluar_poblacion() {
+
+		
+		
 		float punt_acum = 0;
 		float aptitud_mejor;
 
@@ -160,14 +164,16 @@ public class AlgoritmoEvolutivo {
 		 */
 		for (int i = 0; i < tam_pob; i++) {
 			individuoActual = poblacion.get(i);
+			
 			suma_aptitud += individuoActual.get_aptitud();
-
+		
 			if (maximizar) {
 				if (individuoActual.get_aptitud() > aptitud_mejor) {
 					pos_mejor = i;
 					aptitud_mejor = individuoActual.get_aptitud();
 					el_mejor = individuoActual;
 				}
+
 			} else {
 				if (individuoActual.get_aptitud() < aptitud_mejor) {
 					pos_mejor = i;
@@ -179,23 +185,31 @@ public class AlgoritmoEvolutivo {
 		}
 
 		for (int j = 0; j < tam_pob; j++) {
+				
+			
+			
 			// Calculamos la puntuación del individuo y su puntuación acumulada
-			float puntuacion = poblacion.get(j).get_aptitud() / suma_aptitud;
+			float puntuacion;
+		
+			puntuacion = poblacion.get(j).get_aptitud() / suma_aptitud;
 
-			poblacion.get(j).set_puntuacion(puntuacion);
+			poblacion.get(j).set_puntuacion( puntuacion);
 			poblacion.get(j).set_punt_acum(puntuacion + punt_acum);
 
 			// Actualizamos la puntuación acumulada general
 			punt_acum += puntuacion;
 
 		}
+
 		if (maximizar) {
 			if (el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
 				mejor_abs = el_mejor;
 			}
 		} else {
+
 			if (el_mejor.get_aptitud() < mejor_abs.get_aptitud()) {
 				mejor_abs = el_mejor;
+				System.out.println(mejor_abs.get_aptitud());
 			}
 		}
 
@@ -250,22 +264,18 @@ public class AlgoritmoEvolutivo {
 		for (int i = 0; i < num_sele_cruce; i += 2) {
 
 			/* Cogemos el tipo de Cromosoma del problema */
-			if (problemaActual == "F1") {
-				hijo1 = new CromosomaF1();
-				hijo2 = new CromosomaF1();
-			} else if (problemaActual == "F2") {
-				hijo1 = new CromosomaF2();
-				hijo2 = new CromosomaF2();
-			} else if (problemaActual == "F3") {
-				hijo1 = new CromosomaF3();
-				hijo2 = new CromosomaF3();
-			} else if (problemaActual == "F4") {
-				hijo1 = new CromosomaF4();
-				hijo2 = new CromosomaF4();
-			} else if (problemaActual == "P2") {
-				hijo1 = new CromosomaP2();
-				hijo2 = new CromosomaP2();
-			}
+			/*
+			 * if (problemaActual == "F1") { hijo1 = new CromosomaF1(); hijo2 = new
+			 * CromosomaF1(); } else if (problemaActual == "F2") { hijo1 = new
+			 * CromosomaF2(); hijo2 = new CromosomaF2(); } else if (problemaActual == "F3")
+			 * { hijo1 = new CromosomaF3(); hijo2 = new CromosomaF3(); } else if
+			 * (problemaActual == "F4") { hijo1 = new CromosomaF4(); hijo2 = new
+			 * CromosomaF4(); } else if (problemaActual == "P2") { hijo1 = new
+			 * CromosomaP2(); hijo2 = new CromosomaP2(); }
+			 */
+
+			hijo1 = new CromosomaHospitales();
+			hijo2 = new CromosomaHospitales();
 
 			hijo1.inicializa_cromosoma();
 			hijo2.inicializa_cromosoma();
@@ -293,18 +303,18 @@ public class AlgoritmoEvolutivo {
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	private void inicializa_poblacion() {
-		
+
 		CromosomaHospitales.flujos = this.flujos;
 		CromosomaHospitales.distancias = this.distancias;
 		CromosomaHospitales.N = this.N;
-		
+
 		TPoblacion<CromosomaHospitales> pob = new TPoblacion<CromosomaHospitales>();
 		poblacion = pob.inicializa_poblacion(tam_pob, CromosomaHospitales.class);
 		mejor_abs = new CromosomaHospitales();
-		mejor_abs.set_aptitud(Float.MAX_VALUE);
-		maximizar = false;
-		
-		
+		mejor_abs.inicializa_cromosoma();
+		mejor_abs.set_aptitud(Float.MIN_VALUE);
+		maximizar = true;
+
 	}
 
 	public ArrayList<ACromosoma> separaMejores(float porcElitismo) {
@@ -382,6 +392,24 @@ public class AlgoritmoEvolutivo {
 				else if (problemaActual.equals("P2"))
 					poblacion.set(i, new CromosomaP2(elite.get(i)));
 			}
+		}
+	}
+
+	public void funcion_revisar_adaptacion_minimiza() {
+		float fmax = Float.MIN_VALUE;
+
+		// un valor por debajo de cualquiera que pueda
+		// tomar la función objetivo
+		for (int i = 0; i < poblacion.size(); i++) {
+			if (poblacion.get(i).get_aptitud() > fmax) {
+				fmax = poblacion.get(i).get_aptitud();
+			}
+		}
+
+		fmax *= 1.05;
+
+		for (int j = 0; j < poblacion.size(); j++) {
+			poblacion.get(j).set_aptitud(fmax - poblacion.get(j).get_aptitud());
 		}
 	}
 

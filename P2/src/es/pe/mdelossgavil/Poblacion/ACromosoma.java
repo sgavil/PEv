@@ -92,6 +92,7 @@ public abstract class ACromosoma <T> implements Cloneable{
 	 * @return the aptitud
 	 */
 	public float get_aptitud() {
+	
 		return aptitud;
 	}
 
