@@ -62,6 +62,8 @@ public class AlgoritmoEvolutivo {
 	int[][] flujos;
 	int[][] distancias;
 	int N;
+	
+	float fmax;
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Selección, Cruce y Mutación
@@ -169,7 +171,7 @@ public class AlgoritmoEvolutivo {
 			
 			
 			
-			suma_aptitud += individuoActual.get_aptitud();
+			suma_aptitud += (fmax - individuoActual.get_aptitud());
 		
 			if (maximizar) {
 				if (individuoActual.get_aptitud() > aptitud_mejor) {
@@ -195,7 +197,9 @@ public class AlgoritmoEvolutivo {
 			// Calculamos la puntuación del individuo y su puntuación acumulada
 			float puntuacion;
 		
-			puntuacion = poblacion.get(j).get_aptitud() / suma_aptitud;
+		
+			
+			puntuacion = (fmax - poblacion.get(j).get_aptitud()) / suma_aptitud;
 
 			poblacion.get(j).set_puntuacion( puntuacion);
 			poblacion.get(j).set_punt_acum(puntuacion + punt_acum);
@@ -399,7 +403,7 @@ public class AlgoritmoEvolutivo {
 	}
 
 	public void funcion_revisar_adaptacion_minimiza() {
-		/*fmax = Float.MIN_VALUE;
+		fmax = Float.MIN_VALUE;
 
 		// un valor por debajo de cualquiera que pueda
 		// tomar la función objetivo
@@ -411,7 +415,7 @@ public class AlgoritmoEvolutivo {
 
 		fmax *= 1.05;
 
-		*/
+		
 	}
 
 }
