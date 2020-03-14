@@ -73,7 +73,7 @@ public class MutacionPorIntercambio implements IMutacion{
 	
 	private void aplicarMutacion(ACromosoma invididuo,int primero, int segundo)
 	{
-		TGen aux=(TGen) invididuo.getCodificacion().get(primero);
+		int aux= (int) invididuo.getCodificacion().get(primero);
 		invididuo.getCodificacion().set(primero, invididuo.getCodificacion().get(segundo));
 		invididuo.getCodificacion().set(segundo, aux);
 		

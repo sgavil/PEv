@@ -42,7 +42,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		AlgoritmoEvolutivo aEvolutivo = new AlgoritmoEvolutivo(TAM_POB, N_GENERACIONES, DIR_DATOS + "ajuste.txt");
-		aEvolutivo.inicializa(new Ruleta(), new PMX(), new MutacionPorIntercambio());
+		aEvolutivo.inicializa(new Torneos(2,false), new OX(), new MutacionPorIntercambio());
 
 		aEvolutivo.funcion_revisar_adaptacion_minimiza();
 		aEvolutivo.evaluar_poblacion();
@@ -67,6 +67,7 @@ public class Main {
 		}
 
 		System.out.println(aEvolutivo.getEl_mejor().get_aptitud());
+		System.out.println((((CromosomaHospitales) aEvolutivo.getEl_mejor()).get_fenotipo()));
 		// p1frame = new P1Frame();
 		// p1frame.show();
 

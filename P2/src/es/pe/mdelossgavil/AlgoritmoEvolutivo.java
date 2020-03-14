@@ -55,10 +55,10 @@ public class AlgoritmoEvolutivo {
 	}
 
 	private int pos_mejor;
-	public static float prob_cruce;
-	public static float prob_mut;
+	public static float prob_cruce = 0.6f;
+	public static float prob_mut = 0.05f;
 	public static float tolerancia;
-
+	
 	int[][] flujos;
 	int[][] distancias;
 	int N;
@@ -104,7 +104,7 @@ public class AlgoritmoEvolutivo {
 			File myObj = new File(fileName);
 			Scanner myReader = new Scanner(myObj);
 
-			N = Integer.parseInt(myReader.nextLine());
+			N = Integer.parseInt(myReader.nextLine().trim());
 
 			flujos = new int[N][N];
 			distancias = new int[N][N];
@@ -144,7 +144,9 @@ public class AlgoritmoEvolutivo {
 	 */
 	public void evaluar_poblacion() {
 
+		funcion_revisar_adaptacion_minimiza();
 		
+		//tengo el fmax 
 		
 		float punt_acum = 0;
 		float aptitud_mejor;
@@ -164,6 +166,8 @@ public class AlgoritmoEvolutivo {
 		 */
 		for (int i = 0; i < tam_pob; i++) {
 			individuoActual = poblacion.get(i);
+			
+			
 			
 			suma_aptitud += individuoActual.get_aptitud();
 		
@@ -209,7 +213,6 @@ public class AlgoritmoEvolutivo {
 
 			if (el_mejor.get_aptitud() < mejor_abs.get_aptitud()) {
 				mejor_abs = el_mejor;
-				System.out.println(mejor_abs.get_aptitud());
 			}
 		}
 
@@ -312,8 +315,8 @@ public class AlgoritmoEvolutivo {
 		poblacion = pob.inicializa_poblacion(tam_pob, CromosomaHospitales.class);
 		mejor_abs = new CromosomaHospitales();
 		mejor_abs.inicializa_cromosoma();
-		mejor_abs.set_aptitud(Float.MIN_VALUE);
-		maximizar = true;
+		mejor_abs.set_aptitud(Float.MAX_VALUE);
+		maximizar = false;
 
 	}
 
@@ -396,7 +399,7 @@ public class AlgoritmoEvolutivo {
 	}
 
 	public void funcion_revisar_adaptacion_minimiza() {
-		float fmax = Float.MIN_VALUE;
+		/*fmax = Float.MIN_VALUE;
 
 		// un valor por debajo de cualquiera que pueda
 		// tomar la función objetivo
@@ -408,9 +411,7 @@ public class AlgoritmoEvolutivo {
 
 		fmax *= 1.05;
 
-		for (int j = 0; j < poblacion.size(); j++) {
-			poblacion.get(j).set_aptitud(fmax - poblacion.get(j).get_aptitud());
-		}
+		*/
 	}
 
 }

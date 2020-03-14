@@ -47,6 +47,14 @@ public class CromosomaHospitales extends ACromosoma {
 		
 		return total;
 	}
+	
+	public String get_fenotipo() {
+		String s = "";
+		for (int i = 0; i < genes.size(); i++) {
+			s+= Integer.toString(((TGen<Integer>) genes.get(i)).getGenotipo().get(0)) + " ";
+		}
+		return s;
+	}
 
 	@Override
 	public void inicializa_cromosoma() {
