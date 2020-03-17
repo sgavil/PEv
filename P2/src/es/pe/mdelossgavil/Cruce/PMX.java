@@ -78,7 +78,7 @@ public class PMX implements ICruce {
 		}
 		
 		//Despues metemos aquellos que falten
-		//Del principio del cromosoma al principio del tramo
+		//Primero el hijo1
 		for (int i = 0; i < padre1.get_longitud(); i++) {
 			if((int)hijo1.getCodificacion().get(i)==100000)
 			{
@@ -106,6 +106,7 @@ public class PMX implements ICruce {
 
 			}
 			
+			//Luego el segundo hijo
 			if((int)hijo2.getCodificacion().get(i)==100000)
 			{
 				//hijo2
