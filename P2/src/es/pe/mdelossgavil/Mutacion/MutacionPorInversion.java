@@ -56,6 +56,7 @@ public class MutacionPorInversion implements IMutacion{
 				}
 				
 				aplicarMutacion(individuo, principio, fin);
+				mutado=true;
 				
 				/* Actualizamos los genes */
 				int comienzo = 0;
@@ -68,6 +69,8 @@ public class MutacionPorInversion implements IMutacion{
 					comienzo += tam;
 
 				}
+				
+				mutado=true;
 			}
 			
 			//Si se ha producido una mutación tenemos que volver a calcular la aptitud del individuo
@@ -78,10 +81,10 @@ public class MutacionPorInversion implements IMutacion{
 		}
 	}
 	
-	private void aplicarMutacion(ACromosoma invididuo,int comienzo, int fin)
+	private <T> void aplicarMutacion(ACromosoma invididuo,int comienzo, int fin)
 	{
 		for (int i = comienzo; i < (fin/2); i++) {
-			TGen aux=(TGen) invididuo.getCodificacion().get(comienzo+i);
+			T aux=(T)invididuo.getCodificacion().get(comienzo+i);
 			invididuo.getCodificacion().set(comienzo+i, invididuo.getCodificacion().get(fin-i));
 			invididuo.getCodificacion().set(fin-i, aux);
 		}

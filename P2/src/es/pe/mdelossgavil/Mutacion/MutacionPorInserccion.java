@@ -23,7 +23,6 @@ public class MutacionPorInserccion implements IMutacion{
 	@Override
 	public void mutar(ArrayList<ACromosoma> poblacion,float probMutacion) {
 				
-<<<<<<< HEAD
 //		if(probMutacion <= 0f)
 //			return;
 //		
@@ -63,7 +62,6 @@ public class MutacionPorInserccion implements IMutacion{
 //
 //			}
 //		}
-=======
 		if(probMutacion <= 0f)
 			return;
 		
@@ -83,7 +81,7 @@ public class MutacionPorInserccion implements IMutacion{
 				//Escogemos posicion y gen aleatorios
 				Random r = new Random();
 				int posicion = r.nextInt(lCrom);
-				TGen genAInsertar=(TGen) individuo.getCodificacion().get(posicion);
+				Integer genAInsertar=(Integer) individuo.getCodificacion().get(posicion);
 				individuo.getCodificacion().remove(posicion);
 				//Lo instertamos en una posicion aleatoria
 				individuo.getCodificacion().add(r.nextInt(lCrom), genAInsertar);
@@ -99,6 +97,7 @@ public class MutacionPorInserccion implements IMutacion{
 					comienzo += tam;
 
 				}
+				mutado=true;
 			}
 			
 			//Si se ha producido una mutación tenemos que volver a calcular la aptitud del individuo
@@ -107,7 +106,6 @@ public class MutacionPorInserccion implements IMutacion{
 
 			}
 		}
->>>>>>> b3de838705a72ecd06300315cc158307046c5f7b
 	}
 		
 	private void actualizarGen(ACromosoma cromosoma, int tam, int comienzo, int gen) {

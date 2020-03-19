@@ -61,6 +61,7 @@ public class MutacionPorIntercambio implements IMutacion{
 					comienzo += tam;
 
 				}
+				mutado=true;
 			}
 			
 			//Si se ha producido una mutación tenemos que volver a calcular la aptitud del individuo
@@ -71,9 +72,9 @@ public class MutacionPorIntercambio implements IMutacion{
 		}
 	}
 	
-	private void aplicarMutacion(ACromosoma invididuo,int primero, int segundo)
+	private <T> void aplicarMutacion(ACromosoma invididuo,int primero, int segundo)
 	{
-		int aux= (int) invididuo.getCodificacion().get(primero);
+		T aux= (T) invididuo.getCodificacion().get(primero);
 		invididuo.getCodificacion().set(primero, invididuo.getCodificacion().get(segundo));
 		invididuo.getCodificacion().set(segundo, aux);
 		

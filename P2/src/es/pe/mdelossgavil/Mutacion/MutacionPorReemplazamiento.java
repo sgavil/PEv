@@ -54,6 +54,7 @@ public class MutacionPorReemplazamiento implements IMutacion{
 					comienzo += tam;
 
 				}
+				mutado=true;
 			}
 			
 			//Si se ha producido una mutación tenemos que volver a calcular la aptitud del individuo
@@ -64,18 +65,18 @@ public class MutacionPorReemplazamiento implements IMutacion{
 		}
 	}
 	
-	private void aplicarMutacion(ACromosoma invididuo,int puntodeCorte)
+	private <T> void aplicarMutacion(ACromosoma invididuo,int puntodeCorte)
 	{
-		ArrayList<TGen> parte1=new ArrayList<TGen>();
-		ArrayList<TGen> parte2=new ArrayList<TGen>();
-		ArrayList<TGen> ultimo=new ArrayList<TGen>();
+		ArrayList<T> parte1=new ArrayList<T>();
+		ArrayList<T> parte2=new ArrayList<T>();
+		ArrayList<T> ultimo=new ArrayList<T>();
 		for(int i=0;i<puntodeCorte;i++)
 		{
-			parte1.add((TGen) invididuo.getCodificacion().get(i));
+			parte1.add((T) invididuo.getCodificacion().get(i));
 		}
 		for(int i=puntodeCorte;i<invididuo.get_longitud();i++)
 		{
-			parte2.add((TGen) invididuo.getCodificacion().get(i));
+			parte2.add((T) invididuo.getCodificacion().get(i));
 		}
 		
 		System.arraycopy(parte2, 0, ultimo, 0, parte2.size());
