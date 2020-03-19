@@ -10,7 +10,5 @@ import es.pe.mdelossgavil.Poblacion.ACromosoma;
  */
 public interface ISeleccion {
 	public void hacer_seleccion(ArrayList<ACromosoma> poblacion,String tipoProblema);
-
-
 }
 		

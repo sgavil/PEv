@@ -286,6 +286,12 @@ public class AlgoritmoEvolutivo {
 
 			hijo1.inicializa_cromosoma();
 			hijo2.inicializa_cromosoma();
+			
+			for(int j=0;j<hijo1.getCodificacion().size();j++)
+			{
+				hijo1.getCodificacion().set(j, 100000);
+				hijo2.getCodificacion().set(j, 100000);
+			}
 
 			ACromosoma padre1 = poblacion.get(seleccionCruce[i]);
 			ACromosoma padre2 = poblacion.get(seleccionCruce[i + 1]);

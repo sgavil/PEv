@@ -60,20 +60,44 @@ public class OX implements ICruce {
 		}
 
 		// Ahora queda rellenar aquellos elementos que no han sido escogidos en el tramo
+		//Haremos un bucle para cada uno de los
+		//Primero el primer hijo
 		int indice=fin;
-		while(indice!=principio)
-		{
-			//En caso de que lleguemos al final , volvemos la principio
-			if(indice==padre1.get_longitud())indice=0;
-			
+		int indice2=fin;
+		while(indice2!=principio)
+		{	
 			//Si no contiene el elemento del padre, lo metemos.En caso contrario,lo intentamos con el siguiente
 			if(!hijo1.getCodificacion().contains(padre1.getCodificacion().get(indice)))
-				hijo1.getCodificacion().set(indice, padre1.getCodificacion().get(indice));
-			else if(!hijo2.getCodificacion().contains(padre2.getCodificacion().get(indice)))
-				hijo2.getCodificacion().set(indice, padre2.getCodificacion().get(indice));
+			{
+				hijo1.getCodificacion().set(indice2, padre1.getCodificacion().get(indice));
+				indice2++;
+			}
+			//Aumentamos el puntero
+			else indice++;
+			
+			//En caso de que lleguemos al final , volvemos la principio
+			if(indice==padre1.get_longitud())indice=0;
+			if(indice2==padre1.get_longitud())indice2=0;
+		}
+		
+		//Luego el segundo hijo
+		indice=fin;
+		indice2=fin;
+		while(indice2!=principio)
+		{	
+			//Si no contiene el elemento del padre, lo metemos.En caso contrario,lo intentamos con el siguiente
+			if(!hijo2.getCodificacion().contains(padre2.getCodificacion().get(indice)))
+			{
+				hijo2.getCodificacion().set(indice2, padre2.getCodificacion().get(indice));
+				indice2++;
+			}
 			
 			//Aumentamos el puntero
-			indice++;
+			else indice++;
+			
+			//En caso de que lleguemos al final , volvemos la principio
+			if(indice==padre1.get_longitud())indice=0;
+			if(indice2==padre1.get_longitud())indice2=0;
 		}
 
 		/* Actualizamos los genes */

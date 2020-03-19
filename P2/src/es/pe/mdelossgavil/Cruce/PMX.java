@@ -1,6 +1,8 @@
 package es.pe.mdelossgavil.Cruce;
 
 import java.util.ArrayList;
+import javafx.util.*;
+
 import java.util.Random;
 
 import es.pe.mdelossgavil.Poblacion.*;
@@ -53,6 +55,7 @@ public class PMX implements ICruce {
 	 */
 	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2, int principio,int fin) {
 
+		ArrayList<Pair<Integer,Integer>> parejas=new ArrayList<Pair<Integer,Integer>>();
 		// Establecemos el tramos en los hijos
 		for (int i = principio; i < fin; i++) {
 			hijo1.getCodificacion().set(i, padre2.getCodificacion().get(i));
@@ -60,35 +63,75 @@ public class PMX implements ICruce {
 		}
 
 		// Ahora queda rellenar aquellos elementos que no han sido escogidos en el tramo
-		
-		//Del principio del cromosoma al principio del tramo
-		for (int i = 0; i < principio; i++) {
-			
-			//hijo1
-			if(hijo1.getCodificacion().contains(padre1.getCodificacion().get(i)))
-				hijo1.getCodificacion().set(i,padre2.getCodificacion().get(i));
-			else hijo1.getCodificacion().set(i,padre2.getCodificacion().get(i));
-			
-			//hijo2
-			if(hijo2.getCodificacion().contains(padre2.getCodificacion().get(i)))
-				hijo2.getCodificacion().set(i,padre1.getCodificacion().get(i));
-			else hijo2.getCodificacion().set(i,padre2.getCodificacion().get(i));
-		
+		// Primero metemos aquellos elementos que no generen conflictos
+		for(int i=0;i<padre1.getCodificacion().size();i++)
+		{
+			if((int)hijo1.getCodificacion().get(i)==100000 && !
+					hijo1.getCodificacion().contains(padre1.getCodificacion().get(i)))
+				hijo1.getCodificacion().set(i, padre1.getCodificacion().get(i));
+			if((int)hijo2.getCodificacion().get(i)==100000 && !
+					hijo2.getCodificacion().contains(padre2.getCodificacion().get(i)))
+				hijo2.getCodificacion().set(i, padre2.getCodificacion().get(i));
+			Pair<Integer,Integer> pareja=new Pair<Integer, Integer>( (int)padre1.getCodificacion().get(i), 
+					(int)padre2.getCodificacion().get(i));
+			parejas.add(pareja);
 		}
 		
-		//Del final del tramos al final del cromosoma
-		for (int i = fin; i < padre1.getCodificacion().size(); i++) {
+		//Despues metemos aquellos que falten
+		//Primero el hijo1
+		for (int i = 0; i < padre1.get_longitud(); i++) {
+			if((int)hijo1.getCodificacion().get(i)==100000)
+			{
+				int elemento=(int)padre1.getCodificacion().get(i);
+				while((int)hijo1.getCodificacion().get(i)==100000)
+				{
+					//hijo1				
+					for(int j=0;j<parejas.size();j++)
+					{
+						if(elemento==parejas.get(j).getValue())
+						{
+							if(!hijo1.getCodificacion().contains(parejas.get(j).getKey()))
+							{
+								hijo1.getCodificacion().set(i,parejas.get(j).getKey());
+								break;
+							}
+							else
+							{
+								elemento=parejas.get(j).getKey();
+								break;
+							}
+						}
+					}
+				}
+
+			}
 			
-			//hijo1
-			if(hijo1.getCodificacion().contains(padre1.getCodificacion().get(i)))
-				hijo1.getCodificacion().set(i,padre2.getCodificacion().get(i));
-			else hijo1.getCodificacion().set(i,padre2.getCodificacion().get(i));
-			
-			//hijo2
-			if(hijo2.getCodificacion().contains(padre2.getCodificacion().get(i)))
-				hijo2.getCodificacion().set(i,padre1.getCodificacion().get(i));
-			else hijo2.getCodificacion().set(i,padre2.getCodificacion().get(i));
-		
+			//Luego el segundo hijo
+			if((int)hijo2.getCodificacion().get(i)==100000)
+			{
+				//hijo2
+				int elemento=(int)padre2.getCodificacion().get(i);
+				while((int)hijo2.getCodificacion().get(i)==100000)
+				{
+					for(int j=0;j<parejas.size();j++)
+					{
+						if(elemento==parejas.get(j).getKey())
+						{
+							if(!hijo2.getCodificacion().contains(parejas.get(j).getValue()))
+							{
+								hijo2.getCodificacion().set(i,parejas.get(j).getValue());
+								break;
+							}
+							else
+							{
+								elemento=parejas.get(j).getValue();
+								break;
+							}
+						}
+					}
+				}
+
+			}
 		}
 
 		/* Actualizamos los genes */
@@ -103,7 +146,6 @@ public class PMX implements ICruce {
 			comienzo += tam;
 
 		}
-
 		// Una vez hecho el cruce, se evalua
 		hijo1.set_aptitud(hijo1.evaluar());
 		hijo2.set_aptitud(hijo2.evaluar());
