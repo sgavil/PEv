@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import es.pe.mdelossgavil.Poblacion.*;
+import javafx.util.Pair;
 import sun.security.mscapi.PRNG;
 
 public class CX implements ICruce {
@@ -23,23 +24,23 @@ public class CX implements ICruce {
 		//cruzar preservando el orden y la posición de la mayor
 		//cantidad posible de ciudades del otro
 		
+		int principio,fin;
 		int lCrom = p1.get_longitud();
+		//escogemos dos puntos al azar
 		Random r = new Random();
-		ArrayList<Integer> posiciones=new ArrayList<Integer>();
-		int ultimo;
 		
-		for (int i = 0; i < lCrom*0.3; i++) {
-			posiciones.add(r.nextInt(lCrom));
-		}
-		
-		ultimo=posiciones.get(0);
-		for(int i=1;i<posiciones.size();i++)
+		principio = r.nextInt(lCrom);
+		fin=r.nextInt(lCrom);
+		while(fin==principio)fin=r.nextInt(lCrom);
+		//En caso de que esten intercambiados . hacemos swap
+		if(fin<principio)
 		{
-			if(posiciones.get(i)>ultimo)
-				ultimo=posiciones.get(i);
+			int aux=principio;
+			principio=fin;
+			fin=aux;
 		}
 		
-		Cruce(p1, p2, h1, h2, posiciones,ultimo);
+		Cruce(p1, p2, h1, h2);
 
 	}
 
@@ -51,65 +52,65 @@ public class CX implements ICruce {
 	 * @param principio  indice del cromosoma donde empieza el tramos escogido	
 	 * @param fin      	 indice del cromosoma donde acaba el tramos escogido
 	 */
-	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2, ArrayList<Integer> posiciones
-			,int ultimo) {
+	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2) {
 
-		// Establecemos el tramos en los hijos
-		for (int i = 0; i < posiciones.size(); i++) {
-			hijo1.getCodificacion().set(posiciones.get(i), padre2.getCodificacion().get(posiciones.get(i)));
-			hijo2.getCodificacion().set(posiciones.get(i), padre1.getCodificacion().get(posiciones.get(i)));
+		//Creamos las parejas para hacer los ciclos
+		ArrayList<Pair<Integer,Integer>> parejas=new ArrayList<Pair<Integer,Integer>>();
+		for(int i=0;i<padre1.getCodificacion().size();i++)
+		{
+			Pair<Integer,Integer> pareja=new Pair<Integer, Integer>( (int)padre1.getCodificacion().get(i), 
+					(int)padre2.getCodificacion().get(i));
+			parejas.add(pareja);
 		}
-
-		// Ahora queda rellenar aquellos elementos que no han sido escogidos en el tramo
-		//Haremos un bucle para cada uno de los
-		//Primero el primer hijo
-		int indice=ultimo+1;
-		int indice2=ultimo+1;
-		if(indice==padre1.get_longitud())indice=0;
-		if(indice2==padre1.get_longitud())indice2=0;
-		while(indice2!=ultimo)
-		{	
-			if((int)hijo1.getCodificacion().get(indice2)==100000)
-			{
-				//Si no contiene el elemento del padre, lo metemos.En caso contrario,lo intentamos con el siguiente
-				if(!hijo1.getCodificacion().contains(padre1.getCodificacion().get(indice)))
-				{
-					hijo1.getCodificacion().set(indice2, padre1.getCodificacion().get(indice));
-					indice2++;
-				}
-				//Aumentamos el puntero
-				else indice++;
 			
+		//Ciclo del primer hijo
+		int elem = (int) padre1.getCodificacion().get(0);
+		while(!hijo1.getCodificacion().contains(elem))
+		{
+			int pos=0;
+			for(int i=0;i<padre1.getCodificacion().size();i++){
+				if((int)padre1.getCodificacion().get(i)==elem)
+					pos=i;
 			}
-			else indice2++;
-			//En caso de que lleguemos al final , volvemos la principio
-			if(indice==padre1.get_longitud())indice=0;
-			if(indice2==padre1.get_longitud())indice2=0;
+			hijo1.getCodificacion().set(pos, elem);
+			//Buscamos el siguiente elem a insertar mientras se pueda
+			int aux;
+			for (int j = 0; j < parejas.size(); j++) {
+				if(parejas.get(j).getKey()==elem)
+				{
+					elem=parejas.get(j).getValue();
+					break;
+				}
+			}
 		}
 		
-		//Ahora con el segundo hijo
-		indice=ultimo+1;
-		indice2=ultimo+1;
-		if(indice==padre1.get_longitud())indice=0;
-		if(indice2==padre1.get_longitud())indice2=0;
-		while(indice2!=ultimo)
-		{	
-			if((int)hijo2.getCodificacion().get(indice2)==100000)
-			{
-				//Si no contiene el elemento del padre, lo metemos.En caso contrario,lo intentamos con el siguiente
-				if(!hijo2.getCodificacion().contains(padre2.getCodificacion().get(indice)))
-				{
-					hijo2.getCodificacion().set(indice2, padre2.getCodificacion().get(indice));
-					indice2++;
-				}
-			
-				//Aumentamos el puntero
-				else indice++;
+		//Ciclo para el segundo hijo
+		while(!hijo2.getCodificacion().contains(elem))
+		{
+			int pos=0;
+			for(int i=0;i<padre2.getCodificacion().size();i++){
+				if((int)padre2.getCodificacion().get(i)==elem)
+					pos=i;
 			}
-			else indice2++;
-			//En caso de que lleguemos al final , volvemos la principio
-			if(indice==padre1.get_longitud())indice=0;
-			if(indice2==padre1.get_longitud())indice2=0;
+			hijo2.getCodificacion().set(pos, elem);
+			//Buscamos el siguiente elem a insertar mientras se pueda
+			int aux;
+			for (int j = 0; j < parejas.size(); j++) {
+				if(parejas.get(j).getValue()==elem)
+				{
+					elem=parejas.get(j).getKey();
+					break;
+				}
+			}
+		}
+		
+		//Por ultimo , intercambiamos los elementos restantes
+		for(int i=0;i<hijo1.getCodificacion().size();i++) {
+			if((int)hijo1.getCodificacion().get(i)==100000)
+			{
+				hijo1.getCodificacion().set(i,padre2.getCodificacion().get(i));
+				hijo2.getCodificacion().set(i,padre1.getCodificacion().get(i));
+			}
 		}
 
 		/* Actualizamos los genes */

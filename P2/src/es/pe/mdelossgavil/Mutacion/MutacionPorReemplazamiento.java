@@ -70,19 +70,18 @@ public class MutacionPorReemplazamiento implements IMutacion{
 		ArrayList<T> parte1=new ArrayList<T>();
 		ArrayList<T> parte2=new ArrayList<T>();
 		ArrayList<T> ultimo=new ArrayList<T>();
-		for(int i=0;i<puntodeCorte;i++)
-		{
+		for(int i=0;i<puntodeCorte;i++){
 			parte1.add((T) invididuo.getCodificacion().get(i));
 		}
-		for(int i=puntodeCorte;i<invididuo.get_longitud();i++)
-		{
+		for(int i=puntodeCorte;i<invididuo.get_longitud();i++){
 			parte2.add((T) invididuo.getCodificacion().get(i));
 		}
-		
-		System.arraycopy(parte2, 0, ultimo, 0, parte2.size());
-        System.arraycopy(parte1, 0, ultimo, parte2.size(), parte1.size());
-        
-        System.arraycopy(ultimo, 0, invididuo, 0, ultimo.size());
+		for (int i = 0; i < parte2.size(); i++) {
+			invididuo.getCodificacion().set(i, parte2.get(i));
+		}
+		for (int i=parte2.size(); i < parte2.size()+parte1.size(); i++) {
+			invididuo.getCodificacion().set(i, parte1.get(i-parte2.size()));
+		}
 	}
 		
 	private void actualizarGen(ACromosoma cromosoma, int tam, int comienzo, int gen) {

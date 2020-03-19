@@ -20,7 +20,7 @@ public class OX implements ICruce {
 	public void reproduccion(ACromosoma p1, ACromosoma p2, ACromosoma h1, ACromosoma h2) {
 		
 		//elegir un tramo de uno de los progenitores y
-		//cruzar preservando el orden y la posición de la mayor
+		//cruzar preservando el orden y la posiciï¿½n de la mayor
 		//cantidad posible de ciudades del otro
 		
 		int principio,fin;
