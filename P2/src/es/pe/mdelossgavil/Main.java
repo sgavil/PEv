@@ -42,7 +42,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		AlgoritmoEvolutivo aEvolutivo = new AlgoritmoEvolutivo(TAM_POB, N_GENERACIONES, DIR_DATOS + "ajuste.txt");
-		aEvolutivo.inicializa(new Torneos(2,false), new CX(), new MutacionPorReemplazamiento());
+		aEvolutivo.inicializa(new EstocasticoUniversal(), new PMX(), new MutacionPorReemplazamiento());
 
 		aEvolutivo.funcion_revisar_adaptacion_minimiza();
 		aEvolutivo.evaluar_poblacion();
