@@ -23,7 +23,45 @@ public class MutacionPorInserccion implements IMutacion{
 	@Override
 	public void mutar(ArrayList<ACromosoma> poblacion,float probMutacion) {
 				
-
+//		if(probMutacion <= 0f)
+//			return;
+//		
+//		//Recorremos todos los individuos de la población
+//		for (int i = 0; i < poblacion.size(); i++) 
+//		{
+//			boolean mutado = false;
+//			ACromosoma individuo = poblacion.get(i);
+//			
+//			//Generamos un número aleatorio
+//			float rndProb = (float)Math.random();
+//			
+//			//Si es menor que la probabilidad de mutación actualizamos el bit
+//			// y lo marcamos como mutado
+//			if(rndProb < probMutacion) {
+//				int lCrom = individuo.get_longitud();
+//				//Escogemos posicion y gen aleatorios
+//				Random r = new Random();
+//				int posicion = r.nextInt(lCrom);
+//				TGen genAInsertar=individuo.getCodificacion().get(posicion);
+//				
+//				/* Actualizamos los genes */
+//				for (int j = 0; j < individuo.get_genes().size(); j++) {
+//					/* Cogemos el tamanio del gen */
+//					TGen gen = (TGen) individuo.get_genes().get(j);
+//					int tam = gen.getGenotipo().size();
+//					/* Trasladamos el Array */
+//					actualizarGen(individuo, tam, comienzo, j);
+//					comienzo += tam;
+//
+//				}
+//			}
+//			
+//			//Si se ha producido una mutación tenemos que volver a calcular la aptitud del individuo
+//			if(mutado) {
+//				poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
+//
+//			}
+//		}
 		if(probMutacion <= 0f)
 			return;
 		
@@ -43,7 +81,7 @@ public class MutacionPorInserccion implements IMutacion{
 				//Escogemos posicion y gen aleatorios
 				Random r = new Random();
 				int posicion = r.nextInt(lCrom);
-				TGen genAInsertar=(TGen) individuo.getCodificacion().get(posicion);
+				Integer genAInsertar=(Integer) individuo.getCodificacion().get(posicion);
 				individuo.getCodificacion().remove(posicion);
 				//Lo instertamos en una posicion aleatoria
 				individuo.getCodificacion().add(r.nextInt(lCrom), genAInsertar);
@@ -59,6 +97,7 @@ public class MutacionPorInserccion implements IMutacion{
 					comienzo += tam;
 
 				}
+				mutado=true;
 			}
 			
 			//Si se ha producido una mutación tenemos que volver a calcular la aptitud del individuo

@@ -6,9 +6,9 @@ import java.util.Random;
 import es.pe.mdelossgavil.Poblacion.*;
 import sun.security.mscapi.PRNG;
 
-public class OX implements ICruce {
+public class OX_PP implements ICruce {
 
-	public OX() {
+	public OX_PP() {
 
 	}
 
@@ -20,26 +20,26 @@ public class OX implements ICruce {
 	public void reproduccion(ACromosoma p1, ACromosoma p2, ACromosoma h1, ACromosoma h2) {
 		
 		//elegir un tramo de uno de los progenitores y
-		//cruzar preservando el orden y la posiciï¿½n de la mayor
+		//cruzar preservando el orden y la posición de la mayor
 		//cantidad posible de ciudades del otro
 		
-		int principio,fin;
 		int lCrom = p1.get_longitud();
-		//escogemos dos puntos al azar
 		Random r = new Random();
+		ArrayList<Integer> posiciones=new ArrayList<Integer>();
+		int ultimo;
 		
-		principio = r.nextInt(lCrom);
-		fin=r.nextInt(lCrom);
-		while(fin==principio)fin=r.nextInt(lCrom);
-		//En caso de que esten intercambiados . hacemos swap
-		if(fin<principio)
-		{
-			int aux=principio;
-			principio=fin;
-			fin=aux;
+		for (int i = 0; i < lCrom*0.3; i++) {
+			posiciones.add(r.nextInt(lCrom));
 		}
 		
-		Cruce(p1, p2, h1, h2, principio,fin);
+		ultimo=posiciones.get(0);
+		for(int i=1;i<posiciones.size();i++)
+		{
+			if(posiciones.get(i)>ultimo)
+				ultimo=posiciones.get(i);
+		}
+		
+		Cruce(p1, p2, h1, h2, posiciones,ultimo);
 
 	}
 
@@ -51,50 +51,62 @@ public class OX implements ICruce {
 	 * @param principio  indice del cromosoma donde empieza el tramos escogido	
 	 * @param fin      	 indice del cromosoma donde acaba el tramos escogido
 	 */
-	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2, int principio,int fin) {
+	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2, ArrayList<Integer> posiciones
+			,int ultimo) {
 
 		// Establecemos el tramos en los hijos
-		for (int i = principio; i < fin; i++) {
-			hijo1.getCodificacion().set(i, padre2.getCodificacion().get(i));
-			hijo2.getCodificacion().set(i, padre1.getCodificacion().get(i));
+		for (int i = 0; i < posiciones.size(); i++) {
+			hijo1.getCodificacion().set(posiciones.get(i), padre2.getCodificacion().get(posiciones.get(i)));
+			hijo2.getCodificacion().set(posiciones.get(i), padre1.getCodificacion().get(posiciones.get(i)));
 		}
 
 		// Ahora queda rellenar aquellos elementos que no han sido escogidos en el tramo
 		//Haremos un bucle para cada uno de los
 		//Primero el primer hijo
-		int indice=fin;
-		int indice2=fin;
-		while(indice2!=principio)
+		int indice=ultimo+1;
+		int indice2=ultimo+1;
+		if(indice==padre1.get_longitud())indice=0;
+		if(indice2==padre1.get_longitud())indice2=0;
+		while(indice2!=ultimo)
 		{	
-			//Si no contiene el elemento del padre, lo metemos.En caso contrario,lo intentamos con el siguiente
-			if(!hijo1.getCodificacion().contains(padre1.getCodificacion().get(indice)))
+			if((int)hijo1.getCodificacion().get(indice2)==100000)
 			{
-				hijo1.getCodificacion().set(indice2, padre1.getCodificacion().get(indice));
-				indice2++;
-			}
-			//Aumentamos el puntero
-			else indice++;
+				//Si no contiene el elemento del padre, lo metemos.En caso contrario,lo intentamos con el siguiente
+				if(!hijo1.getCodificacion().contains(padre1.getCodificacion().get(indice)))
+				{
+					hijo1.getCodificacion().set(indice2, padre1.getCodificacion().get(indice));
+					indice2++;
+				}
+				//Aumentamos el puntero
+				else indice++;
 			
+			}
+			else indice2++;
 			//En caso de que lleguemos al final , volvemos la principio
 			if(indice==padre1.get_longitud())indice=0;
 			if(indice2==padre1.get_longitud())indice2=0;
 		}
 		
-		//Luego el segundo hijo
-		indice=fin;
-		indice2=fin;
-		while(indice2!=principio)
+		//Ahora con el segundo hijo
+		indice=ultimo+1;
+		indice2=ultimo+1;
+		if(indice==padre1.get_longitud())indice=0;
+		if(indice2==padre1.get_longitud())indice2=0;
+		while(indice2!=ultimo)
 		{	
-			//Si no contiene el elemento del padre, lo metemos.En caso contrario,lo intentamos con el siguiente
-			if(!hijo2.getCodificacion().contains(padre2.getCodificacion().get(indice)))
+			if((int)hijo2.getCodificacion().get(indice2)==100000)
 			{
-				hijo2.getCodificacion().set(indice2, padre2.getCodificacion().get(indice));
-				indice2++;
+				//Si no contiene el elemento del padre, lo metemos.En caso contrario,lo intentamos con el siguiente
+				if(!hijo2.getCodificacion().contains(padre2.getCodificacion().get(indice)))
+				{
+					hijo2.getCodificacion().set(indice2, padre2.getCodificacion().get(indice));
+					indice2++;
+				}
+			
+				//Aumentamos el puntero
+				else indice++;
 			}
-			
-			//Aumentamos el puntero
-			else indice++;
-			
+			else indice2++;
 			//En caso de que lleguemos al final , volvemos la principio
 			if(indice==padre1.get_longitud())indice=0;
 			if(indice2==padre1.get_longitud())indice2=0;

@@ -42,7 +42,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		AlgoritmoEvolutivo aEvolutivo = new AlgoritmoEvolutivo(TAM_POB, N_GENERACIONES, DIR_DATOS + "ajuste.txt");
-		aEvolutivo.inicializa(new Torneos(2,false), new PMX(), new MutacionPorIntercambio());
+		aEvolutivo.inicializa(new Torneos(2,false), new CX(), new MutacionPorReemplazamiento());
 
 		aEvolutivo.funcion_revisar_adaptacion_minimiza();
 		aEvolutivo.evaluar_poblacion();
@@ -54,7 +54,7 @@ public class Main {
 
 		int i = 0;
 		while (i < N_GENERACIONES) {
-			aEvolutivo.seleccion();
+			//aEvolutivo.seleccion();
 			//aEvolutivo.cruce();
 			aEvolutivo.mutacion();
 			aEvolutivo.evaluar_poblacion();
@@ -62,7 +62,6 @@ public class Main {
 			graficaMejorAbs[i] = aEvolutivo.mejor_abs.get_aptitud();
 			graficaMedia[i] = aEvolutivo.get_aptitud_media();
 			graficaMejorRelativo[i] = aEvolutivo.getEl_mejor().get_aptitud();
-
 			i++;
 		}
 
