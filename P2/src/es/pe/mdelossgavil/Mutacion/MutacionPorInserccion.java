@@ -81,7 +81,7 @@ public class MutacionPorInserccion implements IMutacion{
 				//Escogemos posicion y gen aleatorios
 				Random r = new Random();
 				int posicion = r.nextInt(lCrom);
-				Integer genAInsertar=(Integer) individuo.getCodificacion().get(posicion);
+				int genAInsertar=(int) individuo.getCodificacion().get(posicion);
 				individuo.getCodificacion().remove(posicion);
 				//Lo instertamos en una posicion aleatoria
 				individuo.getCodificacion().add(r.nextInt(lCrom), genAInsertar);

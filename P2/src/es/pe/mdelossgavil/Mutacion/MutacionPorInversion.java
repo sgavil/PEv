@@ -84,7 +84,8 @@ public class MutacionPorInversion implements IMutacion{
 	private <T> void aplicarMutacion(ACromosoma invididuo,int comienzo, int fin)
 	{
 		for (int i = comienzo; i < (fin/2); i++) {
-			T aux=(T)invididuo.getCodificacion().get(comienzo+i);
+
+			int aux=(int) invididuo.getCodificacion().get(comienzo+i);
 			invididuo.getCodificacion().set(comienzo+i, invididuo.getCodificacion().get(fin-i));
 			invididuo.getCodificacion().set(fin-i, aux);
 		}

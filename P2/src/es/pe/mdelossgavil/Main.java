@@ -41,10 +41,11 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		AlgoritmoEvolutivo aEvolutivo = new AlgoritmoEvolutivo(TAM_POB, N_GENERACIONES, DIR_DATOS + "ajuste.txt");
-		aEvolutivo.inicializa(new EstocasticoUniversal(), new PMX(), new MutacionPorReemplazamiento());
 
-		aEvolutivo.funcion_revisar_adaptacion_minimiza();
+
+		AlgoritmoEvolutivo aEvolutivo = new AlgoritmoEvolutivo(TAM_POB, N_GENERACIONES, DIR_DATOS + "ajuste.txt");
+		aEvolutivo.inicializa(new Torneos(2,false), new CX(), new MutacionPorInversion());
+
 		aEvolutivo.evaluar_poblacion();
 
 		iteraciones = new double[N_GENERACIONES];
@@ -54,8 +55,8 @@ public class Main {
 
 		int i = 0;
 		while (i < N_GENERACIONES) {
-			//aEvolutivo.seleccion();
-			//aEvolutivo.cruce();
+			aEvolutivo.seleccion();
+			aEvolutivo.cruce();
 			aEvolutivo.mutacion();
 			aEvolutivo.evaluar_poblacion();
 			iteraciones[i] = i;
@@ -65,8 +66,8 @@ public class Main {
 			i++;
 		}
 
-		System.out.println(aEvolutivo.getEl_mejor().get_aptitud());
-		System.out.println((((CromosomaHospitales) aEvolutivo.getEl_mejor()).get_fenotipo()));
+		System.out.println(aEvolutivo.mejor_abs.get_aptitud());
+		System.out.println((((CromosomaHospitales) aEvolutivo.mejor_abs).get_fenotipo()));
 		// p1frame = new P1Frame();
 		// p1frame.show();
 

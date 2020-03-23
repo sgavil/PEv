@@ -8,6 +8,7 @@ import es.pe.mdelossgavil.Poblacion.CromosomaF1;
 import es.pe.mdelossgavil.Poblacion.CromosomaF2;
 import es.pe.mdelossgavil.Poblacion.CromosomaF3;
 import es.pe.mdelossgavil.Poblacion.CromosomaF4;
+import es.pe.mdelossgavil.Poblacion.CromosomaHospitales;
 import es.pe.mdelossgavil.Poblacion.CromosomaP2;
 import es.pe.mdelossgavil.Seleccion.ISeleccion;
 
@@ -36,17 +37,7 @@ public class EstocasticoUniversal implements ISeleccion {
 			while (valorABuscar > poblacion.get(k).get_punt_acum() && k < poblacion.size() - 1)
 				k++;
 
-			// Al llegar al elemento lo guardamos en nuestra selección de población
-			if (tipoProblema.equals("F1"))
-				nueva_pob.add(new CromosomaF1(poblacion.get(k)));
-			else if (tipoProblema.equals("F2"))
-				nueva_pob.add(new CromosomaF2(poblacion.get(k)));
-			else if (tipoProblema.equals("F3"))
-				nueva_pob.add(new CromosomaF3(poblacion.get(k)));
-			else if (tipoProblema.equals("F4"))
-				nueva_pob.add(new CromosomaF4(poblacion.get(k)));
-			else if (tipoProblema.equals("P2"))
-				nueva_pob.add(new CromosomaP2(poblacion.get(k)));
+			nueva_pob.add(new CromosomaHospitales(poblacion.get(k)));
 		}
 
 		// TODO Auto-generated method stub
