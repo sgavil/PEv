@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
-import es.pe.mdelossgavil.Poblacion.CromosomaF1;
-import es.pe.mdelossgavil.Poblacion.CromosomaF2;
-import es.pe.mdelossgavil.Poblacion.CromosomaF3;
-import es.pe.mdelossgavil.Poblacion.CromosomaF4;
 import es.pe.mdelossgavil.Poblacion.CromosomaHospitales;
-import es.pe.mdelossgavil.Poblacion.CromosomaP2;
 import es.pe.mdelossgavil.Seleccion.ISeleccion;
 
 /**
@@ -34,21 +29,7 @@ public class Torneos implements ISeleccion {
 
 		for (int i = 0; i < poblacion.size(); i++) {
 
-			ACromosoma c;
-
-			/*if (tipoProblema.equals("F1"))
-				c = new CromosomaF1();
-			else if (tipoProblema.equals("F2"))
-				c = new CromosomaF2();
-			else if (tipoProblema.equals("F3"))
-				c =  new CromosomaF3();
-			else if (tipoProblema.equals("F4"))
-				c = new CromosomaF4();
-			else if (tipoProblema.equals("P2"))
-				c = new CromosomaP2();
-			else c = null;*/
-			
-			c = new CromosomaHospitales();
+			ACromosoma c =  new CromosomaHospitales();
 			
 			if (maximizar)
 				c.set_aptitud(Float.MIN_VALUE);
@@ -67,16 +48,6 @@ public class Torneos implements ISeleccion {
 
 			}
 
-			/*if (tipoProblema.equals("F1"))
-				nueva_pob.add(new CromosomaF1(c));
-			else if (tipoProblema.equals("F2"))
-				nueva_pob.add(new CromosomaF2(c));
-			else if (tipoProblema.equals("F3"))
-				nueva_pob.add(new CromosomaF3(c));
-			else if (tipoProblema.equals("F4"))
-				nueva_pob.add(new CromosomaF4(c));
-			else if (tipoProblema.equals("P2"))
-				nueva_pob.add(new CromosomaP2(c));*/
 			nueva_pob.add(new CromosomaHospitales(c));
 		
 		}

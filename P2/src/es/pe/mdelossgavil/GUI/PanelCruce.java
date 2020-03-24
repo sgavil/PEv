@@ -30,11 +30,11 @@ public class PanelCruce extends JPanel {
 		setLayout(new GridLayout(1, 3, 15, 0));
 		
 		 cruceBox = new JComboBox();
-		cruceBox.setModel(new DefaultComboBoxModel(new String[] {"Monopunto", "Uniforme", "Discreto Uniforme", "Aritm\u00E9tico", "BLX-Alpha"}));
+		cruceBox.setModel(new DefaultComboBoxModel(new String[] {"CO", "CX", "OX_PP", "OX", "PMX"}));
 		cruceBox.setSelectedIndex(0);
 		add(cruceBox);
 		
-		Main.CRUCE = "Monopunto";
+		Main.CRUCE = "CO";
 
 		
 		cruceBox.addActionListener(new ActionListener() {

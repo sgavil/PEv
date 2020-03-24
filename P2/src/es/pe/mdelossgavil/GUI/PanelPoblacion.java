@@ -15,6 +15,9 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
+
+import es.pe.mdelossgavil.Main;
+
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JScrollBar;
@@ -24,8 +27,8 @@ import javax.swing.JTextField;
 public class PanelPoblacion extends JPanel {
 	public JSpinner pobSpinner;
 	public JSpinner genSpinner;
-	
-	public JTextField toleranciaTF;
+	private JLabel lblNewLabel;
+	private JComboBox comboBox;
 
 	
 	/**
@@ -52,16 +55,25 @@ public class PanelPoblacion extends JPanel {
 		genSpinner = new JSpinner();
 		genSpinner.setModel(new SpinnerNumberModel(new Integer(100), new Integer(0), null, new Integer(1)));
 		add(genSpinner);
-
-		JLabel ToleranciaLabel = new JLabel("Tolerancia");
-		ToleranciaLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		add(ToleranciaLabel);
 		
-		toleranciaTF = new JTextField();
-		toleranciaTF.setText("0.001");
-		toleranciaTF.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(toleranciaTF);
-		toleranciaTF.setColumns(10);
+		lblNewLabel = new JLabel("Archivo ");
+		add(lblNewLabel);
+		
+		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"ajuste", "datos12", "datos15", "datos30", "tai100a", "tai256c"}));
+		comboBox.setSelectedIndex(0);
+		add(comboBox);
+		
+comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cruceb = (JComboBox )(e.getSource());
+				String nombreArchivo = (String)cruceb.getSelectedItem();
+				Main.NOMBRE_ARCHIVO = nombreArchivo;
+				
+			}
+		});
 
 		
 	}

@@ -5,12 +5,7 @@ import java.util.Collections;
 
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
 import es.pe.mdelossgavil.Poblacion.CromosomaComparator;
-import es.pe.mdelossgavil.Poblacion.CromosomaF1;
-import es.pe.mdelossgavil.Poblacion.CromosomaF2;
-import es.pe.mdelossgavil.Poblacion.CromosomaF3;
-import es.pe.mdelossgavil.Poblacion.CromosomaF4;
 import es.pe.mdelossgavil.Poblacion.CromosomaHospitales;
-import es.pe.mdelossgavil.Poblacion.CromosomaP2;
 import es.pe.mdelossgavil.Seleccion.ISeleccion;
 
 /**

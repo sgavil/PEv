@@ -57,12 +57,11 @@ public class AlgoritmoEvolutivo {
 	private int pos_mejor;
 	public static float prob_cruce = 0.6f;
 	public static float prob_mut = 0.05f;
-	public static float tolerancia;
-	
+
 	int[][] flujos;
 	int[][] distancias;
 	int N;
-	
+
 	float fmax;
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -147,9 +146,9 @@ public class AlgoritmoEvolutivo {
 	public void evaluar_poblacion() {
 
 		funcion_revisar_adaptacion_minimiza();
-		
-		//tengo el fmax 
-		
+
+		// tengo el fmax
+
 		float punt_acum = 0;
 		float aptitud_mejor;
 
@@ -157,10 +156,7 @@ public class AlgoritmoEvolutivo {
 
 		ACromosoma individuoActual;
 
-		if (maximizar)
-			aptitud_mejor = Float.MIN_VALUE;
-		else
-			aptitud_mejor = Float.MAX_VALUE;
+		aptitud_mejor = Float.MAX_VALUE;
 
 		/*
 		 * Primero hacemos un for para tener la suma de las aptitudes y la mejor aptitud
@@ -168,40 +164,25 @@ public class AlgoritmoEvolutivo {
 		 */
 		for (int i = 0; i < tam_pob; i++) {
 			individuoActual = poblacion.get(i);
-			
-			
-			
-			suma_aptitud += (fmax - individuoActual.get_aptitud());
-		
-			if (maximizar) {
-				if (individuoActual.get_aptitud() > aptitud_mejor) {
-					pos_mejor = i;
-					aptitud_mejor = individuoActual.get_aptitud();
-					el_mejor = individuoActual;
-				}
 
-			} else {
-				if (individuoActual.get_aptitud() < aptitud_mejor) {
-					pos_mejor = i;
-					aptitud_mejor = individuoActual.get_aptitud();
-					el_mejor = individuoActual;
-				}
+			suma_aptitud += (fmax - individuoActual.get_aptitud());
+
+			if (individuoActual.get_aptitud() < aptitud_mejor) {
+				pos_mejor = i;
+				aptitud_mejor = individuoActual.get_aptitud();
+				el_mejor = individuoActual;
 			}
 
 		}
 
 		for (int j = 0; j < tam_pob; j++) {
-				
-			
-			
+
 			// Calculamos la puntuación del individuo y su puntuación acumulada
 			float puntuacion;
-		
-		
-			
+
 			puntuacion = (fmax - poblacion.get(j).get_aptitud()) / suma_aptitud;
 
-			poblacion.get(j).set_puntuacion( puntuacion);
+			poblacion.get(j).set_puntuacion(puntuacion);
 			poblacion.get(j).set_punt_acum(puntuacion + punt_acum);
 
 			// Actualizamos la puntuación acumulada general
@@ -270,25 +251,13 @@ public class AlgoritmoEvolutivo {
 
 		for (int i = 0; i < num_sele_cruce; i += 2) {
 
-			/* Cogemos el tipo de Cromosoma del problema */
-			/*
-			 * if (problemaActual == "F1") { hijo1 = new CromosomaF1(); hijo2 = new
-			 * CromosomaF1(); } else if (problemaActual == "F2") { hijo1 = new
-			 * CromosomaF2(); hijo2 = new CromosomaF2(); } else if (problemaActual == "F3")
-			 * { hijo1 = new CromosomaF3(); hijo2 = new CromosomaF3(); } else if
-			 * (problemaActual == "F4") { hijo1 = new CromosomaF4(); hijo2 = new
-			 * CromosomaF4(); } else if (problemaActual == "P2") { hijo1 = new
-			 * CromosomaP2(); hijo2 = new CromosomaP2(); }
-			 */
-
 			hijo1 = new CromosomaHospitales();
 			hijo2 = new CromosomaHospitales();
 
 			hijo1.inicializa_cromosoma();
 			hijo2.inicializa_cromosoma();
-			
-			for(int j=0;j<hijo1.getCodificacion().size();j++)
-			{
+
+			for (int j = 0; j < hijo1.getCodificacion().size(); j++) {
 				hijo1.getCodificacion().set(j, 100000);
 				hijo2.getCodificacion().set(j, 100000);
 			}
@@ -341,33 +310,9 @@ public class AlgoritmoEvolutivo {
 
 		// Metemos los tamElite mejores
 		for (int i = 0; i < tamElite; i++) {
-			if (!maximizar) {
-				// Al llegar al elemento lo guardamos en nuestra selección de población
-				if (problemaActual.equals("F1"))
-					elite.add(new CromosomaF1(poblacion.get(i)));
-				else if (problemaActual.equals("F2"))
-					elite.add(new CromosomaF2(poblacion.get(i)));
-				else if (problemaActual.equals("F3"))
-					elite.add(new CromosomaF3(poblacion.get(i)));
-				else if (problemaActual.equals("F4"))
-					elite.add(new CromosomaF4(poblacion.get(i)));
-				else if (problemaActual.equals("P2"))
-					elite.add(new CromosomaP2(poblacion.get(i)));
-			} else {
-				// Al llegar al elemento lo guardamos en nuestra selección de población
-				if (problemaActual.equals("F1"))
-					elite.add(new CromosomaF1(poblacion.get(poblacion.size() - 1 - i)));
-				else if (problemaActual.equals("F2"))
-					elite.add(new CromosomaF2(poblacion.get(poblacion.size() - 1 - i)));
-				else if (problemaActual.equals("F3"))
-					elite.add(new CromosomaF3(poblacion.get(poblacion.size() - 1 - i)));
-				else if (problemaActual.equals("F4"))
-					elite.add(new CromosomaF4(poblacion.get(poblacion.size() - 1 - i)));
-				else if (problemaActual.equals("P2"))
-					elite.add(new CromosomaP2(poblacion.get(poblacion.size() - 1 - i)));
-			}
-		}
 
+			elite.add(new CromosomaHospitales(poblacion.get(i)));
+		}
 		return elite;
 	}
 
@@ -377,35 +322,12 @@ public class AlgoritmoEvolutivo {
 		Collections.sort(poblacion, new CromosomaComparator());
 		// Metemos los tamElite mejores
 
-		if (!maximizar) {
-			for (int i = 0; i < elite.size(); i++) {
-				// Al llegar al elemento lo guardamos en nuestra selección de población
-				if (problemaActual.equals("F1"))
-					poblacion.set(poblacion.size() - 1 - i, new CromosomaF1(elite.get(i)));
-				else if (problemaActual.equals("F2"))
-					poblacion.set(poblacion.size() - 1 - i, new CromosomaF2(elite.get(i)));
-				else if (problemaActual.equals("F3"))
-					poblacion.set(poblacion.size() - 1 - i, new CromosomaF3(elite.get(i)));
-				else if (problemaActual.equals("F4"))
-					poblacion.set(poblacion.size() - 1 - i, new CromosomaF4(elite.get(i)));
-				else if (problemaActual.equals("P2"))
-					poblacion.set(poblacion.size() - 1 - i, new CromosomaP2(elite.get(i)));
-			}
-		} else {
-			for (int i = 0; i < elite.size(); i++) {
-				// Al llegar al elemento lo guardamos en nuestra selección de población
-				if (problemaActual.equals("F1"))
-					poblacion.set(i, new CromosomaF1(elite.get(i)));
-				else if (problemaActual.equals("F2"))
-					poblacion.set(i, new CromosomaF2(elite.get(i)));
-				else if (problemaActual.equals("F3"))
-					poblacion.set(i, new CromosomaF3(elite.get(i)));
-				else if (problemaActual.equals("F4"))
-					poblacion.set(i, new CromosomaF4(elite.get(i)));
-				else if (problemaActual.equals("P2"))
-					poblacion.set(i, new CromosomaP2(elite.get(i)));
-			}
+		for (int i = 0; i < elite.size(); i++) {
+			// Al llegar al elemento lo guardamos en nuestra selección de población
+			poblacion.set(poblacion.size() - 1 - i, new CromosomaHospitales(elite.get(i)));
+
 		}
+
 	}
 
 	public void funcion_revisar_adaptacion_minimiza() {
@@ -421,7 +343,6 @@ public class AlgoritmoEvolutivo {
 
 		fmax *= 1.05;
 
-		
 	}
 
 }
