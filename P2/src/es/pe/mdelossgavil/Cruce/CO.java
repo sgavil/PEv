@@ -52,30 +52,21 @@ public class CO implements ICruce {
 	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2, ArrayList<Integer> lista,
 			int pCorte) {
 		
-		ACromosoma p1=padre1.clone();
 		//Lo primero que hacemos es codificar a los padres segun la lista
 		//El primer padre
 		ArrayList<Integer> auxList=new ArrayList<Integer>(lista);
+		ArrayList<Integer> padre1Cod=new ArrayList<Integer>();
+		ArrayList<Integer> padre2Cod=new ArrayList<Integer>();
 		for(int i=0;i<padre1.get_longitud();i++)
 		{
-			boolean t=false;
 			for(int j=0;j<auxList.size();j++)
 			{
 				if(auxList.get(j)==padre1.getCodificacion().get(i))
 				{
-					if(i>=3 && j>=padre1.getCodificacion().size()-i)
-					{
-						int lala=0;
-					}
-					padre1.getCodificacion().set(i, j);
+					padre1Cod.add(j);
 					auxList.remove(j);
-					t=true;
 					break;	
 				}
-			}
-			if(!t)
-			{
-				int paraaqui=0;
 			}
 		}
 		
@@ -87,15 +78,10 @@ public class CO implements ICruce {
 			{
 				if(auxList.get(j)==padre2.getCodificacion().get(i))
 				{
-					if(i>=3 && j>=padre2.getCodificacion().size()-i)
-					{
-						int lala=0;
-					}
-					padre2.getCodificacion().set(i, j);
+					padre2Cod.add(j);
 					auxList.remove(j);
 					break;
 				}
-				
 			}
 		}
 		
@@ -103,8 +89,8 @@ public class CO implements ICruce {
 		// primera parte del intercambio: 1 a 1 y 2 a 2
 		for (int i = 0; i < pCorte; i++) {
 			int n1,n2;
-			n1=(int) padre1.getCodificacion().get(i);
-			n2=(int) padre2.getCodificacion().get(i);
+			n1=(int) padre1Cod.get(i);
+			n2=(int) padre2Cod.get(i);
 			hijo1.getCodificacion().set(i,n1);
 			hijo2.getCodificacion().set(i,n2);
 		}
@@ -112,26 +98,30 @@ public class CO implements ICruce {
 		// segunda parte: 1 a 2 y 2 a 1
 		for (int i = pCorte; i < hijo1.get_longitud(); i++) {
 			int n1,n2;
-			n1=(int) padre1.getCodificacion().get(i);
-			n2=(int) padre2.getCodificacion().get(i);
+			n1=(int) padre1Cod.get(i);
+			n2=(int) padre2Cod.get(i);
 			hijo1.getCodificacion().set(i,n2);
 			hijo2.getCodificacion().set(i,n1);
 		}
 		//Ahora que los tenemos mezclados, decodificamos cada unos de los hijos
+		
 		//Primer hijo
 		auxList=new ArrayList<Integer>(lista);
 		for(int i=0;i<padre1.get_longitud();i++)
 		{
 			int elem=(int)hijo1.getCodificacion().get(i);
-			if(elem>=auxList.size())
-			{
-				int cosa=4;
-			}
 			hijo1.getCodificacion().set(i, auxList.get(elem));
 			auxList.remove(elem);
 		}
 		
-	
+		//Segundo hijo
+		auxList=new ArrayList<Integer>(lista);
+		for(int i=0;i<padre2.get_longitud();i++)
+		{
+			int elem=(int)hijo2.getCodificacion().get(i);
+			hijo2.getCodificacion().set(i, auxList.get(elem));
+			auxList.remove(elem);
+		}
 		
 		/* Actualizamos los genes */
 		int comienzo = 0;

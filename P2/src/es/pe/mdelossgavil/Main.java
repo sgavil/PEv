@@ -118,7 +118,7 @@ public class Main {
 			iCruce = new OX();
 
 		else if (CRUCE.equals("PMX"))
-			iCruce = new ERX();
+			iCruce = new PMX();
 		
 		// PROBABILIDADES
 		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.pCruce.probCruce.getText())) / 100;
@@ -193,7 +193,6 @@ public class Main {
 		}
 
 		// Graficas
-
 		float mejorValor = aEvolutivo.mejor_abs.get_aptitud();
 
 		String resultado = "";
