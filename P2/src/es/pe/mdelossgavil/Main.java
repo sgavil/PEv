@@ -56,7 +56,6 @@ public class Main {
 		grafica.agregar_linea("Mejor Absoluto", iteraciones, graficaMejorAbs);
 		grafica.agregar_linea("Mejor de cada generación", iteraciones, graficaMejorRelativo);
 		grafica.agregar_linea("Media", iteraciones, graficaMedia);
-
 		grafica.pinta_grafica();
 	}
 
@@ -89,7 +88,6 @@ public class Main {
 		iteraciones = new double[N_GENERACIONES];
 
 		// Panel seleccion
-
 		ISeleccion iSeleccion = null;
 
 		if (SELECCION.equals("Ruleta"))
@@ -120,8 +118,8 @@ public class Main {
 			iCruce = new OX();
 
 		else if (CRUCE.equals("PMX"))
-			iCruce = new PMX();
-
+			iCruce = new ERX();
+		
 		// PROBABILIDADES
 		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.pCruce.probCruce.getText())) / 100;
 		AlgoritmoEvolutivo.prob_mut = Float.parseFloat((p1frame.pMutacion.probMut.getText())) / 100;
@@ -148,6 +146,7 @@ public class Main {
 
 		else if (MUTACION.equals("Mutacion por reemplazamiento"))
 			iMutacion = new MutacionPorReemplazamiento();
+		
 
 		// INICIALIZACION DEL ALGORITMO GENETICO
 
@@ -175,20 +174,22 @@ public class Main {
 			aEvolutivo.seleccion();
 			aEvolutivo.cruce();
 			aEvolutivo.mutacion();
-
+			
 			// Antes de evaluar incluimos la elite
 			if (ELITISMO > 0f) {
 				aEvolutivo.incluyeElite(elite);
 				elite.clear();
 			}
-
+			
 			aEvolutivo.evaluar_poblacion();
-
+			
 			// Graficas
 			graficaMejorAbs[i] = aEvolutivo.mejor_abs.get_aptitud();
 			graficaMedia[i] = aEvolutivo.get_aptitud_media();
 			graficaMejorRelativo[i] = aEvolutivo.getEl_mejor().get_aptitud();
 			i++;
+			
+			
 		}
 
 		// Graficas

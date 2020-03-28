@@ -310,7 +310,6 @@ public class AlgoritmoEvolutivo {
 
 		// Metemos los tamElite mejores
 		for (int i = 0; i < tamElite; i++) {
-
 			elite.add(new CromosomaHospitales(poblacion.get(i)));
 		}
 		return elite;

@@ -64,7 +64,7 @@ public class MutacionPorInversion implements IMutacion{
 					/* Cogemos el tamanio del gen */
 					TGen gen = (TGen) individuo.get_genes().get(j);
 					int tam = gen.getGenotipo().size();
-					/* Trasladamos el Array */
+					/* Trasladamos el	 Array */
 					actualizarGen(individuo, tam, comienzo, j);
 					comienzo += tam;
 
