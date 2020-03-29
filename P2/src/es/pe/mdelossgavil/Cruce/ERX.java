@@ -102,19 +102,6 @@ public class ERX implements ICruce {
 						if(!hijo1.getCodificacion().contains(matriz.get(indice).get(i)))
 							posiblesIndices.add(matriz.get(indice).get(i));
 					}
-							
-					/*
-					// Nos quedamos unicamente con el/los menores
-					for (int j = 0; j < posiblesIndices.size(); j++) {
-						if (posiblesIndices.get(j) <= menor)
-							menor = matriz.get(posiblesIndices.get(j)).size();
-					}
-					// Ahora eliminamos aquellos que sean mayor que le menor
-					for (int j = 0; j < posiblesIndices.size(); j++) {
-						if ( matriz.get(posiblesIndices.get(j)).size() > menor)
-							posiblesIndices.remove(j);
-					}
-					*/
 					
 					//Tenemos todos los adyacentes de ese numero ya metidos, por tanto tenemos que volver atras
 					//y desechar el numero
@@ -157,19 +144,6 @@ public class ERX implements ICruce {
 						posiblesIndices.add(matriz.get(indice).get(i));
 				}
 					
-				/*
-				// Nos quedamos unicamente con el/los menores
-				for (int j = 0; j < posiblesIndices.size(); j++) {
-					if (posiblesIndices.get(j) < menor)
-						menor = matriz.get(posiblesIndices.get(j)).size();
-				}
-				// Ahora eliminamos aquellos que sean mayor que le menor
-				for (int j = 0; j < posiblesIndices.size(); j++) {
-					if ( matriz.get(posiblesIndices.get(j)).size() > menor)
-						posiblesIndices.remove(j);
-				}
-				*/
-				
 				//Tenemos todos los adyacentes de ese numero ya metidos, por tanto tenemos que volver atras
 				//y desechar el numero
 				if(posiblesIndices.size()==0)

@@ -120,6 +120,8 @@ public class Main {
 		else if (CRUCE.equals("PMX"))
 			iCruce = new PMX();
 		
+		iCruce=new CruceImparesOrdenados();
+		
 		// PROBABILIDADES
 		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.pCruce.probCruce.getText())) / 100;
 		AlgoritmoEvolutivo.prob_mut = Float.parseFloat((p1frame.pMutacion.probMut.getText())) / 100;
