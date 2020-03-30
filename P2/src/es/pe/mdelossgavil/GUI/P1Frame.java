@@ -52,6 +52,8 @@ public class P1Frame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(6, 1, 0, 0));
 		setSize(500,600);
+		
+		
 		pPoblacion = new PanelPoblacion();
 		contentPane.add(pPoblacion);
 		

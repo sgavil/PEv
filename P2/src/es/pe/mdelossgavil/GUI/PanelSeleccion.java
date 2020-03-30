@@ -35,7 +35,7 @@ public class PanelSeleccion extends JPanel {
 		setLayout(new GridLayout(0, 1, 0, 0));
 		
 		seleccionBox = new JComboBox();
-		seleccionBox.setModel(new DefaultComboBoxModel(new String[] {"Ruleta", "Estoc\u00E1stico Universal", "Torneos", "Ranking"}));
+		seleccionBox.setModel(new DefaultComboBoxModel(new String[] {"Ruleta", "Estoc\u00E1stico Universal", "Torneos", "Ranking", "Truncamiento"}));
 		seleccionBox.setSelectedIndex(0);
 		seleccionBox.setRenderer(listRenderer);
 		add(seleccionBox);

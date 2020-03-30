@@ -30,7 +30,7 @@ public class PanelCruce extends JPanel {
 		setLayout(new GridLayout(1, 3, 15, 0));
 		
 		 cruceBox = new JComboBox();
-		cruceBox.setModel(new DefaultComboBoxModel(new String[] {"CO", "CX", "OX_PP", "OX", "PMX"}));
+		cruceBox.setModel(new DefaultComboBoxModel(new String[] {"CO", "CX", "OX_PP", "OX", "PMX", "ERX", "CIO"}));
 		cruceBox.setSelectedIndex(0);
 		add(cruceBox);
 		

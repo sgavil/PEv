@@ -60,7 +60,7 @@ public class PanelPoblacion extends JPanel {
 		add(lblNewLabel);
 		
 		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"ajuste", "datos12", "datos15", "datos30", "tai100a", "tai256c"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"ajuste", "datos12", "datos15", "datos30"}));
 		comboBox.setSelectedIndex(0);
 		add(comboBox);
 		

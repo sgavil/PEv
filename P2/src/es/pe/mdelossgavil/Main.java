@@ -67,19 +67,16 @@ public class Main {
 		} else if (NOMBRE_ARCHIVO.equals("datos12")) {
 			NOMBRE_ARCHIVO = "datos12.txt";
 
-		} else if (NOMBRE_ARCHIVO.equals("datos30")) {
-			NOMBRE_ARCHIVO = "datos30.txt";
-
-		} else if (NOMBRE_ARCHIVO.equals("tai100a")) {
-			NOMBRE_ARCHIVO = "tai100a.txt";
 			
-		} else if (NOMBRE_ARCHIVO.equals("tai256c")) {
-			NOMBRE_ARCHIVO = "tai256c.txt";
-
-		} else if (NOMBRE_ARCHIVO.equals("datos15")) {
+		} 
+		else if (NOMBRE_ARCHIVO.equals("datos15")) {
 			NOMBRE_ARCHIVO = "datos15.txt";
 
 		}
+		else if (NOMBRE_ARCHIVO.equals("datos30")) {
+			NOMBRE_ARCHIVO = "datos30.txt";
+
+		} 
 
 		// Panel de poblacion /*
 		TAM_POB = (Integer) p1frame.pPoblacion.pobSpinner.getValue();
@@ -101,6 +98,9 @@ public class Main {
 
 		else if (SELECCION.equals("Ranking"))
 			iSeleccion = new Ranking(1.5f);
+		
+		else if (SELECCION.equals("Truncamiento"))
+			iSeleccion = new Truncamiento(50);
 
 		// Panel cruce
 		ICruce iCruce = null;
@@ -120,7 +120,13 @@ public class Main {
 		else if (CRUCE.equals("PMX"))
 			iCruce = new PMX();
 		
-		iCruce=new CruceImparesOrdenados();
+
+		else if (CRUCE.equals("CIO"))
+			iCruce=new CruceImparesOrdenados();
+
+		else if (CRUCE.equals("ERX"))
+			iCruce = new ERX();
+
 		
 		// PROBABILIDADES
 		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.pCruce.probCruce.getText())) / 100;
