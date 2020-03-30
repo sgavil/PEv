@@ -318,14 +318,15 @@ public class AlgoritmoEvolutivo {
 
 		int tamElite = (int) (poblacion.size() * porcElitismo);
 
+		ArrayList<ACromosoma> newPob=new ArrayList<ACromosoma>(poblacion);
 		// Primero ordenamos la seleccion
-		Collections.sort(poblacion, new CromosomaComparator());
+		Collections.sort(newPob, new CromosomaComparator());
 		// La lista de los elite que devolveremos
 		ArrayList<ACromosoma> elite = new ArrayList<ACromosoma>();
 
 		// Metemos los tamElite mejores
 		for (int i = 0; i < tamElite; i++) {
-			elite.add(new CromosomaHospitales(poblacion.get(i).clone()));
+			elite.add(new CromosomaHospitales(newPob.get(i).clone()));
 		}
 		return elite;
 	}
@@ -339,7 +340,6 @@ public class AlgoritmoEvolutivo {
 		for (int i = 0; i < elite.size(); i++) {
 			// Al llegar al elemento lo guardamos en nuestra selección de población
 			poblacion.set(poblacion.size() - 1 - i, new CromosomaHospitales(elite.get(i).clone()));
-
 		}
 
 	}
