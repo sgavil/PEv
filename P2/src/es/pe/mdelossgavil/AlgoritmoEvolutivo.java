@@ -63,7 +63,7 @@ public class AlgoritmoEvolutivo {
 	int N;
 
 	float fmax;
-	
+
 	public int nCruces = 0;
 	public int nMutaciones = 0;
 
@@ -281,20 +281,18 @@ public class AlgoritmoEvolutivo {
 	 * Proceso de mutación
 	 */
 	public void mutacion() {
-		//Recorremos la poblacion
-		for (int i = 0; i < poblacion.size(); i++) 
-		{
-			float rndProb = (float)Math.random();
-			if(rndProb < prob_mut) {
-				//Mutamos el individuo
+		// Recorremos la poblacion
+		for (int i = 0; i < poblacion.size(); i++) {
+			float rndProb = (float) Math.random();
+			if (rndProb < prob_mut) {
+				// Mutamos el individuo
 				metodo_mutacion.mutar(poblacion.get(i));
-				//Lo evaluamos con la nueva codificacion
+				// Lo evaluamos con la nueva codificacion
 				poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
 				nMutaciones++;
 			}
 		}
-		
-		
+
 	}
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -25,54 +25,52 @@ public class CruceImparesOrdenados implements ICruce {
 	}
 
 	/**
-	 * @param padre1     Primer cromosoma padre
-	 * @param padre2     Segundo cromosoma padre
-	 * @param hijo1      primer cromosoma hijo
-	 * @param hijo2      segundo cromosoma hijo
-	 * @param principio  indice del cromosoma donde empieza el tramos escogido	
-	 * @param fin      indice del cromosoma donde acaba el tramos escogido
+	 * @param padre1    Primer cromosoma padre
+	 * @param padre2    Segundo cromosoma padre
+	 * @param hijo1     primer cromosoma hijo
+	 * @param hijo2     segundo cromosoma hijo
+	 * @param principio indice del cromosoma donde empieza el tramos escogido
+	 * @param fin       indice del cromosoma donde acaba el tramos escogido
 	 */
-	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1,ACromosoma hijo2) {
+	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2) {
 
-		//Primero rellenamos los hijos con las posiciones impares de los padres contrarios
-		for(int i=0;i<padre1.getCodificacion().size();i+=2)
-		{
-			hijo1.getCodificacion().set(i,padre2.getCodificacion().get(i));
-			hijo2.getCodificacion().set(i,padre1.getCodificacion().get(i));
+		// Primero rellenamos los hijos con las posiciones impares de los padres
+		// contrarios
+		for (int i = 0; i < padre1.getCodificacion().size(); i += 2) {
+			hijo1.getCodificacion().set(i, padre2.getCodificacion().get(i));
+			hijo2.getCodificacion().set(i, padre1.getCodificacion().get(i));
 		}
-		
-		//Los elementos que faltes los rellenaremos con los elementos de los propios en padres en orden.
-		//Es decir, intentaremos introducir el primero elemento del padre respectivo en el hijo y en caso de que
-		//no podamos pasaremos al siguiente, y asi hasta acabar.
-		
-		//Primero con el hijo1
 
-		int fatherIndex=0;
-		int childInex=1;
-		while(hijo1.getCodificacion().contains(100000))
-		{
-			if(!hijo1.getCodificacion().contains(padre1.getCodificacion().get(fatherIndex)))
-			{
+		// Los elementos que faltes los rellenaremos con los elementos de los propios en
+		// padres en orden.
+		// Es decir, intentaremos introducir el primero elemento del padre respectivo en
+		// el hijo y en caso de que
+		// no podamos pasaremos al siguiente, y asi hasta acabar.
+
+		// Primero con el hijo1
+
+		int fatherIndex = 0;
+		int childInex = 1;
+		while (hijo1.getCodificacion().contains(100000)) {
+			if (!hijo1.getCodificacion().contains(padre1.getCodificacion().get(fatherIndex))) {
 				hijo1.getCodificacion().set(childInex, padre1.getCodificacion().get(fatherIndex));
-				childInex+=2;
+				childInex += 2;
 			}
 			fatherIndex++;
 		}
-		
-		//Ahora para el segundo hijo
-		fatherIndex=0;
-		childInex=1;
-		while(hijo2.getCodificacion().contains(100000))
-		{
-			if(!hijo2.getCodificacion().contains(padre2.getCodificacion().get(fatherIndex)))
-			{
-				
+
+		// Ahora para el segundo hijo
+		fatherIndex = 0;
+		childInex = 1;
+		while (hijo2.getCodificacion().contains(100000)) {
+			if (!hijo2.getCodificacion().contains(padre2.getCodificacion().get(fatherIndex))) {
+
 				hijo2.getCodificacion().set(childInex, padre2.getCodificacion().get(fatherIndex));
-				childInex+=2;
+				childInex += 2;
 			}
 			fatherIndex++;
 		}
-		
+
 		/* Actualizamos los genes */
 		int comienzo = 0;
 		for (int i = 0; i < hijo1.get_genes().size(); i++) {

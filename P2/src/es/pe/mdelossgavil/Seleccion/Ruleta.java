@@ -20,9 +20,8 @@ public class Ruleta implements ISeleccion {
 	}
 
 	@Override
-	public void hacer_seleccion(ArrayList<ACromosoma> poblacion,String tipoProblema) 
-	{
-		
+	public void hacer_seleccion(ArrayList<ACromosoma> poblacion, String tipoProblema) {
+
 		// Tomamos el número de elementos que se van a seleccionar
 		int elementos_seleccion = poblacion.size();
 
@@ -39,23 +38,11 @@ public class Ruleta implements ISeleccion {
 			while (rnd > poblacion.get(k).get_punt_acum() && k < poblacion.size() - 1)
 				k++;
 
-			// Al llegar al elemento lo guardamos en nuestra selección de población
-			/*if(tipoProblema.equals("F1"))
-					nueva_pob.add(new CromosomaF1(poblacion.get(k)));
-			else if(tipoProblema.equals("F2"))
-				nueva_pob.add(new CromosomaF2(poblacion.get(k)));
-			else if(tipoProblema.equals("F3"))
-				nueva_pob.add(new CromosomaF3(poblacion.get(k)));
-			else if(tipoProblema.equals("F4"))
-				nueva_pob.add(new CromosomaF4(poblacion.get(k)));
-			else if (tipoProblema.equals("P2"))
-				nueva_pob.add(new CromosomaP2(poblacion.get(k)));*/
 			nueva_pob.add(new CromosomaHospitales(poblacion.get(k)));
 
 		}
 		Collections.copy(poblacion, nueva_pob);
-		
-		
+
 	}
 
 }

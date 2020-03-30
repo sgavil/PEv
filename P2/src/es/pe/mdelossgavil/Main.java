@@ -15,7 +15,6 @@ public class Main {
 
 	public static boolean MAXIMIZAR = false;
 
-	public static String PROBLEMA = "P2";
 
 	public static boolean INICIAR_ALGORITMO = false;
 
@@ -40,18 +39,22 @@ public class Main {
 
 	public static int TAM_POB = 100;
 	public static int N_GENERACIONES = 100;
+	
+	private static Grafica grafica;
 
 	public static void main(String[] args)
 
 	{
 		p1frame = new P1Frame();
 		p1frame.show();
+		grafica = p1frame.grafica;
+		
+		
 
 	}
 
 	public static void creaGrafica() {
 
-		Grafica grafica = new Grafica(600, 600);
 		grafica.inicializa_grafica();
 		grafica.agregar_linea("Mejor Absoluto", iteraciones, graficaMejorAbs);
 		grafica.agregar_linea("Mejor de cada generación", iteraciones, graficaMejorRelativo);
@@ -61,6 +64,8 @@ public class Main {
 
 	public static void iniciaAlgoritmo() {
 
+		
+		
 		if (NOMBRE_ARCHIVO.equals("ajuste")) {
 			NOMBRE_ARCHIVO = "ajuste.txt";
 
@@ -79,8 +84,8 @@ public class Main {
 		} 
 
 		// Panel de poblacion /*
-		TAM_POB = (Integer) p1frame.pPoblacion.pobSpinner.getValue();
-		N_GENERACIONES = (Integer) p1frame.pPoblacion.genSpinner.getValue();
+		TAM_POB = (Integer) p1frame.panelWest.pPoblacion.pobSpinner.getValue();
+		N_GENERACIONES = (Integer) p1frame.panelWest.pPoblacion.genSpinner.getValue();
 
 		iteraciones = new double[N_GENERACIONES];
 
@@ -129,12 +134,12 @@ public class Main {
 
 		
 		// PROBABILIDADES
-		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.pCruce.probCruce.getText())) / 100;
-		AlgoritmoEvolutivo.prob_mut = Float.parseFloat((p1frame.pMutacion.probMut.getText())) / 100;
-		ELITISMO = Float.parseFloat((p1frame.pOtros.valElitismo.getText())) / 100;
+		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.panelWest.pCruce.probCruce.getText())) / 100;
+		AlgoritmoEvolutivo.prob_mut = Float.parseFloat((p1frame.panelWest.pMutacion.probMut.getText())) / 100;
+		ELITISMO = Float.parseFloat((p1frame.panelWest.pOtros.valElitismo.getText())) / 100;
 
 		// Cuadro de texto con resultados
-		textResultado = p1frame.pSelectorProblema.textArea;
+		textResultado = p1frame.panelWest.pSelectorProblema.textArea;
 
 		AlgoritmoEvolutivo aEvolutivo = new AlgoritmoEvolutivo(TAM_POB, N_GENERACIONES, DIR_DATOS + NOMBRE_ARCHIVO);
 
@@ -205,12 +210,17 @@ public class Main {
 
 		String resultado = "";
 
-		resultado += "Resultado: " + mejorValor + "\n" + ((CromosomaHospitales) aEvolutivo.mejor_abs).get_fenotipo();
+		resultado += "Resultado: " + mejorValor + "\n" + ((CromosomaHospitales) aEvolutivo.mejor_abs).get_fenotipo() 
+				+"\n" + "N.Mutaciones: " +aEvolutivo.nMutaciones + "\n" + "N.Cruces: " + aEvolutivo.nCruces;
 
 		textResultado.setText(resultado);
+		//System.out.println(resultado);
 		resultado = "";
+		
 
 		creaGrafica();
-	}
+		
+		}
+	
 
 }

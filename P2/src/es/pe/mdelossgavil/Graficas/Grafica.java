@@ -1,42 +1,34 @@
 package es.pe.mdelossgavil.Graficas;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.*;
 import org.math.plot.*;
 
 public class Grafica extends JPanel{
-
-	
-	private int width;
-	private int height;
 		
 	private Plot2DPanel plot;
-	private JFrame frame;
+	private JPanel panel;
 	
 	public Grafica(int width,int height) {
-		this.width = width;
-		this.height = height;
+		//this.width = width;
+		//this.height = height;
+		panel = new JPanel(new GridLayout());
+		panel.setSize(width,height);
 		
+		plot = new Plot2DPanel();
+		panel.add(plot);
+		plot.addLegend("SOUTH");
+		plot.setAxisLabel(0, "Generaciones");
+
 	}
 
 	public void inicializa_grafica() {
-		// create your PlotPanel (you can use it as a JPanel)
-		plot = new Plot2DPanel();
-
-		// define the legend position
-		plot.addLegend("SOUTH");
-
+		plot.removeAllPlots();
 		
-		
-		// put the PlotPanel in a JFrame like a JPanel
-		frame = new JFrame("Resultados del Algoritmo Genético");
-		frame.setSize(width, height);
-		frame.setContentPane(plot);
-		
-		plot.setAxisLabel(0, "Generaciones");
-
 	}
 
 	public void agregar_linea(String titulo,double[]x,double[]y) {
@@ -45,8 +37,15 @@ public class Grafica extends JPanel{
 	}
 	
 	public void pinta_grafica() {
-		frame.setVisible(true);
+		//frame.setVisible(true);
 
 	}
+	
+	public JPanel get_panel() {
+		return panel;
+	}
+	
+
+
 
 }

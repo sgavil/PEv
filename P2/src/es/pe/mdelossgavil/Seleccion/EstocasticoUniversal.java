@@ -22,11 +22,11 @@ public class EstocasticoUniversal implements ISeleccion {
 
 		float distEntreMarcas = 1 / poblacion.size();
 		double primeraMarca = Math.random() * (distEntreMarcas + 1);
-		
+
 		for (int i = 0; i < poblacion.size(); i++) {
 
 			double valorABuscar = (primeraMarca + i - 1) / poblacion.size();
-			
+
 			int k = 0;
 			while (valorABuscar > poblacion.get(k).get_punt_acum() && k < poblacion.size() - 1)
 				k++;

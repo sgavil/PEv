@@ -39,12 +39,13 @@ public class Ranking implements ISeleccion {
 
 			nueva_pob.add(new CromosomaHospitales(poblacion.get(k)));
 		}
+		
+		Collections.copy(poblacion, nueva_pob);
 
 	}
 
 	private void ordenar_poblacion(ArrayList<ACromosoma> poblacion) {
 		Collections.sort(poblacion, new CromosomaComparator());
-		Collections.reverse(poblacion);
 
 	}
 

@@ -29,8 +29,8 @@ public class Torneos implements ISeleccion {
 
 		for (int i = 0; i < poblacion.size(); i++) {
 
-			ACromosoma c =  new CromosomaHospitales();
-			
+			ACromosoma c = new CromosomaHospitales();
+
 			if (maximizar)
 				c.set_aptitud(Float.MIN_VALUE);
 
@@ -49,11 +49,9 @@ public class Torneos implements ISeleccion {
 			}
 
 			nueva_pob.add(new CromosomaHospitales(c));
-		
+
 		}
 		Collections.copy(poblacion, nueva_pob);
-		
-		
 
 	}
 

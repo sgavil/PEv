@@ -6,24 +6,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import es.pe.mdelossgavil.Graficas.Grafica;
+
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 public class P1Frame extends JFrame {
 
-	private JPanel contentPane;
-	
-	public PanelSeleccion pSeleccion;
-	
-	public PanelPoblacion pPoblacion;
-	
-	public PanelOtros pOtros;
-	
-	public PanelCruce pCruce;
 
-	public PanelMutacion pMutacion;
+	public PanelWest panelWest;
 	
-	public PanelSelectorProblema pSelectorProblema;
+	public Grafica grafica;
 	/**
 	 * Launch the application.
 	 */
@@ -44,17 +38,21 @@ public class P1Frame extends JFrame {
 	 * Create the frame.
 	 */
 	public P1Frame() {
-		setTitle("Pr\u00E1ctica 1 - G10");
+		super();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(6, 1, 0, 0));
-		setSize(500,600);
+		setSize(1300, 600);
+		setLayout(new BorderLayout());
+		
+		panelWest = new PanelWest();
+		add(panelWest, BorderLayout.WEST);
+		
+		//PanelGrafica panelGrafica = new PanelGrafica();
+		grafica = new Grafica(600, 600);
+		add(grafica.get_panel(),BorderLayout.CENTER);
 		
 		
-		pPoblacion = new PanelPoblacion();
+		/*pPoblacion = new PanelPoblacion();
 		contentPane.add(pPoblacion);
 		
 		pSeleccion = new PanelSeleccion();
@@ -70,7 +68,11 @@ public class P1Frame extends JFrame {
 		contentPane.add(pOtros);
 		
 		 pSelectorProblema = new PanelSelectorProblema();
-		contentPane.add(pSelectorProblema );
+		contentPane.add(pSelectorProblema );*/
+		
+	
+		//add(contentPane,BorderLayout.WEST);
+		//add(contentPane,BorderLayout.EAST);
 	}
 
 }

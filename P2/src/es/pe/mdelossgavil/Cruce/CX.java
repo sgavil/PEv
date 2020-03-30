@@ -19,97 +19,91 @@ public class CX implements ICruce {
 	 */
 	@Override
 	public void reproduccion(ACromosoma p1, ACromosoma p2, ACromosoma h1, ACromosoma h2) {
-		
-		//elegir un tramo de uno de los progenitores y
-		//cruzar preservando el orden y la posición de la mayor
-		//cantidad posible de ciudades del otro
-		
-		int principio,fin;
+
+		// elegir un tramo de uno de los progenitores y
+		// cruzar preservando el orden y la posición de la mayor
+		// cantidad posible de ciudades del otro
+
+		int principio, fin;
 		int lCrom = p1.get_longitud();
-		//escogemos dos puntos al azar
+		// escogemos dos puntos al azar
 		Random r = new Random();
-		
+
 		principio = r.nextInt(lCrom);
-		fin=r.nextInt(lCrom);
-		while(fin==principio)fin=r.nextInt(lCrom);
-		//En caso de que esten intercambiados . hacemos swap
-		if(fin<principio)
-		{
-			int aux=principio;
-			principio=fin;
-			fin=aux;
+		fin = r.nextInt(lCrom);
+		while (fin == principio)
+			fin = r.nextInt(lCrom);
+		// En caso de que esten intercambiados . hacemos swap
+		if (fin < principio) {
+			int aux = principio;
+			principio = fin;
+			fin = aux;
 		}
-		
+
 		Cruce(p1, p2, h1, h2);
 
 	}
 
 	/**
-	 * @param padre1     Primer cromosoma padre
-	 * @param padre2     Segundo cromosoma padre
-	 * @param hijo1      primer cromosoma hijo
-	 * @param hijo2      segundo cromosoma hijo
-	 * @param principio  indice del cromosoma donde empieza el tramos escogido	
-	 * @param fin      	 indice del cromosoma donde acaba el tramos escogido
+	 * @param padre1    Primer cromosoma padre
+	 * @param padre2    Segundo cromosoma padre
+	 * @param hijo1     primer cromosoma hijo
+	 * @param hijo2     segundo cromosoma hijo
+	 * @param principio indice del cromosoma donde empieza el tramos escogido
+	 * @param fin       indice del cromosoma donde acaba el tramos escogido
 	 */
 	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2) {
 
-		//Creamos las parejas para hacer los ciclos
-		ArrayList<Pair<Integer,Integer>> parejas=new ArrayList<Pair<Integer,Integer>>();
-		for(int i=0;i<padre1.getCodificacion().size();i++)
-		{
-			Pair<Integer,Integer> pareja=new Pair<Integer, Integer>( (int)padre1.getCodificacion().get(i), 
-					(int)padre2.getCodificacion().get(i));
+		// Creamos las parejas para hacer los ciclos
+		ArrayList<Pair<Integer, Integer>> parejas = new ArrayList<Pair<Integer, Integer>>();
+		for (int i = 0; i < padre1.getCodificacion().size(); i++) {
+			Pair<Integer, Integer> pareja = new Pair<Integer, Integer>((int) padre1.getCodificacion().get(i),
+					(int) padre2.getCodificacion().get(i));
 			parejas.add(pareja);
 		}
-			
-		//Ciclo del primer hijo
+
+		// Ciclo del primer hijo
 		int elem = (int) padre1.getCodificacion().get(0);
-		while(!hijo1.getCodificacion().contains(elem))
-		{
-			int pos=0;
-			for(int i=0;i<padre1.getCodificacion().size();i++){
-				if((int)padre1.getCodificacion().get(i)==elem)
-					pos=i;
+		while (!hijo1.getCodificacion().contains(elem)) {
+			int pos = 0;
+			for (int i = 0; i < padre1.getCodificacion().size(); i++) {
+				if ((int) padre1.getCodificacion().get(i) == elem)
+					pos = i;
 			}
 			hijo1.getCodificacion().set(pos, elem);
-			//Buscamos el siguiente elem a insertar mientras se pueda
+			// Buscamos el siguiente elem a insertar mientras se pueda
 			int aux;
 			for (int j = 0; j < parejas.size(); j++) {
-				if(parejas.get(j).getKey()==elem)
-				{
-					elem=parejas.get(j).getValue();
+				if (parejas.get(j).getKey() == elem) {
+					elem = parejas.get(j).getValue();
 					break;
 				}
 			}
 		}
-		
-		//Ciclo para el segundo hijo
-		while(!hijo2.getCodificacion().contains(elem))
-		{
-			int pos=0;
-			for(int i=0;i<padre2.getCodificacion().size();i++){
-				if((int)padre2.getCodificacion().get(i)==elem)
-					pos=i;
+
+		// Ciclo para el segundo hijo
+		while (!hijo2.getCodificacion().contains(elem)) {
+			int pos = 0;
+			for (int i = 0; i < padre2.getCodificacion().size(); i++) {
+				if ((int) padre2.getCodificacion().get(i) == elem)
+					pos = i;
 			}
 			hijo2.getCodificacion().set(pos, elem);
-			//Buscamos el siguiente elem a insertar mientras se pueda
+			// Buscamos el siguiente elem a insertar mientras se pueda
 			int aux;
 			for (int j = 0; j < parejas.size(); j++) {
-				if(parejas.get(j).getValue()==elem)
-				{
-					elem=parejas.get(j).getKey();
+				if (parejas.get(j).getValue() == elem) {
+					elem = parejas.get(j).getKey();
 					break;
 				}
 			}
 		}
-		
-		//Por ultimo , intercambiamos los elementos restantes
-		for(int i=0;i<hijo1.getCodificacion().size();i++) {
-			if((int)hijo1.getCodificacion().get(i)==100000)
-			{
-				hijo1.getCodificacion().set(i,padre2.getCodificacion().get(i));
-				hijo2.getCodificacion().set(i,padre1.getCodificacion().get(i));
+
+		// Por ultimo , intercambiamos los elementos restantes
+		for (int i = 0; i < hijo1.getCodificacion().size(); i++) {
+			if ((int) hijo1.getCodificacion().get(i) == 100000) {
+				hijo1.getCodificacion().set(i, padre2.getCodificacion().get(i));
+				hijo2.getCodificacion().set(i, padre1.getCodificacion().get(i));
 			}
 		}
 

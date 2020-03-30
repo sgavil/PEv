@@ -18,41 +18,40 @@ public class OX_PP implements ICruce {
 	 */
 	@Override
 	public void reproduccion(ACromosoma p1, ACromosoma p2, ACromosoma h1, ACromosoma h2) {
-		
-		//elegir un tramo de uno de los progenitores y
-		//cruzar preservando el orden y la posición de la mayor
-		//cantidad posible de ciudades del otro
-		
+
+		// elegir un tramo de uno de los progenitores y
+		// cruzar preservando el orden y la posición de la mayor
+		// cantidad posible de ciudades del otro
+
 		int lCrom = p1.get_longitud();
 		Random r = new Random();
-		ArrayList<Integer> posiciones=new ArrayList<Integer>();
+		ArrayList<Integer> posiciones = new ArrayList<Integer>();
 		int ultimo;
-		
-		for (int i = 0; i < lCrom*0.3; i++) {
+
+		for (int i = 0; i < lCrom * 0.3; i++) {
 			posiciones.add(r.nextInt(lCrom));
 		}
-		
-		ultimo=posiciones.get(0);
-		for(int i=1;i<posiciones.size();i++)
-		{
-			if(posiciones.get(i)>ultimo)
-				ultimo=posiciones.get(i);
+
+		ultimo = posiciones.get(0);
+		for (int i = 1; i < posiciones.size(); i++) {
+			if (posiciones.get(i) > ultimo)
+				ultimo = posiciones.get(i);
 		}
-		
-		Cruce(p1, p2, h1, h2, posiciones,ultimo);
+
+		Cruce(p1, p2, h1, h2, posiciones, ultimo);
 
 	}
 
 	/**
-	 * @param padre1     Primer cromosoma padre
-	 * @param padre2     Segundo cromosoma padre
-	 * @param hijo1      primer cromosoma hijo
-	 * @param hijo2      segundo cromosoma hijo
-	 * @param principio  indice del cromosoma donde empieza el tramos escogido	
-	 * @param fin      	 indice del cromosoma donde acaba el tramos escogido
+	 * @param padre1    Primer cromosoma padre
+	 * @param padre2    Segundo cromosoma padre
+	 * @param hijo1     primer cromosoma hijo
+	 * @param hijo2     segundo cromosoma hijo
+	 * @param principio indice del cromosoma donde empieza el tramos escogido
+	 * @param fin       indice del cromosoma donde acaba el tramos escogido
 	 */
-	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2, ArrayList<Integer> posiciones
-			,int ultimo) {
+	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2,
+			ArrayList<Integer> posiciones, int ultimo) {
 
 		// Establecemos el tramos en los hijos
 		for (int i = 0; i < posiciones.size(); i++) {
@@ -61,55 +60,61 @@ public class OX_PP implements ICruce {
 		}
 
 		// Ahora queda rellenar aquellos elementos que no han sido escogidos en el tramo
-		//Haremos un bucle para cada uno de los
-		//Primero el primer hijo
-		int indice=ultimo+1;
-		int indice2=ultimo+1;
-		if(indice==padre1.get_longitud())indice=0;
-		if(indice2==padre1.get_longitud())indice2=0;
-		while(indice2!=ultimo)
-		{	
-			if((int)hijo1.getCodificacion().get(indice2)==100000)
-			{
-				//Si no contiene el elemento del padre, lo metemos.En caso contrario,lo intentamos con el siguiente
-				if(!hijo1.getCodificacion().contains(padre1.getCodificacion().get(indice)))
-				{
+		// Haremos un bucle para cada uno de los
+		// Primero el primer hijo
+		int indice = ultimo + 1;
+		int indice2 = ultimo + 1;
+		if (indice == padre1.get_longitud())
+			indice = 0;
+		if (indice2 == padre1.get_longitud())
+			indice2 = 0;
+		while (indice2 != ultimo) {
+			if ((int) hijo1.getCodificacion().get(indice2) == 100000) {
+				// Si no contiene el elemento del padre, lo metemos.En caso contrario,lo
+				// intentamos con el siguiente
+				if (!hijo1.getCodificacion().contains(padre1.getCodificacion().get(indice))) {
 					hijo1.getCodificacion().set(indice2, padre1.getCodificacion().get(indice));
 					indice2++;
 				}
-				//Aumentamos el puntero
-				else indice++;
-			
-			}
-			else indice2++;
-			//En caso de que lleguemos al final , volvemos la principio
-			if(indice==padre1.get_longitud())indice=0;
-			if(indice2==padre1.get_longitud())indice2=0;
+				// Aumentamos el puntero
+				else
+					indice++;
+
+			} else
+				indice2++;
+			// En caso de que lleguemos al final , volvemos la principio
+			if (indice == padre1.get_longitud())
+				indice = 0;
+			if (indice2 == padre1.get_longitud())
+				indice2 = 0;
 		}
-		
-		//Ahora con el segundo hijo
-		indice=ultimo+1;
-		indice2=ultimo+1;
-		if(indice==padre1.get_longitud())indice=0;
-		if(indice2==padre1.get_longitud())indice2=0;
-		while(indice2!=ultimo)
-		{	
-			if((int)hijo2.getCodificacion().get(indice2)==100000)
-			{
-				//Si no contiene el elemento del padre, lo metemos.En caso contrario,lo intentamos con el siguiente
-				if(!hijo2.getCodificacion().contains(padre2.getCodificacion().get(indice)))
-				{
+
+		// Ahora con el segundo hijo
+		indice = ultimo + 1;
+		indice2 = ultimo + 1;
+		if (indice == padre1.get_longitud())
+			indice = 0;
+		if (indice2 == padre1.get_longitud())
+			indice2 = 0;
+		while (indice2 != ultimo) {
+			if ((int) hijo2.getCodificacion().get(indice2) == 100000) {
+				// Si no contiene el elemento del padre, lo metemos.En caso contrario,lo
+				// intentamos con el siguiente
+				if (!hijo2.getCodificacion().contains(padre2.getCodificacion().get(indice))) {
 					hijo2.getCodificacion().set(indice2, padre2.getCodificacion().get(indice));
 					indice2++;
 				}
-			
-				//Aumentamos el puntero
-				else indice++;
-			}
-			else indice2++;
-			//En caso de que lleguemos al final , volvemos la principio
-			if(indice==padre1.get_longitud())indice=0;
-			if(indice2==padre1.get_longitud())indice2=0;
+
+				// Aumentamos el puntero
+				else
+					indice++;
+			} else
+				indice2++;
+			// En caso de que lleguemos al final , volvemos la principio
+			if (indice == padre1.get_longitud())
+				indice = 0;
+			if (indice2 == padre1.get_longitud())
+				indice2 = 0;
 		}
 
 		/* Actualizamos los genes */

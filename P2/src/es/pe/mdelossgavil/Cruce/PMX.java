@@ -20,42 +20,43 @@ public class PMX implements ICruce {
 	 */
 	@Override
 	public void reproduccion(ACromosoma p1, ACromosoma p2, ACromosoma h1, ACromosoma h2) {
-		
-		//elegir un tramo de uno de los progenitores y
-		//cruzar preservando el orden y la posición de la mayor
-		//cantidad posible de ciudades del otro
-		
-		int principio,fin;
+
+		// elegir un tramo de uno de los progenitores y
+		// cruzar preservando el orden y la posición de la mayor
+		// cantidad posible de ciudades del otro
+
+		int principio, fin;
 		int lCrom = p1.get_longitud();
-		//escogemos dos puntos al azar
+		// escogemos dos puntos al azar
 		Random r = new Random();
-		
+
 		principio = r.nextInt(lCrom);
-		fin=r.nextInt(lCrom);
-		while(fin==principio)fin=r.nextInt(lCrom);
-		//En caso de que esten intercambiados . hacemos swap
-		if(fin<principio)
-		{
-			int aux=principio;
-			principio=fin;
-			fin=aux;
+		fin = r.nextInt(lCrom);
+		while (fin == principio)
+			fin = r.nextInt(lCrom);
+		// En caso de que esten intercambiados . hacemos swap
+		if (fin < principio) {
+			int aux = principio;
+			principio = fin;
+			fin = aux;
 		}
-		
-		Cruce(p1, p2, h1, h2, principio,fin);
+
+		Cruce(p1, p2, h1, h2, principio, fin);
 
 	}
 
 	/**
-	 * @param padre1     Primer cromosoma padre
-	 * @param padre2     Segundo cromosoma padre
-	 * @param hijo1      primer cromosoma hijo
-	 * @param hijo2      segundo cromosoma hijo
-	 * @param principio  indice del cromosoma donde empieza el tramos escogido	
-	 * @param fin      indice del cromosoma donde acaba el tramos escogido
+	 * @param padre1    Primer cromosoma padre
+	 * @param padre2    Segundo cromosoma padre
+	 * @param hijo1     primer cromosoma hijo
+	 * @param hijo2     segundo cromosoma hijo
+	 * @param principio indice del cromosoma donde empieza el tramos escogido
+	 * @param fin       indice del cromosoma donde acaba el tramos escogido
 	 */
-	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2, int principio,int fin) {
+	private void Cruce(ACromosoma padre1, ACromosoma padre2, ACromosoma hijo1, ACromosoma hijo2, int principio,
+			int fin) {
 
-		ArrayList<Pair<Integer,Integer>> parejas=new ArrayList<Pair<Integer,Integer>>();
+		ArrayList<Pair<Integer, Integer>> parejas = new ArrayList<Pair<Integer, Integer>>();
 		// Establecemos el tramos en los hijos
 		for (int i = principio; i < fin; i++) {
 			hijo1.getCodificacion().set(i, padre2.getCodificacion().get(i));
@@ -64,40 +65,32 @@ public class PMX implements ICruce {
 
 		// Ahora queda rellenar aquellos elementos que no han sido escogidos en el tramo
 		// Primero metemos aquellos elementos que no generen conflictos
-		for(int i=0;i<padre1.getCodificacion().size();i++)
-		{
-			if((int)hijo1.getCodificacion().get(i)==100000 && !
-					hijo1.getCodificacion().contains(padre1.getCodificacion().get(i)))
+		for (int i = 0; i < padre1.getCodificacion().size(); i++) {
+			if ((int) hijo1.getCodificacion().get(i) == 100000
+					&& !hijo1.getCodificacion().contains(padre1.getCodificacion().get(i)))
 				hijo1.getCodificacion().set(i, padre1.getCodificacion().get(i));
-			if((int)hijo2.getCodificacion().get(i)==100000 && !
-					hijo2.getCodificacion().contains(padre2.getCodificacion().get(i)))
+			if ((int) hijo2.getCodificacion().get(i) == 100000
+					&& !hijo2.getCodificacion().contains(padre2.getCodificacion().get(i)))
 				hijo2.getCodificacion().set(i, padre2.getCodificacion().get(i));
-			Pair<Integer,Integer> pareja=new Pair<Integer, Integer>( (int)padre1.getCodificacion().get(i), 
-					(int)padre2.getCodificacion().get(i));
+			Pair<Integer, Integer> pareja = new Pair<Integer, Integer>((int) padre1.getCodificacion().get(i),
+					(int) padre2.getCodificacion().get(i));
 			parejas.add(pareja);
 		}
-		
-		//Despues metemos aquellos que falten
-		//Primero el hijo1
+
+		// Despues metemos aquellos que falten
+		// Primero el hijo1
 		for (int i = 0; i < padre1.get_longitud(); i++) {
-			if((int)hijo1.getCodificacion().get(i)==100000)
-			{
-				int elemento=(int)padre1.getCodificacion().get(i);
-				while((int)hijo1.getCodificacion().get(i)==100000)
-				{
-					//hijo1				
-					for(int j=0;j<parejas.size();j++)
-					{
-						if(elemento==parejas.get(j).getValue())
-						{
-							if(!hijo1.getCodificacion().contains(parejas.get(j).getKey()))
-							{
-								hijo1.getCodificacion().set(i,parejas.get(j).getKey());
+			if ((int) hijo1.getCodificacion().get(i) == 100000) {
+				int elemento = (int) padre1.getCodificacion().get(i);
+				while ((int) hijo1.getCodificacion().get(i) == 100000) {
+					// hijo1
+					for (int j = 0; j < parejas.size(); j++) {
+						if (elemento == parejas.get(j).getValue()) {
+							if (!hijo1.getCodificacion().contains(parejas.get(j).getKey())) {
+								hijo1.getCodificacion().set(i, parejas.get(j).getKey());
 								break;
-							}
-							else
-							{
-								elemento=parejas.get(j).getKey();
+							} else {
+								elemento = parejas.get(j).getKey();
 								break;
 							}
 						}
@@ -105,26 +98,19 @@ public class PMX implements ICruce {
 				}
 
 			}
-			
-			//Luego el segundo hijo
-			if((int)hijo2.getCodificacion().get(i)==100000)
-			{
-				//hijo2
-				int elemento=(int)padre2.getCodificacion().get(i);
-				while((int)hijo2.getCodificacion().get(i)==100000)
-				{
-					for(int j=0;j<parejas.size();j++)
-					{
-						if(elemento==parejas.get(j).getKey())
-						{
-							if(!hijo2.getCodificacion().contains(parejas.get(j).getValue()))
-							{
-								hijo2.getCodificacion().set(i,parejas.get(j).getValue());
+
+			// Luego el segundo hijo
+			if ((int) hijo2.getCodificacion().get(i) == 100000) {
+				// hijo2
+				int elemento = (int) padre2.getCodificacion().get(i);
+				while ((int) hijo2.getCodificacion().get(i) == 100000) {
+					for (int j = 0; j < parejas.size(); j++) {
+						if (elemento == parejas.get(j).getKey()) {
+							if (!hijo2.getCodificacion().contains(parejas.get(j).getValue())) {
+								hijo2.getCodificacion().set(i, parejas.get(j).getValue());
 								break;
-							}
-							else
-							{
-								elemento=parejas.get(j).getValue();
+							} else {
+								elemento = parejas.get(j).getValue();
 								break;
 							}
 						}

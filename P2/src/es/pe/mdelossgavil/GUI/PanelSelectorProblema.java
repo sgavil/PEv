@@ -24,8 +24,6 @@ public class PanelSelectorProblema extends JPanel {
 	public PanelSelectorProblema() {
 		setLayout(new GridLayout(1, 2, 5, 5));
 		
-		Main.PROBLEMA = "F1"; 
-
 		
 		JButton btnEjecutar = new JButton("Ejecutar");
 		add(btnEjecutar);

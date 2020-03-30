@@ -15,7 +15,7 @@ public class Truncamiento implements ISeleccion {
 	int vueltas;
 
 	public Truncamiento(int p) {
-		
+
 		this.proporcion = p;
 
 	}
@@ -24,32 +24,23 @@ public class Truncamiento implements ISeleccion {
 	public void hacer_seleccion(ArrayList<ACromosoma> poblacion, String tipoProblema) {
 
 		ArrayList<ACromosoma> nueva_pob = new ArrayList<ACromosoma>();
-		
-		Collections.sort(poblacion,new CromosomaComparator());
 
-			if(proporcion == 50) {
-			 vueltas = (int) (1/0.5);
-			
-			}
-			else {
-				 vueltas = (int) (1/0.1);
-			}
+		Collections.sort(poblacion, new CromosomaComparator());
 
-			for (int i = 0; i < vueltas; i++) {
-				for (int j = 0; j < proporcion; j++) {
-					nueva_pob.add(new CromosomaHospitales(poblacion.get(j)));
-				}
-			}
-			
-			
-		
-			Collections.copy(poblacion, nueva_pob);
+		if (proporcion == 50) {
+			vueltas = (int) (1 / 0.5);
+
+		} else {
+			vueltas = (int) (1 / 0.1);
 		}
-	
-		
-		
-		
 
+		for (int i = 0; i < vueltas; i++) {
+			for (int j = 0; j < proporcion; j++) {
+				nueva_pob.add(new CromosomaHospitales(poblacion.get(j)));
+			}
+		}
+
+		Collections.copy(poblacion, nueva_pob);
 	}
 
-
+}
