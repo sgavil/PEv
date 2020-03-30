@@ -325,7 +325,7 @@ public class AlgoritmoEvolutivo {
 
 		// Metemos los tamElite mejores
 		for (int i = 0; i < tamElite; i++) {
-			elite.add(new CromosomaHospitales(poblacion.get(i)));
+			elite.add(new CromosomaHospitales(poblacion.get(i).clone()));
 		}
 		return elite;
 	}
@@ -338,7 +338,7 @@ public class AlgoritmoEvolutivo {
 
 		for (int i = 0; i < elite.size(); i++) {
 			// Al llegar al elemento lo guardamos en nuestra selección de población
-			poblacion.set(poblacion.size() - 1 - i, new CromosomaHospitales(elite.get(i)));
+			poblacion.set(poblacion.size() - 1 - i, new CromosomaHospitales(elite.get(i).clone()));
 
 		}
 
