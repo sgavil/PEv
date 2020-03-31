@@ -38,7 +38,7 @@ public class P1Frame extends JFrame {
 	 * Create the frame.
 	 */
 	public P1Frame() {
-		super();
+		super("G10P2");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1300, 600);
@@ -51,28 +51,6 @@ public class P1Frame extends JFrame {
 		grafica = new Grafica(600, 600);
 		add(grafica.get_panel(),BorderLayout.CENTER);
 		
-		
-		/*pPoblacion = new PanelPoblacion();
-		contentPane.add(pPoblacion);
-		
-		pSeleccion = new PanelSeleccion();
-		contentPane.add(pSeleccion);
-		
-		pCruce = new PanelCruce();
-		contentPane.add(pCruce);
-		
-		pMutacion = new PanelMutacion();
-		contentPane.add(pMutacion);
-		
-		pOtros = new PanelOtros();
-		contentPane.add(pOtros);
-		
-		 pSelectorProblema = new PanelSelectorProblema();
-		contentPane.add(pSelectorProblema );*/
-		
-	
-		//add(contentPane,BorderLayout.WEST);
-		//add(contentPane,BorderLayout.EAST);
 	}
 
 }

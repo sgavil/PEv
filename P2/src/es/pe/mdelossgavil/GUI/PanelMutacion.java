@@ -28,7 +28,7 @@ public class PanelMutacion extends JPanel {
 		setLayout(new GridLayout(1, 3, 0, 0));
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Mutacion por inserccion", "Mutacion por intercambio", "Mutacion por inversion", "Mutacion por reemplazamiento"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Mutacion por inserccion", "Mutacion por intercambio", "Mutacion por inversion", "Mutacion por reemplazamiento", "Mutacion heuristica"}));
 		comboBox.setSelectedIndex(0);
 		add(comboBox);
 		

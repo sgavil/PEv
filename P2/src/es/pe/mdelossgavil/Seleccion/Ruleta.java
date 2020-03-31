@@ -28,7 +28,8 @@ public class Ruleta implements ISeleccion {
 		// Creamos el array donde se guardara la futura poblacion
 		ArrayList<ACromosoma> nueva_pob = new ArrayList<ACromosoma>();
 
-		for (int i = 0; i < poblacion.size(); i++) {
+		for (int i = 0; i < poblacion.size(); i++) 
+		{
 			// Se genera un random entre 0 y 1
 			float rnd = (float) Math.random();
 
@@ -38,7 +39,7 @@ public class Ruleta implements ISeleccion {
 			while (rnd > poblacion.get(k).get_punt_acum() && k < poblacion.size() - 1)
 				k++;
 
-			nueva_pob.add(new CromosomaHospitales(poblacion.get(k)));
+			nueva_pob.add(new CromosomaHospitales(poblacion.get(k).clone()));
 
 		}
 		Collections.copy(poblacion, nueva_pob);

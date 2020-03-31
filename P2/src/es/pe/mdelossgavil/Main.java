@@ -160,6 +160,9 @@ public class Main {
 		else if (MUTACION.equals("Mutacion por reemplazamiento"))
 			iMutacion = new MutacionPorReemplazamiento();
 		
+		else if (MUTACION.equals("Mutacion heuristica"))
+			iMutacion = new MutacionHeuristica();
+		
 
 		// INICIALIZACION DEL ALGORITMO GENETICO
 
