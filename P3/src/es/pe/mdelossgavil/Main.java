@@ -4,30 +4,16 @@ import java.util.ArrayList;
 
 import javax.swing.JTextArea;
 
-import es.pe.mdelossgavil.Cruce.CO;
-import es.pe.mdelossgavil.Cruce.CX;
-import es.pe.mdelossgavil.Cruce.CruceImparesOrdenados;
-import es.pe.mdelossgavil.Cruce.ERX;
-import es.pe.mdelossgavil.Cruce.ICruce;
-import es.pe.mdelossgavil.Cruce.OX;
-import es.pe.mdelossgavil.Cruce.OX_PP;
-import es.pe.mdelossgavil.Cruce.PMX;
+
+import es.pe.mdelossgavil.Poblacion.*;
+import es.pe.mdelossgavil.Seleccion.*;
+import es.pe.mdelossgavil.Cruce.*;
 import es.pe.mdelossgavil.GUI.P1Frame;
 import es.pe.mdelossgavil.Graficas.Grafica;
-import es.pe.mdelossgavil.Mutacion.IMutacion;
-import es.pe.mdelossgavil.Mutacion.MutacionHeuristica;
-import es.pe.mdelossgavil.Mutacion.MutacionPorInserccion;
-import es.pe.mdelossgavil.Mutacion.MutacionPorIntercambio;
-import es.pe.mdelossgavil.Mutacion.MutacionPorInversion;
-import es.pe.mdelossgavil.Mutacion.MutacionPorReemplazamiento;
-import es.pe.mdelossgavil.Poblacion.ACromosoma;
-import es.pe.mdelossgavil.Poblacion.CromosomaHospitales;
-import es.pe.mdelossgavil.Seleccion.EstocasticoUniversal;
-import es.pe.mdelossgavil.Seleccion.ISeleccion;
-import es.pe.mdelossgavil.Seleccion.Ranking;
-import es.pe.mdelossgavil.Seleccion.Ruleta;
-import es.pe.mdelossgavil.Seleccion.Torneos;
-import es.pe.mdelossgavil.Seleccion.Truncamiento;
+import es.pe.mdelossgavil.Mutacion.*;
+
+
+
 
 public class Main {
 
@@ -82,24 +68,7 @@ public class Main {
 
 	public static void iniciaAlgoritmo() {
 
-		
-		
-		if (NOMBRE_ARCHIVO.equals("ajuste")) {
-			NOMBRE_ARCHIVO = "ajuste.txt";
-
-		} else if (NOMBRE_ARCHIVO.equals("datos12")) {
-			NOMBRE_ARCHIVO = "datos12.txt";
-
-			
-		} 
-		else if (NOMBRE_ARCHIVO.equals("datos15")) {
-			NOMBRE_ARCHIVO = "datos15.txt";
-
-		}
-		else if (NOMBRE_ARCHIVO.equals("datos30")) {
-			NOMBRE_ARCHIVO = "datos30.txt";
-
-		} 
+	
 
 		// Panel de poblacion /*
 		TAM_POB = (Integer) p1frame.panelWest.pPoblacion.pobSpinner.getValue();
@@ -128,28 +97,7 @@ public class Main {
 		// Panel cruce
 		ICruce iCruce = null;
 
-		if (CRUCE.equals("CO"))
-			iCruce = new CO();
-
-		else if (CRUCE.equals("CX"))
-			iCruce = new CX();
-
-		else if (CRUCE.equals("OX_PP"))
-			iCruce = new OX_PP();
-
-		else if (CRUCE.equals("OX"))
-			iCruce = new OX();
-
-		else if (CRUCE.equals("PMX"))
-			iCruce = new PMX();
-		
-
-		else if (CRUCE.equals("CIO"))
-			iCruce=new CruceImparesOrdenados();
-
-		else if (CRUCE.equals("ERX"))
-			iCruce = new ERX();
-
+		iCruce = new CruceArboles();
 		
 		// PROBABILIDADES
 		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.panelWest.pCruce.probCruce.getText())) / 100;
@@ -166,22 +114,19 @@ public class Main {
 
 		IMutacion iMutacion = null;
 
-		if (MUTACION.equals("Mutacion por inserccion"))
-			iMutacion = new MutacionPorInserccion();
+		if (MUTACION.equals("Mutacion de arbol"))
+			iMutacion = new MutacionDeArbol();
 
-		else if (MUTACION.equals("Mutacion por intercambio"))
-			iMutacion = new MutacionPorIntercambio();
+		else if (MUTACION.equals("Mutacion funcional simple"))
+			iMutacion = new MutacionFuncionalSimple();
 
-		else if (MUTACION.equals("Mutacion por inversion"))
-			iMutacion = new MutacionPorInversion();
+		else if (MUTACION.equals("Mutacion por permutacion"))
+			iMutacion = new MutacionPorPermutacion();
 
-		else if (MUTACION.equals("Mutacion por reemplazamiento"))
-			iMutacion = new MutacionPorReemplazamiento();
+		else if (MUTACION.equals("Mutacion terminal simple"))
+			iMutacion = new MutacionTerminalSimple();
 		
-		else if (MUTACION.equals("Mutacion heuristica"))
-			iMutacion = new MutacionHeuristica();
-		
-
+	
 		// INICIALIZACION DEL ALGORITMO GENETICO
 
 		aEvolutivo.inicializa(iSeleccion, iCruce, iMutacion);
