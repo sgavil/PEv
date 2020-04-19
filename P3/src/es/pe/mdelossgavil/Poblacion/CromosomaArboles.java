@@ -1,5 +1,6 @@
 package es.pe.mdelossgavil.Poblacion;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class CromosomaArboles extends ACromosoma{
@@ -13,7 +14,65 @@ public class CromosomaArboles extends ACromosoma{
 	private double punt;
 	private double puntAcum;
 	private String fenotipo;
+	
+	private static ArrayList<ArrayList<Integer>> tabla= new ArrayList<ArrayList<Integer>>();
 
+	// Function to print the output 
+	private static void mostrarArray()
+	{ 
+	    for (int i = 0; i < tabla.size(); i++)  
+	    { 
+	        for (int j = 0; j < tabla.get(i).size(); j++) {
+				System.out.print(tabla.get(i).get(j) + " ");
+			}
+	        System.out.println(); 
+	    } 
+	 
+	} 
+	  
+	// Function to generate all binary strings 
+	private static void generarNumerosBinarios(int n, ArrayList<Integer> arr, int i) 
+	{ 
+	    if (i == n)  
+	    { 
+	       tabla.add((ArrayList<Integer>) arr.clone());
+	       return; 
+	    } 
+	    arr.set(i, 0); 
+	    generarNumerosBinarios(n, arr, i + 1);
+	    arr.set(i, 1); 
+	    generarNumerosBinarios(n, arr, i + 1); 
+	} 
+	
+	private static int getIndice(int entrada1, int entrada2)
+	{
+		int total=0;
+		if(entrada1==1)total+=2;
+		if(entrada2==1)total+=1;
+		return total;
+	}
+	
+	private static void generarSalida(ArrayList<ArrayList<Integer>> tabla)
+	{
+		for(int i=0;i<tabla.size();i++)
+		{
+			int indice=getIndice(tabla.get(i).get(0),tabla.get(i).get(1));
+			if(tabla.get(i).get(indice+2)==1)tabla.get(i).add(1);
+			else tabla.get(i).add(0);
+		}
+	}
+	
+	public static void createTable(int n)
+	{
+		ArrayList<Integer> arr=new ArrayList<Integer>(n);
+		for (int i = 0; i < n; i++) {
+			arr.add(0);
+		}
+		generarNumerosBinarios(n, arr, 0);
+		generarSalida(tabla);
+		mostrarArray();
+		
+	}
 	
 	public CromosomaArboles(int profundidad, int tipoCreacion, boolean useIf, int tipoMultiplexor) {
 		

@@ -53,8 +53,6 @@ public class Main {
 		p1frame.show();
 		grafica = p1frame.grafica;
 		
-		
-
 	}
 
 	public static void creaGrafica() {
@@ -67,8 +65,6 @@ public class Main {
 	}
 
 	public static void iniciaAlgoritmo() {
-
-	
 
 		// Panel de poblacion /*
 		TAM_POB = (Integer) p1frame.panelWest.pPoblacion.pobSpinner.getValue();
@@ -137,6 +133,8 @@ public class Main {
 		graficaMejorAbs = new double[N_GENERACIONES];
 		graficaMedia = new double[N_GENERACIONES];
 		graficaMejorRelativo = new double[N_GENERACIONES];
+		
+		CromosomaArboles.createTable(6);
 
 		int i = 0;
 		while (i < N_GENERACIONES) {
