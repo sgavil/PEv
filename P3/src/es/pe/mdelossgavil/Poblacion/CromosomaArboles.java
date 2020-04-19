@@ -81,6 +81,6 @@ public class CromosomaArboles extends ACromosoma{
 
 	public String get_fenotipo() {
 		// TODO Auto-generated method stub
-		return null;
+		return arbol.fenotipo();
 	}
 }

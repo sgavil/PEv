@@ -101,47 +101,6 @@ public class AlgoritmoEvolutivo {
 
 	}
 
-	// Leemos los archivos con las matrices de flujos y distancias
-	private void lee_datos() {
-
-		try {
-			File myObj = new File(fileName);
-			Scanner myReader = new Scanner(myObj);
-
-			N = Integer.parseInt(myReader.nextLine().trim());
-
-			flujos = new int[N][N];
-			distancias = new int[N][N];
-
-			myReader.nextLine();
-
-			while (myReader.hasNextLine()) {
-				// Guardamos la matriz de distancias
-				for (int i = 0; i < N; i++) {
-					String[] line = myReader.nextLine().trim().split(" ");
-					for (int j = 0; j < line.length; j++) {
-						distancias[i][j] = Integer.parseInt(line[j]);
-					}
-				}
-
-				myReader.nextLine();
-
-				for (int i = 0; i < N; i++) {
-					String[] line = myReader.nextLine().trim().split(" ");
-					for (int j = 0; j < line.length; j++) {
-						flujos[i][j] = Integer.parseInt(line[j]);
-					}
-				}
-			}
-
-			myReader.close();
-
-		} catch (FileNotFoundException e) {
-			System.out.println("File " + fileName + " not found.");
-			e.printStackTrace();
-		}
-
-	}
 
 	/**
 	 * Evalua la población y elige al mejor individuo
@@ -315,6 +274,7 @@ public class AlgoritmoEvolutivo {
 
 		mejor_abs = new CromosomaArboles(PROFUNDIDAD_ARBOL,1,true,6);
 		mejor_abs.set_aptitud(Integer.MIN_VALUE);
+		System.out.println("Fenotipo: " + ((CromosomaArboles)mejor_abs).get_fenotipo());
 		
 	}
 
