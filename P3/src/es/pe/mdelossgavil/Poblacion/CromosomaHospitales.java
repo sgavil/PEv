@@ -81,4 +81,10 @@ public class CromosomaHospitales extends ACromosoma {
 		return new CromosomaHospitales(this);
 	}
 
+	@Override
+	public void copia() {
+		// TODO Auto-generated method stub
+		return;
+	}
+
 }
