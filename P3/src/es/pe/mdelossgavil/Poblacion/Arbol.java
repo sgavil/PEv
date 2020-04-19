@@ -7,7 +7,7 @@ public class Arbol {
 	
 	//Atributos del arbol
 	private String valor;
-	private ArrayList<Arbol> hijos;
+	private ArrayList<Arbol> hijos = new ArrayList<Arbol>();
 	private int numHijos;
 	private int numNodos;
 	private int max_prof;

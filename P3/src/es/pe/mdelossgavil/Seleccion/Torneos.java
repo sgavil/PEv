@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
-import es.pe.mdelossgavil.Poblacion.CromosomaHospitales;
+import es.pe.mdelossgavil.Poblacion.CromosomaArboles;
 import es.pe.mdelossgavil.Seleccion.ISeleccion;
 
 /**
@@ -29,7 +29,7 @@ public class Torneos implements ISeleccion {
 
 		for (int i = 0; i < poblacion.size(); i++) {
 
-			ACromosoma c = new CromosomaHospitales();
+			ACromosoma c = new CromosomaArboles();
 
 			if (maximizar)
 				c.set_aptitud(Float.MIN_VALUE);
@@ -48,7 +48,7 @@ public class Torneos implements ISeleccion {
 
 			}
 
-			nueva_pob.add(new CromosomaHospitales(c));
+			nueva_pob.add(new CromosomaArboles(c));
 
 		}
 		Collections.copy(poblacion, nueva_pob);

@@ -147,5 +147,4 @@ public abstract class ACromosoma <T> implements Cloneable{
 
 	public abstract ACromosoma clone();
 
-	public abstract void copia();
 }

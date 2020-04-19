@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
+import es.pe.mdelossgavil.Cruce.CruceArboles;
 import es.pe.mdelossgavil.Cruce.ICruce;
 import es.pe.mdelossgavil.Mutacion.IMutacion;
 import es.pe.mdelossgavil.Poblacion.*;
@@ -67,12 +68,13 @@ public class AlgoritmoEvolutivo {
 	public int nCruces = 0;
 	public int nMutaciones = 0;
 
+	public static int PROFUNDIDAD_ARBOL = 3;
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Selección, Cruce y Mutación
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	private ISeleccion metodo_seleccion;
-	private ICruce metodo_cruce;
+	private CruceArboles metodo_cruce;
 	private IMutacion metodo_mutacion;
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -88,7 +90,7 @@ public class AlgoritmoEvolutivo {
 	 * @param mutacion       tipo de mutacion
 	 * @param tipo_cromosoma tipo de cromosoma
 	 */
-	public void inicializa(ISeleccion seleccion, ICruce cruce, IMutacion mutacion) {
+	public void inicializa(ISeleccion seleccion, CruceArboles cruce, IMutacion mutacion) {
 		/* Guardamos los operadores */
 		metodo_seleccion = seleccion;
 		metodo_cruce = cruce;
@@ -253,21 +255,22 @@ public class AlgoritmoEvolutivo {
 
 		for (int i = 0; i < num_sele_cruce; i += 2) {
 
-			hijo1 = new CromosomaHospitales();
-			hijo2 = new CromosomaHospitales();
+			hijo1 = new CromosomaArboles();
+			hijo2 = new CromosomaArboles();
 
 			hijo1.inicializa_cromosoma();
 			hijo2.inicializa_cromosoma();
 
-			/*for (int j = 0; j < hijo1.getCodificacion().size(); j++) {
+			for (int j = 0; j < hijo1.getCodificacion().size(); j++) {
 				hijo1.getCodificacion().set(j, 100000);
 				hijo2.getCodificacion().set(j, 100000);
 			}
-*/
+
 			ACromosoma padre1 = poblacion.get(seleccionCruce[i]);
 			ACromosoma padre2 = poblacion.get(seleccionCruce[i + 1]);
 
-			metodo_cruce.reproduccion(padre1, padre2, hijo1, hijo2);
+			metodo_cruce.reproduccion((CromosomaArboles) padre1, (CromosomaArboles) padre2, (CromosomaArboles) hijo1,
+					(CromosomaArboles) hijo2);
 
 			poblacion.set(seleccionCruce[i], hijo1.clone());
 			poblacion.set(seleccionCruce[i + 1], hijo2.clone());
@@ -299,24 +302,27 @@ public class AlgoritmoEvolutivo {
 
 	private void inicializa_poblacion() {
 
-		CromosomaHospitales.flujos = this.flujos;
-		CromosomaHospitales.distancias = this.distancias;
-		CromosomaHospitales.N = this.N;
+		// TPoblacion<CromosomaArboles> pob = new TPoblacion<CromosomaArboles>();
+		// poblacion = pob.inicializa_poblacion(tam_pob, CromosomaArboles.class);
 
-		TPoblacion<CromosomaHospitales> pob = new TPoblacion<CromosomaHospitales>();
-		poblacion = pob.inicializa_poblacion(tam_pob, CromosomaHospitales.class);
-		mejor_abs = new CromosomaHospitales();
-		mejor_abs.inicializa_cromosoma();
-		mejor_abs.set_aptitud(Float.MAX_VALUE);
-		maximizar = false;
+		poblacion = new ArrayList<ACromosoma>();
 
+		for (int i = 0; i < tam_pob; i++) {
+			
+			poblacion.add(new CromosomaArboles(PROFUNDIDAD_ARBOL,1,true,6));
+			poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
+		}
+
+		mejor_abs = new CromosomaArboles(PROFUNDIDAD_ARBOL,1,true,6);
+		mejor_abs.set_aptitud(Integer.MIN_VALUE);
+		
 	}
 
 	public ArrayList<ACromosoma> separaMejores(float porcElitismo) {
 
 		int tamElite = (int) (poblacion.size() * porcElitismo);
 
-		ArrayList<ACromosoma> newPob=new ArrayList<ACromosoma>(poblacion);
+		ArrayList<ACromosoma> newPob = new ArrayList<ACromosoma>(poblacion);
 		// Primero ordenamos la seleccion
 		Collections.sort(newPob, new CromosomaComparator());
 		// La lista de los elite que devolveremos
@@ -324,7 +330,7 @@ public class AlgoritmoEvolutivo {
 
 		// Metemos los tamElite mejores
 		for (int i = 0; i < tamElite; i++) {
-			elite.add(new CromosomaHospitales(newPob.get(i).clone()));
+			elite.add(new CromosomaArboles(newPob.get(i).clone()));
 		}
 		return elite;
 	}
@@ -337,7 +343,7 @@ public class AlgoritmoEvolutivo {
 
 		for (int i = 0; i < elite.size(); i++) {
 			// Al llegar al elemento lo guardamos en nuestra selección de población
-			poblacion.set(poblacion.size() - 1 - i, new CromosomaHospitales(elite.get(i).clone()));
+			poblacion.set(poblacion.size() - 1 - i, new CromosomaArboles(elite.get(i).clone()));
 		}
 
 	}

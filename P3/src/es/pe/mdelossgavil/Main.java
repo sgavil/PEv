@@ -94,10 +94,6 @@ public class Main {
 		else if (SELECCION.equals("Truncamiento"))
 			iSeleccion = new Truncamiento(50);
 
-		// Panel cruce
-		ICruce iCruce = null;
-
-		iCruce = new CruceArboles();
 		
 		// PROBABILIDADES
 		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.panelWest.pCruce.probCruce.getText())) / 100;
@@ -129,7 +125,7 @@ public class Main {
 	
 		// INICIALIZACION DEL ALGORITMO GENETICO
 
-		aEvolutivo.inicializa(iSeleccion, iCruce, iMutacion);
+		aEvolutivo.inicializa(iSeleccion, new CruceArboles(), iMutacion);
 
 		////////////////////////////////////////////////////////////////
 
@@ -176,7 +172,7 @@ public class Main {
 
 		String resultado = "";
 
-		resultado += "Resultado: " + mejorValor + "\n" + ((CromosomaHospitales) aEvolutivo.mejor_abs).get_fenotipo() 
+		resultado += "Resultado: " + mejorValor + "\n" + ((CromosomaArboles) aEvolutivo.mejor_abs).get_fenotipo() 
 				+"\n" + "N.Mutaciones: " +aEvolutivo.nMutaciones + "\n" + "N.Cruces: " + aEvolutivo.nCruces;
 
 		textResultado.setText(resultado);

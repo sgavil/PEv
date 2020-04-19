@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
+import es.pe.mdelossgavil.Poblacion.CromosomaArboles;
 import es.pe.mdelossgavil.Poblacion.CromosomaComparator;
-import es.pe.mdelossgavil.Poblacion.CromosomaHospitales;
 
 public class Ranking implements ISeleccion {
 
@@ -37,7 +37,7 @@ public class Ranking implements ISeleccion {
 			while (rnd > probabilidades[k] && k < probabilidades.length - 1)
 				k++;
 
-			nueva_pob.add(new CromosomaHospitales(poblacion.get(k)));
+			nueva_pob.add(new CromosomaArboles(poblacion.get(k)));
 		}
 		
 		Collections.copy(poblacion, nueva_pob);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
-import es.pe.mdelossgavil.Poblacion.CromosomaHospitales;
+import es.pe.mdelossgavil.Poblacion.CromosomaArboles;
 
 /**
  * Los individuos se mapean en segmentos continuos cuyo tamaño es el de su
@@ -31,7 +31,7 @@ public class EstocasticoUniversal implements ISeleccion {
 			while (valorABuscar > poblacion.get(k).get_punt_acum() && k < poblacion.size() - 1)
 				k++;
 
-			nueva_pob.add(new CromosomaHospitales(poblacion.get(k)));
+			nueva_pob.add(new CromosomaArboles(poblacion.get(k)));
 		}
 
 		// TODO Auto-generated method stub

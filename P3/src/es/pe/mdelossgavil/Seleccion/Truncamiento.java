@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import es.pe.mdelossgavil.Poblacion.ACromosoma;
+import es.pe.mdelossgavil.Poblacion.CromosomaArboles;
 import es.pe.mdelossgavil.Poblacion.CromosomaComparator;
-import es.pe.mdelossgavil.Poblacion.CromosomaHospitales;
 import es.pe.mdelossgavil.Seleccion.ISeleccion;
 
 public class Truncamiento implements ISeleccion {
@@ -36,7 +36,7 @@ public class Truncamiento implements ISeleccion {
 
 		for (int i = 0; i < vueltas; i++) {
 			for (int j = 0; j < proporcion; j++) {
-				nueva_pob.add(new CromosomaHospitales(poblacion.get(j)));
+				nueva_pob.add(new CromosomaArboles(poblacion.get(j)));
 			}
 		}
 
