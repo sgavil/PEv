@@ -99,6 +99,8 @@ public class Main {
 		// Cuadro de texto con resultados
 		textResultado = p1frame.panelWest.pSelectorProblema.textArea;
 
+		CromosomaArboles.createTable(6);
+
 		AlgoritmoEvolutivo aEvolutivo = new AlgoritmoEvolutivo(TAM_POB, N_GENERACIONES, DIR_DATOS + NOMBRE_ARCHIVO);
 
 		// AlgoritmoEvolutivo.tolerancia =
@@ -134,7 +136,6 @@ public class Main {
 		graficaMedia = new double[N_GENERACIONES];
 		graficaMejorRelativo = new double[N_GENERACIONES];
 		
-		CromosomaArboles.createTable(6);
 
 		int i = 0;
 		while (i < N_GENERACIONES) {
@@ -145,8 +146,8 @@ public class Main {
 				elite = aEvolutivo.separaMejores(ELITISMO);
 
 			aEvolutivo.seleccion();
-			aEvolutivo.cruce();
-			aEvolutivo.mutacion();
+			//aEvolutivo.cruce();
+			//aEvolutivo.mutacion();
 			
 			// Antes de evaluar incluimos la elite
 			if (ELITISMO > 0f) {

@@ -288,6 +288,9 @@ public class Arbol {
 		return fenotipo;
 	}
 
+	public String getValor() {
+		return valor;
+	}
 	private void recorreArbol(Arbol a) {
 
 		fenotipo+=a.valor + " ";

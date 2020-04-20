@@ -68,7 +68,7 @@ public class AlgoritmoEvolutivo {
 	public int nCruces = 0;
 	public int nMutaciones = 0;
 
-	public static int PROFUNDIDAD_ARBOL = 3;
+	public static int PROFUNDIDAD_ARBOL = 2;
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Selección, Cruce y Mutación
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -101,24 +101,23 @@ public class AlgoritmoEvolutivo {
 
 	}
 
-
 	/**
 	 * Evalua la población y elige al mejor individuo
 	 */
 	public void evaluar_poblacion() {
 
-		funcion_revisar_adaptacion_minimiza();
+		// funcion_revisar_adaptacion_minimiza();
 
 		// tengo el fmax
 
 		float punt_acum = 0;
-		float aptitud_mejor;
+		int aptitud_mejor;
 
 		float suma_aptitud = 0;
 
 		ACromosoma individuoActual;
 
-		aptitud_mejor = Float.MAX_VALUE;
+		aptitud_mejor = Integer.MIN_VALUE;
 
 		/*
 		 * Primero hacemos un for para tener la suma de las aptitudes y la mejor aptitud
@@ -127,11 +126,11 @@ public class AlgoritmoEvolutivo {
 		for (int i = 0; i < tam_pob; i++) {
 			individuoActual = poblacion.get(i);
 
-			suma_aptitud += (fmax - individuoActual.get_aptitud());
+			suma_aptitud += individuoActual.get_aptitud();
 
-			if (individuoActual.get_aptitud() < aptitud_mejor) {
+			if (individuoActual.get_aptitud() > aptitud_mejor) {
 				pos_mejor = i;
-				aptitud_mejor = individuoActual.get_aptitud();
+				aptitud_mejor = (int) individuoActual.get_aptitud();
 				el_mejor = individuoActual;
 			}
 
@@ -142,7 +141,7 @@ public class AlgoritmoEvolutivo {
 			// Calculamos la puntuación del individuo y su puntuación acumulada
 			float puntuacion;
 
-			puntuacion = (fmax - poblacion.get(j).get_aptitud()) / suma_aptitud;
+			puntuacion = poblacion.get(j).get_aptitud() / suma_aptitud;
 
 			poblacion.get(j).set_puntuacion(puntuacion);
 			poblacion.get(j).set_punt_acum(puntuacion + punt_acum);
@@ -152,15 +151,8 @@ public class AlgoritmoEvolutivo {
 
 		}
 
-		if (maximizar) {
-			if (el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
-				mejor_abs = el_mejor;
-			}
-		} else {
-
-			if (el_mejor.get_aptitud() < mejor_abs.get_aptitud()) {
-				mejor_abs = el_mejor;
-			}
+		if (el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
+			mejor_abs = el_mejor;
 		}
 
 	}
@@ -267,15 +259,15 @@ public class AlgoritmoEvolutivo {
 		poblacion = new ArrayList<ACromosoma>();
 
 		for (int i = 0; i < tam_pob; i++) {
-			
-			poblacion.add(new CromosomaArboles(PROFUNDIDAD_ARBOL,1,true,6));
+
+			poblacion.add(new CromosomaArboles(PROFUNDIDAD_ARBOL, 1, true, 6));
 			poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
 		}
 
-		mejor_abs = new CromosomaArboles(PROFUNDIDAD_ARBOL,1,true,6);
+		mejor_abs = new CromosomaArboles(PROFUNDIDAD_ARBOL, 1, true, 6);
 		mejor_abs.set_aptitud(Integer.MIN_VALUE);
-		System.out.println("Fenotipo: " + ((CromosomaArboles)mejor_abs).get_fenotipo());
-		
+		System.out.println("Fenotipo: " + ((CromosomaArboles) mejor_abs).get_fenotipo());
+
 	}
 
 	public ArrayList<ACromosoma> separaMejores(float porcElitismo) {
