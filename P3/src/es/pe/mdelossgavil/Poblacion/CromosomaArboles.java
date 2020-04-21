@@ -13,8 +13,7 @@ public class CromosomaArboles extends ACromosoma {
 	private Arbol arbol;
 	private String fenotipo;
 
-	private static ArrayList<ArrayList<Boolean>> tabla = new ArrayList<ArrayList<Boolean>>();
-
+	private static ArrayList<ArrayList<Boolean>> tabla;
 	// Function to print the output
 	private static void mostrarArray() {
 		for (int i = 0; i < tabla.size(); i++) {
@@ -59,6 +58,7 @@ public class CromosomaArboles extends ACromosoma {
 
 	public static void createTable(int n) {
 		N_ENTRADAS = n;
+		tabla=new ArrayList<ArrayList<Boolean>>();
 		ArrayList<Boolean> arr = new ArrayList<Boolean>(n);
 		for (int i = 0; i < n; i++) {
 			arr.add(false);
