@@ -143,7 +143,8 @@ public class Arbol {
 	public void getTerminales(ArrayList<Arbol> hijos, ArrayList<Arbol> nodos) {
 		for (int i = 0; i < hijos.size(); i++) {
 			if (hijos.get(i).isEsHoja()) {
-				nodos.add(hijos.get(i).copia());
+				//nodos.add(hijos.get(i).copia());
+				nodos.add(hijos.get(i));
 			} else {
 				getTerminales(hijos.get(i).getHijos(), nodos);
 			}
@@ -190,7 +191,8 @@ public class Arbol {
 	public void getFunciones(ArrayList<Arbol> hijos, ArrayList<Arbol> nodos) {
 		for (int i = 0; i < hijos.size(); i++) {
 			if (hijos.get(i).isEsRaiz()) {
-				nodos.add(hijos.get(i).copia());
+				//nodos.add(hijos.get(i).copia());
+				nodos.add(hijos.get(i));
 				getFunciones(hijos.get(i).hijos, nodos);
 			}
 		}
@@ -297,5 +299,8 @@ public class Arbol {
 		for (int i = 0; i < a.numHijos; i++) {
 			recorreArbol(a.getHijos().get(i));
 		}
+	}
+	public int getNumNodos() {
+		return numNodos;
 	}
 }

@@ -147,7 +147,7 @@ public class Main {
 
 			aEvolutivo.seleccion();
 			//aEvolutivo.cruce();
-			//aEvolutivo.mutacion();
+			aEvolutivo.mutacion();
 			
 			// Antes de evaluar incluimos la elite
 			if (ELITISMO > 0f) {

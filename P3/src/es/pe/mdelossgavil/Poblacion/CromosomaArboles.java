@@ -197,4 +197,7 @@ public class CromosomaArboles extends ACromosoma {
 		}
 		return evaluacion;
 	}
+	public void setMutatedTree(Arbol a) {
+		arbol = a;
+	}
 }
