@@ -28,8 +28,8 @@ public class CruceArboles implements ICruce {
 		int puntoCruce2 = (int) (Math.random() * nodos_selec2.size());
 
 		// copiamos los cromosomas padre en los hijos
-		h1 = p1.copia();
-		h2 = p2.copia();
+		h1.setCromosoma(p1.getArbol(), p1.get_fenotipo());
+		h2.setCromosoma(p2.getArbol(), p2.get_fenotipo());
 
 		// Cogemos los nodos de cruce seleccionados
 		Arbol temp1 = nodos_selec1.get(puntoCruce1).copia();
@@ -46,8 +46,8 @@ public class CruceArboles implements ICruce {
 		((CromosomaArboles)h2).getArbol().setNumNodos(nodos);
 
 		// Finalmente se evalúan
-		h1.evaluar();
-		h2.evaluar();
+		h1.set_aptitud(h1.evaluar());
+		h2.set_aptitud(h2.evaluar());
 
 	}
 

@@ -68,6 +68,11 @@ public class CromosomaArboles extends ACromosoma {
 		mostrarArray();
 
 	}
+	
+	public void setCromosoma(Arbol ar,String fenotipo_) {
+		this.arbol=ar.copia();
+		this.fenotipo=fenotipo_;
+	}
 
 	public CromosomaArboles(int profundidad, int tipoCreacion, boolean useIf, int tipoMultiplexor) {
 
