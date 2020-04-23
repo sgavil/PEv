@@ -47,7 +47,9 @@ public class CruceArboles implements ICruce {
 
 		// Finalmente se evalúan
 		h1.set_aptitud(h1.evaluar());
+		h1.getArbol().fenotipo();
 		h2.set_aptitud(h2.evaluar());
+		
 
 	}
 

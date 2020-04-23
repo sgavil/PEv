@@ -111,7 +111,7 @@ public class Arbol {
 			terminal = rnd.nextInt(CromosomaArboles.terminales6.length);
 			valor = CromosomaArboles.terminales6[terminal];
 			esHoja = true;
-			numHijos = 0;
+			numHijos++;
 		}
 		setNumNodos(n);
 		return n;
@@ -296,7 +296,7 @@ public class Arbol {
 	private void recorreArbol(Arbol a) {
 
 		fenotipo+=a.valor + " ";
-		for (int i = 0; i < a.numHijos; i++) {
+		for (int i = 0; i < a.hijos.size(); i++) {
 			recorreArbol(a.getHijos().get(i));
 		}
 	}

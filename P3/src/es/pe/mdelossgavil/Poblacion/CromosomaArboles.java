@@ -78,6 +78,7 @@ public class CromosomaArboles extends ACromosoma {
 
 		arbol = new Arbol(profundidad, useIf);
 		arbol.inicializacionCompleta(0, 0);
+		fenotipo=get_fenotipo();
 
 		/*
 		 * switch(tipoCreacion){ case 0: arbol.inicializacionCreciente(0); break; case
