@@ -68,7 +68,7 @@ public class AlgoritmoEvolutivo {
 	public int nCruces = 0;
 	public int nMutaciones = 0;
 
-	public static int PROFUNDIDAD_ARBOL = 3;
+	public static int PROFUNDIDAD_ARBOL = 2;
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Selección, Cruce y Mutación
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

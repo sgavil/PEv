@@ -16,7 +16,6 @@ public class Arbol {
 	private boolean esHoja;
 	private boolean esRaiz;
 	private String fenotipo;
-
 	/* //// CONSTRUCTORA //// */
 
 	// Crea una hoja
@@ -285,8 +284,10 @@ public class Arbol {
 	}
 
 	public String fenotipo() {
-		 fenotipo = "";
+		fenotipo = "";
+		fenotipo+="(";
 		recorreArbol(this);
+		fenotipo+=")";
 		return fenotipo;
 	}
 
@@ -294,11 +295,15 @@ public class Arbol {
 		return valor;
 	}
 	private void recorreArbol(Arbol a) {
-
-		fenotipo+=a.valor + " ";
+		fenotipo+=a.valor + " ";	
+		if(!a.esHoja)
+			fenotipo+="(";
 		for (int i = 0; i < a.hijos.size(); i++) {
+			profundidad++;
 			recorreArbol(a.getHijos().get(i));
 		}
+		if(!a.esHoja)
+			fenotipo+=")";
 	}
 	public int getNumNodos() {
 		return numNodos;
