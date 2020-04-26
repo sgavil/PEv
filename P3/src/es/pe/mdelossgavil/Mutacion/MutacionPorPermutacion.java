@@ -17,8 +17,18 @@ public class MutacionPorPermutacion implements IMutacion {
 		Arbol raiz = ((CromosomaArboles)individuo).getArbol().copia();
 		
 		ArrayList<Arbol> nodosFunciones = new ArrayList<Arbol>();
+		nodosFunciones.add(raiz);
+		
 		raiz.getFunciones(raiz.getHijos(), nodosFunciones);
 		
+		if(nodosFunciones.size()==0)
+		{
+			int i =0;
+			i+=7;
+			
+		}
+		System.out.println(nodosFunciones.size());
+		System.out.println(raiz.getNumHijos());
 		int randNodoFuncion = (int) (Math.random()*nodosFunciones.size());
 		Arbol nodoFuncAMutar = nodosFunciones.get(randNodoFuncion);
 		

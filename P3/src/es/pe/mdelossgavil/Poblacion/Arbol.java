@@ -188,7 +188,8 @@ public class Arbol {
 	 * @param nodos Array donde se guardan las funciones
 	 */
 	public void getFunciones(ArrayList<Arbol> hijos, ArrayList<Arbol> nodos) {
-		for (int i = 0; i < hijos.size(); i++) {
+		for (int i = 0; i < hijos.size(); i++) 
+		{
 			if (hijos.get(i).isEsRaiz()) {
 				//nodos.add(hijos.get(i).copia());
 				nodos.add(hijos.get(i));
@@ -202,8 +203,10 @@ public class Arbol {
 
 		copia.setEsHoja(this.esHoja);
 		copia.setEsRaiz(this.esRaiz);
-		copia.setNumNodos(this.numHijos);
+		copia.setNHijos(this.numHijos);
 		copia.setNumNodos(this.numNodos);
+		copia.max_prof = this.max_prof;
+		
 		copia.setProfundidad(this.profundidad);
 		copia.setValor(this.valor);
 		ArrayList<Arbol> aux = new ArrayList<Arbol>();
@@ -293,6 +296,9 @@ public class Arbol {
 
 	public String getValor() {
 		return valor;
+	}
+	public void setNHijos(int nHijos) {
+		this.numHijos = nHijos;
 	}
 	private void recorreArbol(Arbol a) {
 		fenotipo+=a.valor + " ";	
