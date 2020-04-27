@@ -18,9 +18,7 @@ public class CromosomaArboles extends ACromosoma {
 	private static void mostrarArray() {
 		for (int i = 0; i < tabla.size(); i++) {
 			for (int j = 0; j < tabla.get(i).size(); j++) {
-				System.out.print(tabla.get(i).get(j) + " ");
 			}
-			System.out.println();
 		}
 
 	}
@@ -79,6 +77,7 @@ public class CromosomaArboles extends ACromosoma {
 		arbol = new Arbol(profundidad, useIf);
 		arbol.inicializacionCompleta(0, 0);
 		fenotipo=get_fenotipo();
+
 
 		/*
 		 * switch(tipoCreacion){ case 0: arbol.inicializacionCreciente(0); break; case

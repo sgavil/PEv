@@ -46,6 +46,7 @@ public class Ranking implements ISeleccion {
 
 	private void ordenar_poblacion(ArrayList<ACromosoma> poblacion) {
 		Collections.sort(poblacion, new CromosomaComparator());
+		Collections.reverse(poblacion);
 
 	}
 

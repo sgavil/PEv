@@ -27,8 +27,6 @@ public class MutacionPorPermutacion implements IMutacion {
 			i+=7;
 			
 		}
-		System.out.println(nodosFunciones.size());
-		System.out.println(raiz.getNumHijos());
 		int randNodoFuncion = (int) (Math.random()*nodosFunciones.size());
 		Arbol nodoFuncAMutar = nodosFunciones.get(randNodoFuncion);
 		

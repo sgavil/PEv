@@ -26,6 +26,7 @@ public class Truncamiento implements ISeleccion {
 		ArrayList<ACromosoma> nueva_pob = new ArrayList<ACromosoma>();
 
 		Collections.sort(poblacion, new CromosomaComparator());
+		Collections.reverse(poblacion);
 
 		if (proporcion == 50) {
 			vueltas = (int) (1 / 0.5);

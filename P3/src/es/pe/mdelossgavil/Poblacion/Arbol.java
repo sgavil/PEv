@@ -305,10 +305,10 @@ public class Arbol {
 		if(!a.esHoja)
 			fenotipo+="(";
 		for (int i = 0; i < a.hijos.size(); i++) {
-			profundidad++;
+			//profundidad++;	
 			recorreArbol(a.getHijos().get(i));
 		}
-		if(!a.esHoja)
+				if(!a.esHoja)
 			fenotipo+=")";
 	}
 	public int getNumNodos() {

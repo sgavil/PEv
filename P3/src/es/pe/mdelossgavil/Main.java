@@ -82,7 +82,7 @@ public class Main {
 			iSeleccion = new EstocasticoUniversal();
 
 		else if (SELECCION.equals("Torneos"))
-			iSeleccion = new Torneos(2, false);
+			iSeleccion = new Torneos(2, true);
 
 		else if (SELECCION.equals("Ranking"))
 			iSeleccion = new Ranking(1.5f);
