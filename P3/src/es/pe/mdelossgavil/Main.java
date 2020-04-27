@@ -145,8 +145,8 @@ public class Main {
 			if (ELITISMO > 0f)
 				elite = aEvolutivo.separaMejores(ELITISMO);
 
-		    aEvolutivo.seleccion();
-			aEvolutivo.cruce();
+		     aEvolutivo.seleccion();
+		    aEvolutivo.cruce();
 			aEvolutivo.mutacion();
 			
 			// Antes de evaluar incluimos la elite

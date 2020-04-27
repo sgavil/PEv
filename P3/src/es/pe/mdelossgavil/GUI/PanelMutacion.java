@@ -43,7 +43,7 @@ public class PanelMutacion extends JPanel {
 		add(probMut);
 		probMut.setColumns(10);
 		
-		Main.MUTACION = "Mutacion por inserccion";
+		Main.MUTACION = "Mutacion de arbol";
 		
 		comboBox.addActionListener(new ActionListener() {
 			

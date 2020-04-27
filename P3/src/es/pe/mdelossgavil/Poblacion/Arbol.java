@@ -314,4 +314,10 @@ public class Arbol {
 	public int getNumNodos() {
 		return numNodos;
 	}
+	public int getMaxProf() {
+		return max_prof;
+	}
+	public boolean getUseIf() {
+		return useIF;
+	}
 }
