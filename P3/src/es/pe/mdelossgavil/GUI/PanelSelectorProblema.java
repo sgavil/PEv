@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class PanelSelectorProblema extends JPanel {
 	public JTextArea textArea;
@@ -28,8 +29,13 @@ public class PanelSelectorProblema extends JPanel {
 		JButton btnEjecutar = new JButton("Ejecutar");
 		add(btnEjecutar);
 		
-		textArea = new JTextArea();
-		add(textArea);
+		textArea = new JTextArea(16,20);
+		textArea.setEditable(false);
+		
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		add(scrollPane);
+		
+		
 		
 		btnEjecutar.addActionListener(new ActionListener() {
 			

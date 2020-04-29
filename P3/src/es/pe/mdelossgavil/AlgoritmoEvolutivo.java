@@ -68,7 +68,7 @@ public class AlgoritmoEvolutivo {
 	public int nCruces = 0;
 	public int nMutaciones = 0;
 
-	public static int PROFUNDIDAD_ARBOL = 2;
+	public static int PROFUNDIDAD_ARBOL = 3;
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Selección, Cruce y Mutación
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,6 +118,20 @@ public class AlgoritmoEvolutivo {
 		ACromosoma individuoActual;
 
 		aptitud_mejor = Integer.MIN_VALUE;
+
+		///////////////// CONTROL DE BLOATING ////////////
+
+		////////// Tarpeian //////////////
+
+	//	bloatingTarpeian();
+
+		//////////////////////////////////
+
+		/////////// Penalizacion bien fundamentada /////////////
+		
+		//penBienFundamentada();
+
+		////////////////////////////////////////////////////
 
 		/*
 		 * Primero hacemos un for para tener la suma de las aptitudes y la mejor aptitud
@@ -262,6 +276,7 @@ public class AlgoritmoEvolutivo {
 
 			poblacion.add(new CromosomaArboles(PROFUNDIDAD_ARBOL, 1, true, 6));
 			poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
+
 		}
 
 		mejor_abs = new CromosomaArboles(PROFUNDIDAD_ARBOL, 1, true, 6);
@@ -277,6 +292,7 @@ public class AlgoritmoEvolutivo {
 		ArrayList<ACromosoma> newPob = new ArrayList<ACromosoma>(poblacion);
 		// Primero ordenamos la seleccion
 		Collections.sort(newPob, new CromosomaComparator());
+		Collections.reverse(newPob);
 		// La lista de los elite que devolveremos
 		ArrayList<ACromosoma> elite = new ArrayList<ACromosoma>();
 
@@ -291,6 +307,7 @@ public class AlgoritmoEvolutivo {
 
 		// Primero ordenamos la seleccion
 		Collections.sort(poblacion, new CromosomaComparator());
+		Collections.reverse(poblacion);
 		// Metemos los tamElite mejores
 
 		for (int i = 0; i < elite.size(); i++) {
@@ -300,19 +317,56 @@ public class AlgoritmoEvolutivo {
 
 	}
 
-	public void funcion_revisar_adaptacion_minimiza() {
-		fmax = Float.MIN_VALUE;
+	private void bloatingTarpeian() {
+		int profMedia = 0;
 
-		// un valor por debajo de cualquiera que pueda
-		// tomar la función objetivo
-		for (int i = 0; i < poblacion.size(); i++) {
-			if (poblacion.get(i).get_aptitud() > fmax) {
-				fmax = poblacion.get(i).get_aptitud();
+		for (int i = 0; i < tam_pob; i++) {
+			Arbol raiz = ((CromosomaArboles) poblacion.get(i)).getArbol();
+			profMedia += raiz.getAlturaArbol();
+		}
+		profMedia /= tam_pob;
+		
+		for (int i = 0; i < tam_pob; i++) {
+			Arbol raiz = ((CromosomaArboles) poblacion.get(i)).getArbol();
+			if (raiz.getAlturaArbol() > profMedia && (float) Math.random() > 0.5f) {
+				poblacion.get(i).set_aptitud(0);
 			}
+
+		}
+	}
+
+	private void penBienFundamentada() {
+		float k; // Factor de correccion
+		int sumaFitness = 0;
+		int sumaTamanyo = 0;
+
+		float mediaFitness = 0;
+		float mediaTamanyo = 0;
+
+		for (int i = 0; i < tam_pob; i++) {
+			sumaFitness += poblacion.get(i).get_aptitud();
+			sumaTamanyo = ((CromosomaArboles) (poblacion.get(i))).getArbol().getAlturaArbol();
 		}
 
-		fmax *= 1.05;
+		mediaFitness = sumaFitness / tam_pob;
+		mediaTamanyo = sumaTamanyo / tam_pob;
 
+		float cov = 0.0f;
+		float varianza = 0.0f;
+
+		for (int i = 1; i <= tam_pob; i++) {
+			int tamIndividuo = ((CromosomaArboles) (poblacion.get(i-1))).getArbol().getAlturaArbol();
+
+			cov += (tamIndividuo - mediaTamanyo) * (poblacion.get(i-1).get_aptitud() - mediaFitness) / tam_pob;
+
+			varianza += (Math.pow((tamIndividuo - mediaTamanyo), 2)) / tam_pob;
+		}
+		
+		k = cov / varianza;
+		
+		for (int i = 0; i < tam_pob; i++) {
+			poblacion.get(i).set_aptitud(poblacion.get(i).get_aptitud() + k * ((CromosomaArboles) (poblacion.get(i))).getArbol().getNumNodos());
+		}
 	}
 
 }

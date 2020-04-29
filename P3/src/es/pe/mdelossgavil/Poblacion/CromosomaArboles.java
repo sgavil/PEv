@@ -76,6 +76,8 @@ public class CromosomaArboles extends ACromosoma {
 
 		arbol = new Arbol(profundidad, useIf);
 		arbol.inicializacionCompleta(0, 0);
+	    arbol.setNumNodos(arbol.obtieneNodos(arbol, 0));
+		
 		fenotipo=get_fenotipo();
 
 
@@ -108,6 +110,10 @@ public class CromosomaArboles extends ACromosoma {
 
 	@Override
 	public float evaluar() {
+		
+		arbol.encuentraAltura();
+		arbol.setNumNodos(arbol.obtieneNodos(arbol, 0));
+		
 		int fitness = 0;
 		for (int i = 0; i < tabla.size(); i++) 
 		{

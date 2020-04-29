@@ -16,6 +16,8 @@ public class Arbol {
 	private boolean esHoja;
 	private boolean esRaiz;
 	private String fenotipo;
+	private int profTotal;
+	
 	/* //// CONSTRUCTORA //// */
 
 	// Crea una hoja
@@ -206,7 +208,7 @@ public class Arbol {
 		copia.setNHijos(this.numHijos);
 		copia.setNumNodos(this.numNodos);
 		copia.max_prof = this.max_prof;
-		
+		copia.profTotal = this.profTotal;
 		copia.setProfundidad(this.profundidad);
 		copia.setValor(this.valor);
 		ArrayList<Arbol> aux = new ArrayList<Arbol>();
@@ -319,5 +321,23 @@ public class Arbol {
 	}
 	public boolean getUseIf() {
 		return useIF;
+	}
+	
+	private int getAltura(Arbol raiz){
+        if(raiz == null) return 0;
+        int h=0;
+
+        for(Arbol n : raiz.getHijos()){
+            h = Math.max(h, getAltura(n));
+        }
+        return h+1;
+    }
+
+	public void encuentraAltura() {
+		profTotal = getAltura(this);
+		
+	}
+	public int getAlturaArbol() {
+		return profTotal;
 	}
 }
