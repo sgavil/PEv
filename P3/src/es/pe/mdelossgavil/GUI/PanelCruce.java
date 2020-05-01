@@ -17,46 +17,26 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 
 public class PanelCruce extends JPanel {
-	public JTextField probCruce;
-	public JComboBox cruceBox;
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelCruce() {
-		setBorder(new TitledBorder(null, "Cruce", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
-		setLayout(new GridLayout(1, 3, 15, 0));
+		setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Bloating", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		setLayout(new GridLayout(0, 2, 15, 0));
 		
-		 cruceBox = new JComboBox();
-		cruceBox.setModel(new DefaultComboBoxModel(new String[] {"CruceArboles"}));
-		cruceBox.setSelectedIndex(0);
-		add(cruceBox);
+		JLabel lblNewLabel = new JLabel("Tipo de bloating");
+		add(lblNewLabel);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Tarpeian", "Penalizaci\u00F3n bien fundamentada"}));
+		comboBox.setSelectedIndex(0);
+		add(comboBox);
 		
 		Main.CRUCE = "CO";
-
-		
-		cruceBox.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JComboBox cruceb = (JComboBox )(e.getSource());
-				String metodoCruce = (String)cruceb.getSelectedItem();
-				Main.CRUCE = metodoCruce;
-				
-			}
-		});
-
-		JLabel probCruceLabel = new JLabel("Probabilidad de cruce %");
-		probCruceLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(probCruceLabel);
-		
-		probCruce = new JTextField();
-		probCruce.setText("60");
-		probCruce.setHorizontalAlignment(SwingConstants.CENTER);
-		add(probCruce);
-		probCruce.setColumns(10);
 
 	}
 

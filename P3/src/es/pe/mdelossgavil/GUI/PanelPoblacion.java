@@ -28,6 +28,8 @@ public class PanelPoblacion extends JPanel {
 	public JSpinner pobSpinner;
 	public JSpinner genSpinner;
 	private JLabel lblNewLabel;
+	public JSpinner profspinner;
+	private JLabel lblNewLabel_1;
 	private JComboBox comboBox;
 
 	
@@ -37,7 +39,7 @@ public class PanelPoblacion extends JPanel {
 	public PanelPoblacion() {
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Atributos de la poblaci\u00F3n",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
-		setLayout(new GridLayout(3, 2, 0, 0));
+		setLayout(new GridLayout(4, 2, 0, 0));
 
 		JLabel poblacionLabel = new JLabel("Poblaci\u00F3n");
 		poblacionLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -53,27 +55,24 @@ public class PanelPoblacion extends JPanel {
 		add(GeneracionesLabel);
 
 		genSpinner = new JSpinner();
-		genSpinner.setModel(new SpinnerNumberModel(new Integer(100), new Integer(0), null, new Integer(1)));
+		genSpinner.setModel(new SpinnerNumberModel(new Integer(200), new Integer(0), null, new Integer(1)));
 		add(genSpinner);
 		
-		lblNewLabel = new JLabel("Archivo ");
+		lblNewLabel = new JLabel("Profundidad m\u00E1xima");
 		add(lblNewLabel);
 		
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"ajuste", "datos12", "datos15", "datos30"}));
-		comboBox.setSelectedIndex(0);
-		add(comboBox);
+		profspinner = new JSpinner();
+		profspinner.setModel(new SpinnerNumberModel(new Integer(4), null, null, new Integer(1)));
+		add(profspinner);
 		
-comboBox.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JComboBox cruceb = (JComboBox )(e.getSource());
-				String nombreArchivo = (String)cruceb.getSelectedItem();
-				Main.NOMBRE_ARCHIVO = nombreArchivo;
-				
-			}
-		});
+		lblNewLabel_1 = new JLabel("Entradas multiplexor");
+		add(lblNewLabel_1);
+		
+		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"6 entradas", "11 entradas"}));
+		comboBox.setSelectedIndex(0);
+		comboBox.setToolTipText("");
+		add(comboBox);
 
 		
 	}

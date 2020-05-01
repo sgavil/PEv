@@ -69,6 +69,7 @@ public class Main {
 		// Panel de poblacion /*
 		TAM_POB = (Integer) p1frame.panelWest.pPoblacion.pobSpinner.getValue();
 		N_GENERACIONES = (Integer) p1frame.panelWest.pPoblacion.genSpinner.getValue();
+		AlgoritmoEvolutivo.PROFUNDIDAD_ARBOL = (Integer)p1frame.panelWest.pPoblacion.profspinner.getValue();
 
 		iteraciones = new double[N_GENERACIONES];
 
@@ -92,7 +93,7 @@ public class Main {
 
 		
 		// PROBABILIDADES
-		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.panelWest.pCruce.probCruce.getText())) / 100;
+		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.panelWest.pSeleccion.probCruce.getText())) / 100;
 		AlgoritmoEvolutivo.prob_mut = Float.parseFloat((p1frame.panelWest.pMutacion.probMut.getText())) / 100;
 		ELITISMO = Float.parseFloat((p1frame.panelWest.pOtros.valElitismo.getText())) / 100;
 
