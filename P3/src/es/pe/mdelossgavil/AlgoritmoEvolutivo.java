@@ -123,7 +123,7 @@ public class AlgoritmoEvolutivo {
 
 		////////// Tarpeian //////////////
 
-	//	bloatingTarpeian();
+		bloatingTarpeian();
 
 		//////////////////////////////////
 
@@ -328,7 +328,7 @@ public class AlgoritmoEvolutivo {
 		
 		for (int i = 0; i < tam_pob; i++) {
 			Arbol raiz = ((CromosomaArboles) poblacion.get(i)).getArbol();
-			if (raiz.getAlturaArbol() > profMedia && (float) Math.random() > 0.5f) {
+			if (raiz.getAlturaArbol() > (profMedia*2) && (float) Math.random() > 0.5f) {
 				poblacion.get(i).set_aptitud(0);
 			}
 

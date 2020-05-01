@@ -3,10 +3,13 @@ package es.pe.mdelossgavil.Poblacion;
 import java.util.ArrayList;
 import java.util.Random;
 
+import es.pe.mdelossgavil.Main;
+
 public class CromosomaArboles extends ACromosoma {
 
 	public static String terminales[];
 	public static final String terminales6[] = { "A0", "A1", "D0", "D1", "D2", "D3" };
+	public static final String terminales11[] = { "A0", "A1", "A2 ", "D0", "D1", "D2", "D3","D4","D5","D6","D7" };
 	public static final String funciones[] = { "AND", "OR", "NOT", "IF" };
 	private static int N_ENTRADAS;
 
@@ -18,7 +21,9 @@ public class CromosomaArboles extends ACromosoma {
 	private static void mostrarArray() {
 		for (int i = 0; i < tabla.size(); i++) {
 			for (int j = 0; j < tabla.get(i).size(); j++) {
+				System.out.print(tabla.get(i).get(j)+" ");
 			}
+			System.out.print("\n");
 		}
 
 	}
@@ -35,7 +40,7 @@ public class CromosomaArboles extends ACromosoma {
 		generarNumerosBinarios(n, arr, i + 1);
 	}
 
-	private static int getIndice(boolean entrada1, boolean entrada2) {
+	private static int getIndice6(boolean entrada1, boolean entrada2) {
 		int total = 0;
 		if (entrada1)
 			total += 2;
@@ -43,14 +48,38 @@ public class CromosomaArboles extends ACromosoma {
 			total += 1;
 		return total;
 	}
+	private static int getIndice11(boolean entrada1, boolean entrada2,boolean entrada3) {
+		int total = 0;
+		if (entrada1)
+			total += 4;
+		if (entrada2)
+			total += 2;
+		if (entrada3)
+			total += 1;
+		return total;
+	}
+
 
 	private static void generarSalida(ArrayList<ArrayList<Boolean>> tabla) {
-		for (int i = 0; i < tabla.size(); i++) {
-			int indice = getIndice(tabla.get(i).get(0), tabla.get(i).get(1));
-			if (tabla.get(i).get(indice + 2))
-				tabla.get(i).add(true);
-			else
-				tabla.get(i).add(false);
+		if(Main.entradas==6)
+		{
+			for (int i = 0; i < tabla.size(); i++) {
+				int indice = getIndice6(tabla.get(i).get(0), tabla.get(i).get(1));
+				if (tabla.get(i).get(indice + 2))
+					tabla.get(i).add(true);
+				else
+					tabla.get(i).add(false);
+			}
+		}
+		else
+		{
+			for (int i = 0; i < tabla.size(); i++) {
+				int indice = getIndice11(tabla.get(i).get(0), tabla.get(i).get(1),tabla.get(i).get(2));
+				if (tabla.get(i).get(indice + 3))
+					tabla.get(i).add(true);
+				else
+					tabla.get(i).add(false);
+			}
 		}
 	}
 
@@ -148,17 +177,36 @@ public class CromosomaArboles extends ACromosoma {
 	}
 
 	private int devuelvePosTerminal(Arbol a) {
-		if(N_ENTRADAS == 6)
+		
+		if(Main.entradas==6)
 		{
-			for (int i = 0; i < terminales6.length; i++) 
+			if(N_ENTRADAS == 6)
 			{
-				if(terminales6[i].equals(a.getValor()))
-					return i;
+				for (int i = 0; i < terminales6.length; i++) 
+				{
+					if(terminales6[i].equals(a.getValor()))
+						return i;
+				}
+				return -1;
 			}
-			return -1;
+			else
+				return -1;
 		}
 		else
-			return -1;
+		{
+			if(N_ENTRADAS == 11)
+			{
+				for (int i = 0; i < terminales11.length; i++) 
+				{
+					if(terminales11[i].equals(a.getValor()))
+						return i;
+				}
+				return -1;
+			}
+			else
+				return -1;
+		}
+			
 	}
 
 	private boolean evaluaRecursivo(ArrayList<Boolean>caso,Arbol arbol) {
@@ -201,9 +249,7 @@ public class CromosomaArboles extends ACromosoma {
 				} else {
 					// Y si no evaluamos el tercer hijo
 					evaluacion = evaluaRecursivo(caso,arbol.getHijos().get(2));
-
 				}
-
 			}
 		}
 		return evaluacion;

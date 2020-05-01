@@ -45,6 +45,8 @@ public class Main {
 	public static int N_GENERACIONES = 100;
 	
 	private static Grafica grafica;
+	
+	public static int entradas;
 
 	public static void main(String[] args)
 
@@ -100,7 +102,8 @@ public class Main {
 		// Cuadro de texto con resultados
 		textResultado = p1frame.panelWest.pSelectorProblema.textArea;
 
-		CromosomaArboles.createTable(6);
+		//Creamos la tabla dependiendo del numero de entradas
+		CromosomaArboles.createTable(entradas);
 
 		AlgoritmoEvolutivo aEvolutivo = new AlgoritmoEvolutivo(TAM_POB, N_GENERACIONES, DIR_DATOS + NOMBRE_ARCHIVO);
 

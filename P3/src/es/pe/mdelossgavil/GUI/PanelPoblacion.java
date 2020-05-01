@@ -30,7 +30,7 @@ public class PanelPoblacion extends JPanel {
 	private JLabel lblNewLabel;
 	public JSpinner profspinner;
 	private JLabel lblNewLabel_1;
-	private JComboBox comboBox;
+	public JComboBox comboBox;
 
 	
 	/**
@@ -74,6 +74,21 @@ public class PanelPoblacion extends JPanel {
 		comboBox.setToolTipText("");
 		add(comboBox);
 
+		Main.entradas = 6;
+
+		
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox numeroEntradas = (JComboBox )(e.getSource());
+				String metodoSeleccion = (String)numeroEntradas.getSelectedItem();
+				if(metodoSeleccion.equals("6 entradas"))
+					Main.entradas=6;
+				else
+					Main.entradas=11;
+			}
+		});
 		
 	}
 

@@ -3,6 +3,8 @@ package es.pe.mdelossgavil.Poblacion;
 import java.util.ArrayList;
 import java.util.Random;
 
+import es.pe.mdelossgavil.Main;
+
 public class Arbol {
 
 	// Atributos del arbol
@@ -109,8 +111,16 @@ public class Arbol {
 			Random rnd = new Random();
 			int terminal;
 			this.setEsHoja(true);
-			terminal = rnd.nextInt(CromosomaArboles.terminales6.length);
-			valor = CromosomaArboles.terminales6[terminal];
+			if(Main.entradas==6)
+			{
+				terminal = rnd.nextInt(CromosomaArboles.terminales6.length);
+				valor = CromosomaArboles.terminales6[terminal];
+			}
+			else
+			{
+				terminal = rnd.nextInt(CromosomaArboles.terminales11.length);
+				valor = CromosomaArboles.terminales11[terminal];
+			}
 			esHoja = true;
 			numHijos++;
 		}
