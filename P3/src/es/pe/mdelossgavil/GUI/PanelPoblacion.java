@@ -20,9 +20,13 @@ import es.pe.mdelossgavil.Main;
 
 import javax.swing.UIManager;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JScrollBar;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
+import javax.swing.JCheckBox;
 
 public class PanelPoblacion extends JPanel {
 	public JSpinner pobSpinner;
@@ -31,18 +35,20 @@ public class PanelPoblacion extends JPanel {
 	public JSpinner profspinner;
 	private JLabel lblNewLabel_1;
 	public JComboBox comboBox;
+	private JLabel lblNewLabel_2;
+	public JCheckBox checkBxUseif;
 
 	
 	/**
 	 * Create the panel.
 	 */
 	public PanelPoblacion() {
-		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Atributos de la poblaci\u00F3n",
-				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
-		setLayout(new GridLayout(4, 2, 0, 0));
+		setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Problema", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		setLayout(new GridLayout(5, 2, 0, 0));
 
+		
 		JLabel poblacionLabel = new JLabel("Poblaci\u00F3n");
-		poblacionLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		poblacionLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(poblacionLabel);
 
 		 
@@ -51,7 +57,7 @@ public class PanelPoblacion extends JPanel {
 		add(pobSpinner);
 
 		JLabel GeneracionesLabel = new JLabel("Generaciones");
-		GeneracionesLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		GeneracionesLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(GeneracionesLabel);
 
 		genSpinner = new JSpinner();
@@ -59,6 +65,7 @@ public class PanelPoblacion extends JPanel {
 		add(genSpinner);
 		
 		lblNewLabel = new JLabel("Profundidad m\u00E1xima");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel);
 		
 		profspinner = new JSpinner();
@@ -66,6 +73,7 @@ public class PanelPoblacion extends JPanel {
 		add(profspinner);
 		
 		lblNewLabel_1 = new JLabel("Entradas multiplexor");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel_1);
 		
 		comboBox = new JComboBox();
@@ -73,6 +81,14 @@ public class PanelPoblacion extends JPanel {
 		comboBox.setSelectedIndex(0);
 		comboBox.setToolTipText("");
 		add(comboBox);
+		
+		lblNewLabel_2 = new JLabel("UseIF");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblNewLabel_2);
+		
+		checkBxUseif = new JCheckBox("");
+		checkBxUseif.setHorizontalAlignment(SwingConstants.RIGHT);
+		add(checkBxUseif);
 
 		Main.entradas = 6;
 

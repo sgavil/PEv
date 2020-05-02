@@ -22,6 +22,7 @@ public class Grafica extends JPanel{
 		plot = new Plot2DPanel();
 		panel.add(plot);
 		plot.addLegend("SOUTH");
+		plot.setLegendOrientation("NORTH");
 		plot.setAxisLabel(0, "Generaciones");
 
 	}

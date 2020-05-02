@@ -350,4 +350,32 @@ public class Arbol {
 	public int getAlturaArbol() {
 		return profTotal;
 	}
+	
+	public Arbol getFuncionAleatoria() {
+		ArrayList<Arbol> nodosFuncion = new ArrayList<Arbol>();
+		Arbol raiz = this;
+		nodosFuncion.add(raiz);
+		
+		raiz.getFunciones(getHijos(), nodosFuncion);
+		
+		int nNodosFuncion = nodosFuncion.size();
+		int randNodoFuncion = (int) (Math.random()*nNodosFuncion);
+		
+		return nodosFuncion.get(randNodoFuncion);
+
+	}
+	public Arbol getTerminalAleatorio() {
+		ArrayList<Arbol> nodosTerminales = new ArrayList<Arbol>();
+		Arbol raiz = this;
+		
+		raiz.getTerminales(raiz.getHijos(), nodosTerminales);
+		
+		int nNodosTerminales = nodosTerminales.size();
+		int randNodoTerminal = (int) (Math.random()*nNodosTerminales);
+		
+		return nodosTerminales.get(randNodoTerminal);
+
+	}
+	
+
 }

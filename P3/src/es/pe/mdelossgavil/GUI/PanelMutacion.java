@@ -27,8 +27,9 @@ public class PanelMutacion extends JPanel {
 		setBorder(new TitledBorder(null, "Mutaci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setLayout(new GridLayout(1, 3, 0, 0));
 		
+		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Mutacion de arbol", "Mutacion funcional simple", "Mutacion por permutacion", "Mutacion terminal simple"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Mutacion de arbol", "Mutacion funcional simple", "Mutacion por permutacion", "Mutacion terminal simple", "Mutacion hoist", "Mutacion por contracci\u00F3n"}));
 		comboBox.setSelectedIndex(0);
 		add(comboBox);
 		

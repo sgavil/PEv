@@ -1,9 +1,12 @@
 package es.pe.mdelossgavil.GUI;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.FlowLayout;
 
 public class PanelWest extends JPanel {
 
@@ -24,11 +27,13 @@ public class PanelWest extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelWest() {
-		setLayout(new GridLayout(6, 1, 0, 0));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
-		setSize(200,200);
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+	//	setSize(200,200);
+		
 
 		pPoblacion = new PanelPoblacion();
+
 		add(pPoblacion);
 
 		pSeleccion = new PanelSeleccion();

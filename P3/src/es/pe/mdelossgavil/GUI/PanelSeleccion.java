@@ -39,6 +39,7 @@ public class PanelSeleccion extends JPanel {
 		setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Selecci\u00F3n y cruce", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		setLayout(new GridLayout(2, 2, 0, 0));
 		
+		
 		JLabel lblNewLabel = new JLabel("Selecci\u00F3n");
 		add(lblNewLabel);
 		

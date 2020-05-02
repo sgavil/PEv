@@ -15,7 +15,7 @@ public class MutacionFuncionalSimple implements IMutacion {
 	public void mutar(ACromosoma individuo) {
 		// TODO Auto-generated method stub
 		//int randFuncion = (int) (Math.random()*CromosomaArboles.funciones.length);
-		Arbol funcion = getFuncionAleatoria((CromosomaArboles)individuo);
+		Arbol funcion = ((CromosomaArboles)individuo).getArbol().getFuncionAleatoria();
 		
 		if(funcion.getValor().equals("AND")) {
 			funcion.setValor("OR");
@@ -26,18 +26,6 @@ public class MutacionFuncionalSimple implements IMutacion {
 		
 	}
 	
-	private Arbol getFuncionAleatoria(CromosomaArboles c) {
-		ArrayList<Arbol> nodosFuncion = new ArrayList<Arbol>();
-		Arbol raiz = c.getArbol();
-		nodosFuncion.add(raiz);
-		
-		raiz.getFunciones(raiz.getHijos(), nodosFuncion);
-		
-		int nNodosFuncion = nodosFuncion.size();
-		int randNodoFuncion = (int) (Math.random()*nNodosFuncion);
-		
-		return nodosFuncion.get(randNodoFuncion);
-
-	}
+	
 
 }

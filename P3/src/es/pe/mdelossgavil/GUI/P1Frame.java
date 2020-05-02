@@ -18,6 +18,8 @@ public class P1Frame extends JFrame {
 	public PanelWest panelWest;
 	
 	public Grafica grafica;
+	
+	public PanelResultado pResult;
 	/**
 	 * Launch the application.
 	 */
@@ -50,6 +52,9 @@ public class P1Frame extends JFrame {
 		//PanelGrafica panelGrafica = new PanelGrafica();
 		grafica = new Grafica(600, 600);
 		add(grafica.get_panel(),BorderLayout.CENTER);
+		
+		pResult = new PanelResultado();
+		add(pResult,BorderLayout.SOUTH);
 		
 	}
 

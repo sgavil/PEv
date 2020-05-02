@@ -1,5 +1,6 @@
 package es.pe.mdelossgavil;
 
+import java.awt.Checkbox;
 import java.util.ArrayList;
 
 import javax.swing.JTextArea;
@@ -97,10 +98,11 @@ public class Main {
 		// PROBABILIDADES
 		AlgoritmoEvolutivo.prob_cruce = Float.parseFloat((p1frame.panelWest.pSeleccion.probCruce.getText())) / 100;
 		AlgoritmoEvolutivo.prob_mut = Float.parseFloat((p1frame.panelWest.pMutacion.probMut.getText())) / 100;
+		AlgoritmoEvolutivo.USE_IF = p1frame.panelWest.pPoblacion.checkBxUseif.isSelected();
 		ELITISMO = Float.parseFloat((p1frame.panelWest.pOtros.valElitismo.getText())) / 100;
 
 		// Cuadro de texto con resultados
-		textResultado = p1frame.panelWest.pSelectorProblema.textArea;
+		textResultado = p1frame.pResult.resultText;
 
 		//Creamos la tabla dependiendo del numero de entradas
 		CromosomaArboles.createTable(entradas);
@@ -124,7 +126,11 @@ public class Main {
 		else if (MUTACION.equals("Mutacion terminal simple"))
 			iMutacion = new MutacionTerminalSimple();
 		
-	
+		else if (MUTACION.equals("Mutacion hoist"))
+			iMutacion = new MutacionHoist();
+		
+		else if (MUTACION.equals("Mutacion por contracción"))
+			iMutacion = new MutacionContraccion();
 		// INICIALIZACION DEL ALGORITMO GENETICO
 
 		aEvolutivo.inicializa(iSeleccion, new CruceArboles(), iMutacion);
@@ -175,7 +181,7 @@ public class Main {
 
 		String resultado = "";
 
-		resultado += "Resultado: " + mejorValor + "\n" + ((CromosomaArboles) aEvolutivo.mejor_abs).get_fenotipo() 
+		resultado += "Resultado: " + mejorValor + "\n" + "Fenotipo: " +((CromosomaArboles) aEvolutivo.mejor_abs).get_fenotipo() 
 				+"\n" + "N.Mutaciones: " +aEvolutivo.nMutaciones + "\n" + "N.Cruces: " + aEvolutivo.nCruces;
 
 		textResultado.setText(resultado);

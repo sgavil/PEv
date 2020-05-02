@@ -3,6 +3,7 @@ package es.pe.mdelossgavil.GUI;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import es.pe.mdelossgavil.AlgoritmoEvolutivo;
 import es.pe.mdelossgavil.Main;
 
 import java.awt.Color;
@@ -36,7 +37,18 @@ public class PanelCruce extends JPanel {
 		comboBox.setSelectedIndex(0);
 		add(comboBox);
 		
-		Main.CRUCE = "CO";
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cruceb = (JComboBox )(e.getSource());
+				String bloating = (String)cruceb.getSelectedItem();
+				AlgoritmoEvolutivo.TIPO_BLOATING= bloating;
+				
+			}
+		});
+		
+		
 
 	}
 

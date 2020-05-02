@@ -69,6 +69,8 @@ public class AlgoritmoEvolutivo {
 	public int nMutaciones = 0;
 
 	public static int PROFUNDIDAD_ARBOL = 4;
+	public static String TIPO_BLOATING = "";
+	public static boolean USE_IF;
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Selección, Cruce y Mutación
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -106,9 +108,6 @@ public class AlgoritmoEvolutivo {
 	 */
 	public void evaluar_poblacion() {
 
-		// funcion_revisar_adaptacion_minimiza();
-
-		// tengo el fmax
 
 		float punt_acum = 0;
 		int aptitud_mejor;
@@ -121,16 +120,13 @@ public class AlgoritmoEvolutivo {
 
 		///////////////// CONTROL DE BLOATING ////////////
 
-		////////// Tarpeian //////////////
+		if(TIPO_BLOATING.equals("Tarpeian")) {
+			bloatingTarpeian();
 
-		bloatingTarpeian();
-
-		//////////////////////////////////
-
-		/////////// Penalizacion bien fundamentada /////////////
-		
-		//penBienFundamentada();
-
+		}
+		else if(TIPO_BLOATING.equals("Penalización bien fundamentada")) {
+			penBienFundamentada();
+		}
 		////////////////////////////////////////////////////
 
 		/*
@@ -274,12 +270,12 @@ public class AlgoritmoEvolutivo {
 
 		for (int i = 0; i < tam_pob; i++) {
 
-			poblacion.add(new CromosomaArboles(PROFUNDIDAD_ARBOL, 1, true, 6));
+			poblacion.add(new CromosomaArboles(PROFUNDIDAD_ARBOL, 1, USE_IF, 6));
 			poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
 
 		}
 
-		mejor_abs = new CromosomaArboles(PROFUNDIDAD_ARBOL, 1, true, 6);
+		mejor_abs = new CromosomaArboles(PROFUNDIDAD_ARBOL, 1, USE_IF, 6);
 		mejor_abs.set_aptitud(Integer.MIN_VALUE);
 		System.out.println("Fenotipo: " + ((CromosomaArboles) mejor_abs).get_fenotipo());
 

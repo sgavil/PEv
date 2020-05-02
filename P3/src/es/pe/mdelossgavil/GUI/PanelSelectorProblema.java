@@ -1,6 +1,10 @@
 package es.pe.mdelossgavil.GUI;
 
 import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,29 +15,24 @@ import javax.swing.SwingConstants;
 import es.pe.mdelossgavil.Main;
 
 import javax.swing.JComboBox;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import java.awt.Component;
 
 public class PanelSelectorProblema extends JPanel {
-	public JTextArea textArea;
 	
 	/**
 	 * Create the panel.
 	 */
 	public PanelSelectorProblema() {
-		setLayout(new GridLayout(1, 2, 5, 5));
-		
+		setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		
 		JButton btnEjecutar = new JButton("Ejecutar");
+
 		add(btnEjecutar);
-		
-		textArea = new JTextArea(16,20);
-		textArea.setEditable(false);
-		
-		JScrollPane scrollPane = new JScrollPane(textArea);
-		add(scrollPane);
 		
 		
 		

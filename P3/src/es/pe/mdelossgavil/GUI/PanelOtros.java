@@ -20,6 +20,7 @@ public class PanelOtros extends JPanel {
 		setBorder(new TitledBorder(null, "Otros", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setLayout(new GridLayout(1, 2, 0, 0));
 		
+		
 		JLabel lblNewLabel = new JLabel("Elitismo %");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel);
