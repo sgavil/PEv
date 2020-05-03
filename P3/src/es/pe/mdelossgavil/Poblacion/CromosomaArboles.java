@@ -101,21 +101,11 @@ public class CromosomaArboles extends ACromosoma {
 		this.fenotipo=fenotipo_;
 	}
 
-	public CromosomaArboles(int profundidad, int tipoCreacion, boolean useIf, int tipoMultiplexor) {
+	public CromosomaArboles(int profundidad, boolean useIf) {
 
 		arbol = new Arbol(profundidad, useIf);
-		arbol.inicializacionCompleta(0, 0);
-	    arbol.setNumNodos(arbol.obtieneNodos(arbol, 0));
 		
-		fenotipo=get_fenotipo();
-
-
-		/*
-		 * switch(tipoCreacion){ case 0: arbol.inicializacionCreciente(0); break; case
-		 * 1: arbol.inicializacionCompleta(0,0); break; case 2: int ini = new
-		 * Random().nextInt(2); if(ini == 0) arbol.inicializacionCreciente(0); else
-		 * arbol.inicializacionCompleta(0,0); break; }
-		 */
+		 fenotipo=get_fenotipo();
 	}
 
 	public CromosomaArboles(ACromosoma ac) {
@@ -128,6 +118,15 @@ public class CromosomaArboles extends ACromosoma {
 		fenotipo = ca.fenotipo;
 	}
 
+	public void inicializacionCompleta() {
+		arbol.inicializacionCompleta(0, 0);
+		 arbol.setNumNodos(arbol.obtieneNodos(arbol, 0));
+	}
+	public void inicializacionCreciente() {
+		arbol.inicializacionCreciente(0, 0);
+		 arbol.setNumNodos(arbol.obtieneNodos(arbol, 0));
+	}
+	
 	public CromosomaArboles() {
 		// TODO Auto-generated constructor stub
 	}

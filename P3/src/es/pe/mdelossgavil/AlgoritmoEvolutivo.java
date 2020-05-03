@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Random;
 import java.util.Scanner;
 
 import es.pe.mdelossgavil.Cruce.CruceArboles;
@@ -108,7 +109,6 @@ public class AlgoritmoEvolutivo {
 	 */
 	public void evaluar_poblacion() {
 
-
 		float punt_acum = 0;
 		int aptitud_mejor;
 
@@ -120,11 +120,10 @@ public class AlgoritmoEvolutivo {
 
 		///////////////// CONTROL DE BLOATING ////////////
 
-		if(TIPO_BLOATING.equals("Tarpeian")) {
+		if (TIPO_BLOATING.equals("Tarpeian")) {
 			bloatingTarpeian();
 
-		}
-		else if(TIPO_BLOATING.equals("Penalización bien fundamentada")) {
+		} else if (TIPO_BLOATING.equals("Penalización bien fundamentada")) {
 			penBienFundamentada();
 		}
 		////////////////////////////////////////////////////
@@ -222,11 +221,6 @@ public class AlgoritmoEvolutivo {
 			hijo1.inicializa_cromosoma();
 			hijo2.inicializa_cromosoma();
 
-			for (int j = 0; j < hijo1.getCodificacion().size(); j++) {
-				hijo1.getCodificacion().set(j, 100000);
-				hijo2.getCodificacion().set(j, 100000);
-			}
-
 			ACromosoma padre1 = poblacion.get(seleccionCruce[i]);
 			ACromosoma padre2 = poblacion.get(seleccionCruce[i + 1]);
 
@@ -263,19 +257,69 @@ public class AlgoritmoEvolutivo {
 
 	private void inicializa_poblacion() {
 
-		// TPoblacion<CromosomaArboles> pob = new TPoblacion<CromosomaArboles>();
-		// poblacion = pob.inicializa_poblacion(tam_pob, CromosomaArboles.class);
-
 		poblacion = new ArrayList<ACromosoma>();
 
-		for (int i = 0; i < tam_pob; i++) {
+		Random rnd = new Random();
+		int tipoInicializacion = rnd.nextInt(3);
 
-			poblacion.add(new CromosomaArboles(PROFUNDIDAD_ARBOL, 1, USE_IF, 6));
-			poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
+		tipoInicializacion= 1;
+		if (tipoInicializacion < 2) {
+
+			for (int i = 0; i < tam_pob; i++) {
+
+				CromosomaArboles cArboles = new CromosomaArboles(PROFUNDIDAD_ARBOL, USE_IF);
+
+				if (tipoInicializacion == 0)
+					cArboles.inicializacionCompleta();
+				else
+					cArboles.inicializacionCreciente();
+				
+
+				poblacion.add(cArboles);
+				poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
+
+			}
 
 		}
+			 else {
+			int nGrupos = PROFUNDIDAD_ARBOL - 1;
+			int individuosPorGrupo = tam_pob / nGrupos;
+			int profInicial = 2;
 
-		mejor_abs = new CromosomaArboles(PROFUNDIDAD_ARBOL, 1, USE_IF, 6);
+			for (int i = 0; i < nGrupos; i++) {
+				for (int j = 0; j < individuosPorGrupo; j++) 
+				{
+					CromosomaArboles cArboles = new CromosomaArboles(profInicial, USE_IF);
+
+					if (i <= nGrupos / 2)
+						cArboles.inicializacionCompleta();
+					else
+						cArboles.inicializacionCreciente();
+					
+					cArboles.set_aptitud(cArboles.evaluar());
+					poblacion.add(cArboles);
+					
+					
+				}
+				profInicial++;
+			}
+			
+			//Si al redondear a int hemos perdido algun individio lo recuperamos aqui
+			if(individuosPorGrupo*nGrupos<tam_pob)
+			{
+				int indivRestantes = tam_pob - (individuosPorGrupo*nGrupos);
+				for (int i = 0; i < indivRestantes; i++) {
+					CromosomaArboles cArboles = new CromosomaArboles(PROFUNDIDAD_ARBOL, USE_IF);
+				
+					cArboles.inicializacionCompleta();
+					cArboles.set_aptitud(cArboles.evaluar());
+					poblacion.add(cArboles);
+
+				}
+			}
+		}
+
+		mejor_abs = new CromosomaArboles(PROFUNDIDAD_ARBOL, USE_IF);
 		mejor_abs.set_aptitud(Integer.MIN_VALUE);
 		System.out.println("Fenotipo: " + ((CromosomaArboles) mejor_abs).get_fenotipo());
 
@@ -321,10 +365,10 @@ public class AlgoritmoEvolutivo {
 			profMedia += raiz.getAlturaArbol();
 		}
 		profMedia /= tam_pob;
-		
+
 		for (int i = 0; i < tam_pob; i++) {
 			Arbol raiz = ((CromosomaArboles) poblacion.get(i)).getArbol();
-			if (raiz.getAlturaArbol() > (profMedia*2) && (float) Math.random() > 0.5f) {
+			if (raiz.getAlturaArbol() > (profMedia * 2) && (float) Math.random() > 0.5f) {
 				poblacion.get(i).set_aptitud(0);
 			}
 
@@ -351,17 +395,18 @@ public class AlgoritmoEvolutivo {
 		float varianza = 0.0f;
 
 		for (int i = 1; i <= tam_pob; i++) {
-			int tamIndividuo = ((CromosomaArboles) (poblacion.get(i-1))).getArbol().getAlturaArbol();
+			int tamIndividuo = ((CromosomaArboles) (poblacion.get(i - 1))).getArbol().getAlturaArbol();
 
-			cov += (tamIndividuo - mediaTamanyo) * (poblacion.get(i-1).get_aptitud() - mediaFitness) / tam_pob;
+			cov += (tamIndividuo - mediaTamanyo) * (poblacion.get(i - 1).get_aptitud() - mediaFitness) / tam_pob;
 
 			varianza += (Math.pow((tamIndividuo - mediaTamanyo), 2)) / tam_pob;
 		}
-		
+
 		k = cov / varianza;
-		
+
 		for (int i = 0; i < tam_pob; i++) {
-			poblacion.get(i).set_aptitud(poblacion.get(i).get_aptitud() + k * ((CromosomaArboles) (poblacion.get(i))).getArbol().getNumNodos());
+			poblacion.get(i).set_aptitud(poblacion.get(i).get_aptitud()
+					+ k * ((CromosomaArboles) (poblacion.get(i))).getArbol().getNumNodos());
 		}
 	}
 

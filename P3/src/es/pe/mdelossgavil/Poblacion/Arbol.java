@@ -19,7 +19,7 @@ public class Arbol {
 	private boolean esRaiz;
 	private String fenotipo;
 	private int profTotal;
-	
+
 	/* //// CONSTRUCTORA //// */
 
 	// Crea una hoja
@@ -111,18 +111,84 @@ public class Arbol {
 			Random rnd = new Random();
 			int terminal;
 			this.setEsHoja(true);
-			if(Main.entradas==6)
-			{
+			if (Main.entradas == 6) {
 				terminal = rnd.nextInt(CromosomaArboles.terminales6.length);
 				valor = CromosomaArboles.terminales6[terminal];
-			}
-			else
-			{
+			} else {
 				terminal = rnd.nextInt(CromosomaArboles.terminales11.length);
 				valor = CromosomaArboles.terminales11[terminal];
 			}
 			esHoja = true;
-			numHijos++;
+			numHijos = 0;
+		}
+		setNumNodos(n);
+		return n;
+	}
+
+	public int inicializacionCreciente(int p, int nodos) {
+		int n = nodos;
+		if (p < max_prof) 
+		{
+			setProfundidad(p);
+			Random rnd = new Random();
+			int rndTipo = rnd.nextInt(2);
+
+			if (rndTipo == 0) // funcion
+			{
+				int nHijos = 0;
+				int func = 0;
+				if (useIF) {
+					func = rnd.nextInt(CromosomaArboles.funciones.length);
+				} else
+					func = rnd.nextInt(CromosomaArboles.funciones.length - 1);
+
+				this.valor = CromosomaArboles.funciones[func];
+
+				this.setEsRaiz(true);
+				if (valor.equals("IF"))
+					nHijos = 3;
+				if (valor.equals("NOT"))
+					nHijos = 1;
+				if (valor.equals("OR") || valor.equals("AND")) {
+					nHijos = 2;
+				}
+				for (int i = 0; i < nHijos; i++) {
+					Arbol hijo = new Arbol(max_prof, useIF);
+					esRaiz = true;
+					n++;
+					n = hijo.inicializacionCreciente(p + 1, n);
+					hijos.add(hijo);
+					numHijos++;
+				}
+
+			} else // terminal
+			{
+				this.setEsHoja(true);
+				numHijos = 0;
+				int terminal = 0;
+				if (Main.entradas == 6) {
+					terminal = rnd.nextInt(CromosomaArboles.terminales6.length);
+					this.valor = CromosomaArboles.terminales6[terminal];
+				} else {
+					terminal = rnd.nextInt(CromosomaArboles.terminales11.length);
+					this.valor = CromosomaArboles.terminales11[terminal];
+				}
+				setProfundidad(p);
+			}
+
+		} else {
+			setProfundidad(p);
+			Random rnd = new Random();
+			int terminal;
+			if (Main.entradas == 6) {
+				terminal = rnd.nextInt(CromosomaArboles.terminales6.length);
+				this.valor = CromosomaArboles.terminales6[terminal];
+			} else {
+				terminal = rnd.nextInt(CromosomaArboles.terminales11.length);
+				this.valor = CromosomaArboles.terminales11[terminal];
+			}
+			esHoja = true;
+			numHijos = 0;
 		}
 		setNumNodos(n);
 		return n;
@@ -154,7 +220,7 @@ public class Arbol {
 	public void getTerminales(ArrayList<Arbol> hijos, ArrayList<Arbol> nodos) {
 		for (int i = 0; i < hijos.size(); i++) {
 			if (hijos.get(i).isEsHoja()) {
-				//nodos.add(hijos.get(i).copia());
+				// nodos.add(hijos.get(i).copia());
 				nodos.add(hijos.get(i));
 			} else {
 				getTerminales(hijos.get(i).getHijos(), nodos);
@@ -200,10 +266,9 @@ public class Arbol {
 	 * @param nodos Array donde se guardan las funciones
 	 */
 	public void getFunciones(ArrayList<Arbol> hijos, ArrayList<Arbol> nodos) {
-		for (int i = 0; i < hijos.size(); i++) 
-		{
+		for (int i = 0; i < hijos.size(); i++) {
 			if (hijos.get(i).isEsRaiz()) {
-				//nodos.add(hijos.get(i).copia());
+				// nodos.add(hijos.get(i).copia());
 				nodos.add(hijos.get(i));
 				getFunciones(hijos.get(i).hijos, nodos);
 			}
@@ -247,7 +312,7 @@ public class Arbol {
 		} else if (nodo.valor.equals("AND") || nodo.valor.equals("OR")) {
 			n = obtieneNodos(nodo.hijos.get(0), n + 1);
 			n = obtieneNodos(nodo.hijos.get(1), n + 1);
-		} else {
+		} else  {
 			n = obtieneNodos(nodo.hijos.get(0), n + 1);
 		}
 		return n;
@@ -300,82 +365,89 @@ public class Arbol {
 
 	public String fenotipo() {
 		fenotipo = "";
-		fenotipo+="(";
+		fenotipo += "(";
 		recorreArbol(this);
-		fenotipo+=")";
+		fenotipo += ")";
 		return fenotipo;
 	}
 
 	public String getValor() {
 		return valor;
 	}
+
 	public void setNHijos(int nHijos) {
 		this.numHijos = nHijos;
 	}
+
 	private void recorreArbol(Arbol a) {
-		fenotipo+=a.valor + " ";	
-		if(!a.esHoja)
-			fenotipo+="(";
+		fenotipo += a.valor + " ";
+		if (!a.esHoja)
+			fenotipo += "(";
 		for (int i = 0; i < a.hijos.size(); i++) {
-			//profundidad++;	
+			// profundidad++;
 			recorreArbol(a.getHijos().get(i));
 		}
-				if(!a.esHoja)
-			fenotipo+=")";
+		if (!a.esHoja)
+			fenotipo += ")";
 	}
+
 	public int getNumNodos() {
 		return numNodos;
 	}
+
 	public int getMaxProf() {
 		return max_prof;
 	}
+
 	public boolean getUseIf() {
 		return useIF;
 	}
-	
-	private int getAltura(Arbol raiz){
-        if(raiz == null) return 0;
-        int h=0;
 
-        for(Arbol n : raiz.getHijos()){
-            h = Math.max(h, getAltura(n));
-        }
-        return h+1;
-    }
+	private int getAltura(Arbol raiz) {
+		if (raiz == null)
+			return 0;
+		int h = 0;
+
+		for (Arbol n : raiz.getHijos()) {
+			h = Math.max(h, getAltura(n));
+		}
+		return h + 1;
+	}
 
 	public void encuentraAltura() {
 		profTotal = getAltura(this);
-		
+
 	}
+
 	public int getAlturaArbol() {
 		return profTotal;
 	}
-	
+
 	public Arbol getFuncionAleatoria() {
 		ArrayList<Arbol> nodosFuncion = new ArrayList<Arbol>();
 		Arbol raiz = this;
 		nodosFuncion.add(raiz);
-		
+
 		raiz.getFunciones(getHijos(), nodosFuncion);
-		
+
 		int nNodosFuncion = nodosFuncion.size();
-		int randNodoFuncion = (int) (Math.random()*nNodosFuncion);
-		
+		int randNodoFuncion = (int) (Math.random() * nNodosFuncion);
+
 		return nodosFuncion.get(randNodoFuncion);
 
 	}
+
 	public Arbol getTerminalAleatorio() {
 		ArrayList<Arbol> nodosTerminales = new ArrayList<Arbol>();
 		Arbol raiz = this;
-		
+
 		raiz.getTerminales(raiz.getHijos(), nodosTerminales);
-		
+
 		int nNodosTerminales = nodosTerminales.size();
-		int randNodoTerminal = (int) (Math.random()*nNodosTerminales);
-		
+		int randNodoTerminal = (int) (Math.random() * nNodosTerminales);
+
 		return nodosTerminales.get(randNodoTerminal);
 
 	}
-	
 
 }
