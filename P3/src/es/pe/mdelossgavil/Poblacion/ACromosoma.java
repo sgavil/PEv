@@ -10,6 +10,9 @@ public abstract class ACromosoma <T> implements Cloneable{
 	//Valor de fitness del individuo
 	protected float aptitud;
 	
+	//Aptitud que usaremos unicamente para la seleccion sin modificar asi, la aptitud real de invididuo
+	protected float aptitudAux;
+	
 	//Cómo de bueno es el individuo respecto a los demás
 	protected float puntuacion;
 	
@@ -29,6 +32,20 @@ public abstract class ACromosoma <T> implements Cloneable{
 	
 
 
+	/**
+	 * @return the aptitud
+	 */
+	public float get_aptitudAux() {
+		return aptitudAux;
+	}
+
+	/**
+	 * @param aptitud the aptitud to set
+	 */
+	public void set_aptitudAux(float aptitud_) {
+		aptitudAux = aptitud_;
+	}
+	
 	/**
 	 * @return the aptitud
 	 */

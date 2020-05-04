@@ -123,41 +123,83 @@ public class AlgoritmoEvolutivo {
 		if (TIPO_BLOATING.equals("Tarpeian")) {
 			bloatingTarpeian();
 
-		} else if (TIPO_BLOATING.equals("Penalización bien fundamentada")) {
-			penBienFundamentada();
-		}
+		} 
+		
 		////////////////////////////////////////////////////
 
 		/*
 		 * Primero hacemos un for para tener la suma de las aptitudes y la mejor aptitud
 		 * de todas
 		 */
-		for (int i = 0; i < tam_pob; i++) {
-			individuoActual = poblacion.get(i);
+		
+		/*En caos de usar la bien fundamentada , usamos una apt auxiliar*/
+		if (TIPO_BLOATING.equals("Penalización bien fundamentada")) {		
+			for (int i = 0; i < tam_pob; i++) {
+				individuoActual = poblacion.get(i);
+				
+				//Actualizamos la apt auxiliar
+				individuoActual.set_aptitudAux(individuoActual.get_aptitud());
+				
+				//La usamos para el bloating y luego calculamos la probabilidad con ello
+				penBienFundamentada();
+				
+				suma_aptitud += individuoActual.get_aptitudAux();
 
-			suma_aptitud += individuoActual.get_aptitud();
+				if (individuoActual.get_aptitud() > aptitud_mejor) {
+					pos_mejor = i;
+					aptitud_mejor = (int) individuoActual.get_aptitud();
+					el_mejor = individuoActual;
+				}
 
-			if (individuoActual.get_aptitud() > aptitud_mejor) {
-				pos_mejor = i;
-				aptitud_mejor = (int) individuoActual.get_aptitud();
-				el_mejor = individuoActual;
 			}
 
+			for (int j = 0; j < tam_pob; j++) {
+
+				// Calculamos la puntuación del individuo y su puntuación acumulada
+				float puntuacion;
+
+				puntuacion = poblacion.get(j).get_aptitudAux() / suma_aptitud;
+
+				poblacion.get(j).set_puntuacion(puntuacion);
+				poblacion.get(j).set_punt_acum(puntuacion + punt_acum);
+
+				// Actualizamos la puntuación acumulada general
+				punt_acum += puntuacion;
+
+			}
 		}
+		
+		/*En caso de que sea Tarpeia, usamos la apt original*/
+		else
+		{
+			for (int i = 0; i < tam_pob; i++) {
+				individuoActual = poblacion.get(i);
 
-		for (int j = 0; j < tam_pob; j++) {
+				suma_aptitud += individuoActual.get_aptitud();
 
-			// Calculamos la puntuación del individuo y su puntuación acumulada
-			float puntuacion;
+				if (individuoActual.get_aptitud() > aptitud_mejor) {
+					pos_mejor = i;
+					aptitud_mejor = (int) individuoActual.get_aptitud();
+					el_mejor = individuoActual;
+				}
 
-			puntuacion = poblacion.get(j).get_aptitud() / suma_aptitud;
+			}
 
-			poblacion.get(j).set_puntuacion(puntuacion);
-			poblacion.get(j).set_punt_acum(puntuacion + punt_acum);
+			for (int j = 0; j < tam_pob; j++) {
 
-			// Actualizamos la puntuación acumulada general
-			punt_acum += puntuacion;
+				// Calculamos la puntuación del individuo y su puntuación acumulada
+				float puntuacion;
 
+				puntuacion = poblacion.get(j).get_aptitud() / suma_aptitud;
+
+				poblacion.get(j).set_puntuacion(puntuacion);
+				poblacion.get(j).set_punt_acum(puntuacion + punt_acum);
+
+				// Actualizamos la puntuación acumulada general
+				punt_acum += puntuacion;
+
+			}
+			
 		}
 
 		if (el_mejor.get_aptitud() > mejor_abs.get_aptitud()) {
@@ -261,14 +303,12 @@ public class AlgoritmoEvolutivo {
 
 		Random rnd = new Random();
 		int tipoInicializacion = rnd.nextInt(3);
-
-		tipoInicializacion= 1;
 		if (tipoInicializacion < 2) {
 
 			for (int i = 0; i < tam_pob; i++) {
 
 				CromosomaArboles cArboles = new CromosomaArboles(PROFUNDIDAD_ARBOL, USE_IF);
-
+				
 				if (tipoInicializacion == 0)
 					cArboles.inicializacionCompleta();
 				else
@@ -281,7 +321,9 @@ public class AlgoritmoEvolutivo {
 			}
 
 		}
-			 else {
+		
+		//Inicializacion Ramped and Half
+		else {
 			int nGrupos = PROFUNDIDAD_ARBOL - 1;
 			int individuosPorGrupo = tam_pob / nGrupos;
 			int profInicial = 2;
@@ -298,8 +340,6 @@ public class AlgoritmoEvolutivo {
 					
 					cArboles.set_aptitud(cArboles.evaluar());
 					poblacion.add(cArboles);
-					
-					
 				}
 				profInicial++;
 			}
@@ -320,8 +360,7 @@ public class AlgoritmoEvolutivo {
 		}
 
 		mejor_abs = new CromosomaArboles(PROFUNDIDAD_ARBOL, USE_IF);
-		mejor_abs.set_aptitud(Integer.MIN_VALUE);
-		System.out.println("Fenotipo: " + ((CromosomaArboles) mejor_abs).get_fenotipo());
+		mejor_abs.set_aptitud(Integer.MIN_VALUE);	
 
 	}
 
@@ -376,6 +415,7 @@ public class AlgoritmoEvolutivo {
 	}
 
 	private void penBienFundamentada() {
+		
 		float k; // Factor de correccion
 		int sumaFitness = 0;
 		int sumaTamanyo = 0;
@@ -384,7 +424,7 @@ public class AlgoritmoEvolutivo {
 		float mediaTamanyo = 0;
 
 		for (int i = 0; i < tam_pob; i++) {
-			sumaFitness += poblacion.get(i).get_aptitud();
+			sumaFitness += poblacion.get(i).get_aptitudAux();
 			sumaTamanyo = ((CromosomaArboles) (poblacion.get(i))).getArbol().getAlturaArbol();
 		}
 
@@ -397,7 +437,7 @@ public class AlgoritmoEvolutivo {
 		for (int i = 1; i <= tam_pob; i++) {
 			int tamIndividuo = ((CromosomaArboles) (poblacion.get(i - 1))).getArbol().getAlturaArbol();
 
-			cov += (tamIndividuo - mediaTamanyo) * (poblacion.get(i - 1).get_aptitud() - mediaFitness) / tam_pob;
+			cov += (tamIndividuo - mediaTamanyo) * (poblacion.get(i - 1).get_aptitudAux() - mediaFitness) / tam_pob;
 
 			varianza += (Math.pow((tamIndividuo - mediaTamanyo), 2)) / tam_pob;
 		}
@@ -405,9 +445,9 @@ public class AlgoritmoEvolutivo {
 		k = cov / varianza;
 
 		for (int i = 0; i < tam_pob; i++) {
-			poblacion.get(i).set_aptitud(poblacion.get(i).get_aptitud()
-					+ k * ((CromosomaArboles) (poblacion.get(i))).getArbol().getNumNodos());
+			poblacion.get(i).set_aptitudAux(poblacion.get(i).get_aptitudAux()
+					- k * ((CromosomaArboles) (poblacion.get(i))).getArbol().getNumNodos());
 		}
+		
 	}
-
 }

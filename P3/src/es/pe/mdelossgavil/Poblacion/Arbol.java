@@ -100,7 +100,7 @@ public class Arbol {
 			for (int i = 0; i < nHijos; i++) {
 				Arbol hijo = new Arbol(max_prof, useIF);
 				// hijo.setPadre(this);
-				esRaiz = true;
+				esRaiz = true;	
 				n++;
 				n = hijo.inicializacionCompleta(p + 1, n);
 				hijos.add(hijo);
@@ -132,8 +132,38 @@ public class Arbol {
 			setProfundidad(p);
 			Random rnd = new Random();
 			int rndTipo = rnd.nextInt(2);
+			
+			//El primer nodo siempre sera un nodo funcional
+			if(p==1)
+			{
+				int nHijos = 0;
+				int func = 0;
+				if (useIF) {
+					func = rnd.nextInt(CromosomaArboles.funciones.length);
+				} else
+					func = rnd.nextInt(CromosomaArboles.funciones.length - 1);
 
-			if (rndTipo == 0) // funcion
+				this.valor = CromosomaArboles.funciones[func];
+
+				this.setEsRaiz(true);
+				if (valor.equals("IF"))
+					nHijos = 3;
+				if (valor.equals("NOT"))
+					nHijos = 1;
+				if (valor.equals("OR") || valor.equals("AND")) {
+					nHijos = 2;
+				}
+				for (int i = 0; i < nHijos; i++) {
+					Arbol hijo = new Arbol(max_prof, useIF);
+					esRaiz = true;
+					n++;
+					n = hijo.inicializacionCreciente(p + 1, n);
+					hijos.add(hijo);
+					numHijos++;
+				}
+			}
+
+			else if (rndTipo == 0) // funcion
 			{
 				int nHijos = 0;
 				int func = 0;
@@ -406,7 +436,7 @@ public class Arbol {
 	private int getAltura(Arbol raiz) {
 		if (raiz == null)
 			return 0;
-		int h = 0;
+		int h = 1;
 
 		for (Arbol n : raiz.getHijos()) {
 			h = Math.max(h, getAltura(n));
