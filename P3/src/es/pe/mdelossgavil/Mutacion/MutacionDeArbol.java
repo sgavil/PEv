@@ -13,7 +13,7 @@ public class MutacionDeArbol implements IMutacion {
 	public void mutar(ACromosoma individuo) {
 		Arbol aIndividuo = ((CromosomaArboles)individuo).getArbol();
 		Arbol aux = new Arbol(aIndividuo.getMaxProf(),aIndividuo.getUseIf());
-		aux.inicializacionCompleta(0, 0);
+		aux.inicializacionCompleta(1, 0);
 		
 		((CromosomaArboles)individuo).setMutatedTree(aux);
 		

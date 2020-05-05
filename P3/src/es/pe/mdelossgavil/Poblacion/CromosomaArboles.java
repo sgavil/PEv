@@ -117,11 +117,11 @@ public class CromosomaArboles extends ACromosoma {
 	}
 
 	public void inicializacionCompleta() {
-		arbol.inicializacionCompleta(0, 0);
+		arbol.inicializacionCompleta(1, 0);
 		 arbol.setNumNodos(arbol.obtieneNodos(arbol, 0));
 	}
 	public void inicializacionCreciente() {
-		arbol.inicializacionCreciente(0, 0);
+		arbol.inicializacionCreciente(1, 0);
 		 arbol.setNumNodos(arbol.obtieneNodos(arbol, 0));
 	}
 	
