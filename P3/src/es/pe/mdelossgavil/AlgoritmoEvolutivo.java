@@ -72,6 +72,7 @@ public class AlgoritmoEvolutivo {
 	public static int PROFUNDIDAD_ARBOL = 4;
 	public static String TIPO_BLOATING = "";
 	public static boolean USE_IF;
+	public static int TIPO_INICIALIZACION;
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Selección, Cruce y Mutación
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -302,14 +303,15 @@ public class AlgoritmoEvolutivo {
 		poblacion = new ArrayList<ACromosoma>();
 
 		Random rnd = new Random();
-		int tipoInicializacion = rnd.nextInt(3);
-		if (tipoInicializacion < 2) {
+	
+		
+		if (AlgoritmoEvolutivo.TIPO_INICIALIZACION < 2) {
 
 			for (int i = 0; i < tam_pob; i++) {
 
 				CromosomaArboles cArboles = new CromosomaArboles(PROFUNDIDAD_ARBOL, USE_IF);
 				
-				if (tipoInicializacion == 0)
+				if (AlgoritmoEvolutivo.TIPO_INICIALIZACION == 0)
 					cArboles.inicializacionCompleta();
 				else
 					cArboles.inicializacionCreciente();

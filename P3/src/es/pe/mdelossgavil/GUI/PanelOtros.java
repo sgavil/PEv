@@ -27,7 +27,7 @@ public class PanelOtros extends JPanel {
 		
 		valElitismo = new JTextField();
 		valElitismo.setHorizontalAlignment(SwingConstants.CENTER);
-		valElitismo.setText("0");
+		valElitismo.setText("5");
 		add(valElitismo);
 		valElitismo.setColumns(10);
 
