@@ -121,19 +121,15 @@ public class AlgoritmoEvolutivo {
 
 		///////////////// CONTROL DE BLOATING ////////////
 
+		//En caso de que sea Tarpeian se puede hacer antes de calcular la puntuacion
 		if (TIPO_BLOATING.equals("Tarpeian")) {
 			bloatingTarpeian();
 
 		} 
+		//En caos de usar la bien fundamentada , usamos una apt auxiliar para crear las puntuaciones
+		//Ademas,despues de calcular la aptAux de cada uno de los individuos, penalizamos cada uno de ellos
+		//con la "Penalizacion bien fundamentada"
 		
-		////////////////////////////////////////////////////
-
-		/*
-		 * Primero hacemos un for para tener la suma de las aptitudes y la mejor aptitud
-		 * de todas
-		 */
-		
-		/*En caos de usar la bien fundamentada , usamos una apt auxiliar*/
 		if (TIPO_BLOATING.equals("Penalización bien fundamentada")) {		
 			for (int i = 0; i < tam_pob; i++) {
 				individuoActual = poblacion.get(i);
@@ -299,9 +295,39 @@ public class AlgoritmoEvolutivo {
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	private void inicializa_poblacion() {
-
+		
 		poblacion = new ArrayList<ACromosoma>();
+		
+		//AQUI TENEMOS QUE PONER LO DEL PANEL
+		
+		//En caso de que sea inicializacion completa
+		
+		/*
+		for (int i = 0; i < tam_pob; i++) {
 
+			CromosomaArboles cArboles = new CromosomaArboles(PROFUNDIDAD_ARBOL, USE_IF);
+			cArboles.inicializacionCompleta();
+			poblacion.add(cArboles);
+			poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
+
+		}
+		*/
+		
+		//En caso de que sea inicializacion creciente
+		
+		/*
+		for (int i = 0; i < tam_pob; i++) {
+
+			CromosomaArboles cArboles = new CromosomaArboles(PROFUNDIDAD_ARBOL, USE_IF);
+			cArboles.inicializacionCreciente();
+			poblacion.add(cArboles);
+			poblacion.get(i).set_aptitud(poblacion.get(i).evaluar());
+
+		}
+		*/
+
+
+		//En caso de que sea Inicializacion RampedAndHalf
 		Random rnd = new Random();
 	
 		
@@ -333,8 +359,9 @@ public class AlgoritmoEvolutivo {
 			for (int i = 0; i < nGrupos; i++) {
 				for (int j = 0; j < individuosPorGrupo; j++) 
 				{
+					//La primera mitad de la pob se inicia con InicializacionCompleta mientras que la 
+					//segunda mita de la poblacion empieza con InicializacionCreciente
 					CromosomaArboles cArboles = new CromosomaArboles(profInicial, USE_IF);
-
 					if (i <= nGrupos / 2)
 						cArboles.inicializacionCompleta();
 					else
@@ -347,6 +374,7 @@ public class AlgoritmoEvolutivo {
 			}
 			
 			//Si al redondear a int hemos perdido algun individio lo recuperamos aqui
+			//inicializandolo con InicializacionCompleta
 			if(individuosPorGrupo*nGrupos<tam_pob)
 			{
 				int indivRestantes = tam_pob - (individuosPorGrupo*nGrupos);
@@ -398,6 +426,8 @@ public class AlgoritmoEvolutivo {
 
 	}
 
+	//Eliminamos aquellos arboles que tengas una profundidad  mayor que el doble de la media de 
+	//profundidades de la poblacion
 	private void bloatingTarpeian() {
 		int profMedia = 0;
 
@@ -416,6 +446,8 @@ public class AlgoritmoEvolutivo {
 		}
 	}
 
+	//Le restamos una penalizacion calculada a cada individuo usando una aptitud auxiliar para que así
+	//no modifiquemosla aptitud real de cada individuo
 	private void penBienFundamentada() {
 		
 		float k; // Factor de correccion
