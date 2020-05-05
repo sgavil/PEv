@@ -79,6 +79,8 @@ public class Arbol {
 		return s;
 	}
 
+	//Metodo que inicaliza todos los nodos con funciones hasta llegar a la profundidad maxima, 
+	//donde coloca terminales en las hojas
 	public int inicializacionCompleta(int p, int nodos) {
 		int n = nodos;
 		int nHijos = 2;
@@ -125,6 +127,8 @@ public class Arbol {
 		return n;
 	}
 
+	//Metodo que pone siempre el primer nodo como funcion pero a partir de ahi
+	//hasta la profundidad maxima, escoge aleatoriamente
 	public int inicializacionCreciente(int p, int nodos) {
 		int n = nodos;
 		if (p < max_prof) 
