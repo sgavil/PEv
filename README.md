@@ -1,3 +1,3 @@
-# REPOSITORIO DE LA ASIGNATURA PROGRAMACIÓN EVOLUTIVA
+# Evolutive Algorithm
 
-<img src="https://imgur.com/a/k2furB2">
+<img src="https://i.imgur.com/H19YBqG.jpg">
