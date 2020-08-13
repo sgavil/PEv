@@ -1,3 +1,3 @@
 # REPOSITORIO DE LA ASIGNATURA PROGRAMACIÓN EVOLUTIVA
 
-En la práctica 1 utilizamos la librería: jmathplot.jar
+![example](https://imgur.com/a/k2furB2)
